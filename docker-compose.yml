@@ -1,0 +1,18 @@
+version: '3'
+services:
+
+  nginx:
+    build:
+      dockerfile: ./docker/nginx/Dockerfile
+      context: ./
+    ports:
+      - "80"
+    links:
+      - web
+
+  web:
+    build:
+      dockerfile: ./docker/web/Dockerfile
+      context: ./
+    volumes:
+      - .:/opt
