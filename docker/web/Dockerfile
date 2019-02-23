@@ -5,13 +5,13 @@ RUN apt-get install -y --no-install-recommends \
     nginx \
     supervisor
 
-COPY ./requirements.txt .
-RUN pip3 install -r requirements.txt
-
 COPY ./docker/web/uwsgi.ini /etc/uwsgi/uwsgi.ini
 COPY ./docker/web/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/web/nginx.conf /etc/nginx/nginx.conf
 COPY . .
+
+RUN pip3 install pipenv
+RUN pipenv install --system --deploy --ignore-pipfile
 
 EXPOSE 5000
 WORKDIR /opt
