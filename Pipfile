@@ -8,8 +8,8 @@ verify_ssl = true
 [packages]
 Flask = "==1.0.2"
 uwsgi = "*"
-grpcio = "*"
-grpcio-tools = "*"
+grpcio = "==1.18.0"
+grpcio-tools = "==1.18.0"
 
 [requires]
 python_version = "3.6"

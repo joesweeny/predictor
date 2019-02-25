@@ -1,3 +1,10 @@
 #!/bin/bash
 
-pipenv run python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./proto/prediction.proto
+pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./app/grpc/proto/prediction.proto
+
+> $ pip install grpcio-tools
+> $ python -m grpc_tools.protoc -I$PYTHON_PROJRCT_PATH –python_out=$PYTHON_CLIENT_FILE_DIST –grpc_python_out=$PYTHON_GRPC_FILE_DIST $SOURCE_PTROTO
+PYTHON_PROJRCT_PATH: your python project path
+PYTHON_CLIENT_FILE_DIST: path of the output python client file
+PYTHON_GRPC_FILE_DIST: path of the output python gRPC files. Usually the same as above
+SOURCE_PTROTO: path of the .proto file.
