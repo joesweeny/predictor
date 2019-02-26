@@ -6,3 +6,4 @@ services:
       ports:
         - "50051:50051"
       tty: true
+      command: ["python3", "./opt/app/grpc/server.py"]
