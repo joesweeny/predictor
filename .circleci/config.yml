@@ -9,7 +9,7 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-            - "3f:66:e4:bb:f0:43:80:a8:78:1f:e5:36:7b:41:34:56"
+            - "5a:3c:09:01:a7:15:9a:07:f0:4e:f5:04:06:96:b5:72"
 
       - run:
           name: Build Release Image
