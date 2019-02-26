@@ -2,6 +2,7 @@ from concurrent import futures
 import time
 
 import grpc
+from grpc_reflection.v1alpha import reflection
 
 import prediction_pb2_grpc
 import prediction_pb2
@@ -20,6 +21,11 @@ def serve():
     prediction_pb2_grpc.add_PredictionServiceServicer_to_server(
         PredictionServiceServicer(), server
     )
+    SERVICE_NAMES = (
+        prediction_pb2.DESCRIPTOR.services_by_name['PredictionService'].full_name,
+        reflection.SERVICE_NAME,
+    )
+    reflection.enable_server_reflection(SERVICE_NAMES, server)
     print('Starting server. Listing on port 50051')
     server.add_insecure_port('grpc:50051')
     server.start()
