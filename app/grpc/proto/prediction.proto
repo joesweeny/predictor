@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package prediction;
+
+service PredictionService {
+    // A simple RPC.
+    //
+    // Returns a prediction for a given fixture
+    rpc GetForFixture(Fixture) returns (Prediction) {}
+}
+
+message Fixture {
+    int64 id = 1;
+}
+
+message Prediction {
+    int64 id = 1;
+    string type = 2;
+    float probability = 3;
+}

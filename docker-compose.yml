@@ -1,18 +1,11 @@
 version: '3'
 services:
 
-  nginx:
+  grpc:
     build:
-      dockerfile: ./docker/nginx/Dockerfile
-      context: ./
-    ports:
-      - "80"
-    links:
-      - web
-
-  web:
-    build:
-      dockerfile: ./docker/web/Dockerfile
+      dockerfile: ./docker/grpc/Dockerfile
       context: ./
     volumes:
       - .:/opt
+    ports:
+      - "50051:50051"
