@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/statistico-predictor
+    machine: true
+
+    steps:
+      - checkout
+
+      - add_ssh_keys:
+          fingerprints:
+            - "5a:3c:09:01:a7:15:9a:07:f0:4e:f5:04:06:96:b5:72"
+
+      - run:
+          name: Build Release Image
+          command: |
+            docker-compose -f docker-compose.dev.yml up -d --build
+
+      - deploy:
+          name: Deploy
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ssh-keyscan $PRODUCTION_SERVER >> ~/.ssh/known_hosts
+              chmod +x ./.circleci/deploy/docker-push.sh
+              ./.circleci/deploy/docker-push.sh
+              chmod +x ./.circleci/deploy/docker-deploy.sh
+              ./.circleci/deploy/docker-deploy.sh
+            fi
