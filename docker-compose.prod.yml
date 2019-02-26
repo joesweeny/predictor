@@ -1,0 +1,8 @@
+version: '3.5'
+services:
+
+    grpc:
+      image: joesweeny/statisticopredictor_grpc
+      ports:
+        - "50051:50051"
+      tty: true
