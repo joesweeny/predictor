@@ -1,18 +1,21 @@
 from concurrent import futures
-import time
-
-import grpc
+from dotenv import load_dotenv
+from pathlib import Path
 from grpc_reflection.v1alpha import reflection
-
+import time
+import grpc
 import prediction_pb2_grpc
 import prediction_pb2
+import fixture_client
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 
 class PredictionServiceServicer(prediction_pb2_grpc.PredictionServiceServicer):
     def GetForFixture(self, request, context):
-        pred = prediction_pb2.Prediction(id=request.id, type='Over 2.5 goals', probability=0.75)
+        client = fixture_client.FixtureClient()
+        response = client.GetFixture(fixture_id=request.id)
+        pred = prediction_pb2.Prediction(id=request.id, type=response.home_team.name, probability=0.75)
         return pred
 
 
@@ -35,5 +38,8 @@ def serve():
     except KeyboardInterrupt:
         server.stop(0)
 
+
+env_path = Path('.') / '/opt/app/.env'
+load_dotenv(dotenv_path=env_path)
 
 serve()
