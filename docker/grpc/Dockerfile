@@ -9,4 +9,4 @@ RUN cd /opt && pipenv install --system --deploy --ignore-pipfile
 
 EXPOSE 50051
 WORKDIR /opt
-CMD ["python3", "/opt/app/grpc/server.py"]
+CMD ["python3", "-m", "app"]
