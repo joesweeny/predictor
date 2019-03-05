@@ -15,7 +15,7 @@ class MatchGoalsAggregrator(object):
             results.append(self.__resultToRow(res))
 
         df = pd.DataFrame(results)
-        
+
         return df
 
     @staticmethod

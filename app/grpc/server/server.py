@@ -29,7 +29,7 @@ def serve():
         reflection.SERVICE_NAME,
     )
     reflection.enable_server_reflection(SERVICE_NAMES, server)
-    print('Starting server. Listing on port 50051')
+    print('Starting server. Listening on port 50051')
     server.add_insecure_port('grpc:50051')
     server.start()
     try:
