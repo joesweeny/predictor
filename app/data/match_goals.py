@@ -9,8 +9,6 @@ class MatchGoalsAggregrator(object):
 
         now = today_beginning.astimezone()
 
-        print(now)
-
         results = []
 
         for res in ResultClient().GetResultsForTeam(team_id=team_id, limit=limit, date_before=now.isoformat()):
