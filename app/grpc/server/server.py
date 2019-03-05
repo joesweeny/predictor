@@ -14,7 +14,7 @@ class PredictionServiceServicer(prediction_pb2_grpc.PredictionServiceServicer):
         client = fixture_client.FixtureClient()
         response = client.GetFixtureById(fixture_id=request.id)
         x = match_goals.MatchGoalsAggregrator()
-        res = x.RecentForm(response.home_team.id, 10)
+        res = x.RecentForm(response.home_team.id, 2)
         pred = prediction_pb2.Prediction(id=1, type="Over 2.5 goals", probability=0.75)
         return pred
 
@@ -29,7 +29,7 @@ def serve():
         reflection.SERVICE_NAME,
     )
     reflection.enable_server_reflection(SERVICE_NAMES, server)
-    print('Starting server. Listing on port 50051')
+    print('Starting server. Listening on port 50051')
     server.add_insecure_port('grpc:50051')
     server.start()
     try:
