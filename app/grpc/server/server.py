@@ -14,7 +14,7 @@ class PredictionServiceServicer(prediction_pb2_grpc.PredictionServiceServicer):
         client = fixture_client.FixtureClient()
         response = client.GetFixtureById(fixture_id=request.id)
         x = match_goals.MatchGoalsAggregrator()
-        res = x.RecentForm(response.home_team.id, 10)
+        res = x.RecentForm(response.home_team.id, 2)
         pred = prediction_pb2.Prediction(id=1, type="Over 2.5 goals", probability=0.75)
         return pred
 
