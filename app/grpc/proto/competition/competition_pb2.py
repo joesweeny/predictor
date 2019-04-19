@@ -17,10 +17,10 @@ from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='app/grpc/proto/competition/competition.proto',
-  package='statistico_data',
+  package='competition',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n,app/grpc/proto/competition/competition.proto\x12\x0fstatistico_data\x1a\x1egoogle/protobuf/wrappers.proto\"S\n\x0b\x43ompetition\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12*\n\x06is_cup\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValueb\x06proto3')
+  serialized_pb=_b('\n,app/grpc/proto/competition/competition.proto\x12\x0b\x63ompetition\x1a\x1egoogle/protobuf/wrappers.proto\"S\n\x0b\x43ompetition\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12*\n\x06is_cup\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValueb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -29,27 +29,27 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _COMPETITION = _descriptor.Descriptor(
   name='Competition',
-  full_name='statistico_data.Competition',
+  full_name='competition.Competition',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='statistico_data.Competition.id', index=0,
+      name='id', full_name='competition.Competition.id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='name', full_name='statistico_data.Competition.name', index=1,
+      name='name', full_name='competition.Competition.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='is_cup', full_name='statistico_data.Competition.is_cup', index=2,
+      name='is_cup', full_name='competition.Competition.is_cup', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -67,8 +67,8 @@ _COMPETITION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=97,
-  serialized_end=180,
+  serialized_start=93,
+  serialized_end=176,
 )
 
 _COMPETITION.fields_by_name['is_cup'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
@@ -78,7 +78,7 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Competition = _reflection.GeneratedProtocolMessageType('Competition', (_message.Message,), dict(
   DESCRIPTOR = _COMPETITION,
   __module__ = 'app.grpc.proto.competition.competition_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.Competition)
+  # @@protoc_insertion_point(class_scope:competition.Competition)
   ))
 _sym_db.RegisterMessage(Competition)
 

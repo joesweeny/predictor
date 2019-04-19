@@ -21,10 +21,10 @@ from app.grpc.proto.venue import venue_pb2 as app_dot_grpc_dot_proto_dot_venue_d
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='app/grpc/proto/fixture/fixture.proto',
-  package='statistico_data',
+  package='fixture',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n$app/grpc/proto/fixture/fixture.proto\x12\x0fstatistico_data\x1a\x1egoogle/protobuf/wrappers.proto\x1a,app/grpc/proto/competition/competition.proto\x1a\"app/grpc/proto/season/season.proto\x1a\x1e\x61pp/grpc/proto/team/team.proto\x1a app/grpc/proto/venue/venue.proto\"6\n\x10\x44\x61teRangeRequest\x12\x11\n\tdate_from\x18\x01 \x01(\t\x12\x0f\n\x07\x64\x61te_to\x18\x02 \x01(\t\"$\n\x0e\x46ixtureRequest\x12\x12\n\nfixture_id\x18\x01 \x01(\x03\"\xb0\x02\n\x07\x46ixture\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x31\n\x0b\x63ompetition\x18\x02 \x01(\x0b\x32\x1c.statistico_data.Competition\x12\'\n\x06season\x18\x03 \x01(\x0b\x32\x17.statistico_data.Season\x12(\n\thome_team\x18\x04 \x01(\x0b\x32\x15.statistico_data.Team\x12(\n\taway_team\x18\x05 \x01(\x0b\x32\x15.statistico_data.Team\x12%\n\x05venue\x18\x06 \x01(\x0b\x32\x16.statistico_data.Venue\x12/\n\nreferee_id\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\tdate_time\x18\x08 \x01(\x03\x32\xad\x01\n\x0e\x46ixtureService\x12O\n\x0cListFixtures\x12!.statistico_data.DateRangeRequest\x1a\x18.statistico_data.Fixture\"\x00\x30\x01\x12J\n\x0b\x46ixtureByID\x12\x1f.statistico_data.FixtureRequest\x1a\x18.statistico_data.Fixture\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n$app/grpc/proto/fixture/fixture.proto\x12\x07\x66ixture\x1a\x1egoogle/protobuf/wrappers.proto\x1a,app/grpc/proto/competition/competition.proto\x1a\"app/grpc/proto/season/season.proto\x1a\x1e\x61pp/grpc/proto/team/team.proto\x1a app/grpc/proto/venue/venue.proto\"6\n\x10\x44\x61teRangeRequest\x12\x11\n\tdate_from\x18\x01 \x01(\t\x12\x0f\n\x07\x64\x61te_to\x18\x02 \x01(\t\"$\n\x0e\x46ixtureRequest\x12\x12\n\nfixture_id\x18\x01 \x01(\x03\"\x83\x02\n\x07\x46ixture\x12\n\n\x02id\x18\x01 \x01(\x03\x12-\n\x0b\x63ompetition\x18\x02 \x01(\x0b\x32\x18.competition.Competition\x12\x1e\n\x06season\x18\x03 \x01(\x0b\x32\x0e.season.Season\x12\x1d\n\thome_team\x18\x04 \x01(\x0b\x32\n.team.Team\x12\x1d\n\taway_team\x18\x05 \x01(\x0b\x32\n.team.Team\x12\x1b\n\x05venue\x18\x06 \x01(\x0b\x32\x0c.venue.Venue\x12/\n\nreferee_id\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\tdate_time\x18\x08 \x01(\x03\x32\x8d\x01\n\x0e\x46ixtureService\x12?\n\x0cListFixtures\x12\x19.fixture.DateRangeRequest\x1a\x10.fixture.Fixture\"\x00\x30\x01\x12:\n\x0b\x46ixtureByID\x12\x17.fixture.FixtureRequest\x1a\x10.fixture.Fixture\"\x00\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,app_dot_grpc_dot_proto_dot_competition_dot_competition__pb2.DESCRIPTOR,app_dot_grpc_dot_proto_dot_season_dot_season__pb2.DESCRIPTOR,app_dot_grpc_dot_proto_dot_team_dot_team__pb2.DESCRIPTOR,app_dot_grpc_dot_proto_dot_venue_dot_venue__pb2.DESCRIPTOR,])
 
@@ -33,20 +33,20 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _DATERANGEREQUEST = _descriptor.Descriptor(
   name='DateRangeRequest',
-  full_name='statistico_data.DateRangeRequest',
+  full_name='fixture.DateRangeRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='date_from', full_name='statistico_data.DateRangeRequest.date_from', index=0,
+      name='date_from', full_name='fixture.DateRangeRequest.date_from', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='date_to', full_name='statistico_data.DateRangeRequest.date_to', index=1,
+      name='date_to', full_name='fixture.DateRangeRequest.date_to', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -64,20 +64,20 @@ _DATERANGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=237,
-  serialized_end=291,
+  serialized_start=229,
+  serialized_end=283,
 )
 
 
 _FIXTUREREQUEST = _descriptor.Descriptor(
   name='FixtureRequest',
-  full_name='statistico_data.FixtureRequest',
+  full_name='fixture.FixtureRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='fixture_id', full_name='statistico_data.FixtureRequest.fixture_id', index=0,
+      name='fixture_id', full_name='fixture.FixtureRequest.fixture_id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -95,69 +95,69 @@ _FIXTUREREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=293,
-  serialized_end=329,
+  serialized_start=285,
+  serialized_end=321,
 )
 
 
 _FIXTURE = _descriptor.Descriptor(
   name='Fixture',
-  full_name='statistico_data.Fixture',
+  full_name='fixture.Fixture',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='statistico_data.Fixture.id', index=0,
+      name='id', full_name='fixture.Fixture.id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='competition', full_name='statistico_data.Fixture.competition', index=1,
+      name='competition', full_name='fixture.Fixture.competition', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='season', full_name='statistico_data.Fixture.season', index=2,
+      name='season', full_name='fixture.Fixture.season', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='home_team', full_name='statistico_data.Fixture.home_team', index=3,
+      name='home_team', full_name='fixture.Fixture.home_team', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='away_team', full_name='statistico_data.Fixture.away_team', index=4,
+      name='away_team', full_name='fixture.Fixture.away_team', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='venue', full_name='statistico_data.Fixture.venue', index=5,
+      name='venue', full_name='fixture.Fixture.venue', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='referee_id', full_name='statistico_data.Fixture.referee_id', index=6,
+      name='referee_id', full_name='fixture.Fixture.referee_id', index=6,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='date_time', full_name='statistico_data.Fixture.date_time', index=7,
+      name='date_time', full_name='fixture.Fixture.date_time', index=7,
       number=8, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -175,8 +175,8 @@ _FIXTURE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=636,
+  serialized_start=324,
+  serialized_end=583,
 )
 
 _FIXTURE.fields_by_name['competition'].message_type = app_dot_grpc_dot_proto_dot_competition_dot_competition__pb2._COMPETITION
@@ -193,21 +193,21 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 DateRangeRequest = _reflection.GeneratedProtocolMessageType('DateRangeRequest', (_message.Message,), dict(
   DESCRIPTOR = _DATERANGEREQUEST,
   __module__ = 'app.grpc.proto.fixture.fixture_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.DateRangeRequest)
+  # @@protoc_insertion_point(class_scope:fixture.DateRangeRequest)
   ))
 _sym_db.RegisterMessage(DateRangeRequest)
 
 FixtureRequest = _reflection.GeneratedProtocolMessageType('FixtureRequest', (_message.Message,), dict(
   DESCRIPTOR = _FIXTUREREQUEST,
   __module__ = 'app.grpc.proto.fixture.fixture_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.FixtureRequest)
+  # @@protoc_insertion_point(class_scope:fixture.FixtureRequest)
   ))
 _sym_db.RegisterMessage(FixtureRequest)
 
 Fixture = _reflection.GeneratedProtocolMessageType('Fixture', (_message.Message,), dict(
   DESCRIPTOR = _FIXTURE,
   __module__ = 'app.grpc.proto.fixture.fixture_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.Fixture)
+  # @@protoc_insertion_point(class_scope:fixture.Fixture)
   ))
 _sym_db.RegisterMessage(Fixture)
 
@@ -215,16 +215,16 @@ _sym_db.RegisterMessage(Fixture)
 
 _FIXTURESERVICE = _descriptor.ServiceDescriptor(
   name='FixtureService',
-  full_name='statistico_data.FixtureService',
+  full_name='fixture.FixtureService',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=639,
-  serialized_end=812,
+  serialized_start=586,
+  serialized_end=727,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListFixtures',
-    full_name='statistico_data.FixtureService.ListFixtures',
+    full_name='fixture.FixtureService.ListFixtures',
     index=0,
     containing_service=None,
     input_type=_DATERANGEREQUEST,
@@ -233,7 +233,7 @@ _FIXTURESERVICE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='FixtureByID',
-    full_name='statistico_data.FixtureService.FixtureByID',
+    full_name='fixture.FixtureService.FixtureByID',
     index=1,
     containing_service=None,
     input_type=_FIXTUREREQUEST,

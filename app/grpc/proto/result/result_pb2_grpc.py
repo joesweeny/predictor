@@ -14,8 +14,18 @@ class ResultServiceStub(object):
     Args:
       channel: A grpc.Channel.
     """
+    self.GetHistoricalResultsForFixture = channel.unary_stream(
+        '/result.ResultService/GetHistoricalResultsForFixture',
+        request_serializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.HistoricalResultRequest.SerializeToString,
+        response_deserializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.Result.FromString,
+        )
+    self.GetResultsForSeason = channel.unary_stream(
+        '/result.ResultService/GetResultsForSeason',
+        request_serializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.SeasonRequest.SerializeToString,
+        response_deserializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.Result.FromString,
+        )
     self.GetResultsForTeam = channel.unary_stream(
-        '/statistico_data.ResultService/GetResultsForTeam',
+        '/result.ResultService/GetResultsForTeam',
         request_serializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.TeamRequest.SerializeToString,
         response_deserializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.Result.FromString,
         )
@@ -24,6 +34,20 @@ class ResultServiceStub(object):
 class ResultServiceServicer(object):
   # missing associated documentation comment in .proto file
   pass
+
+  def GetHistoricalResultsForFixture(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetResultsForSeason(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
 
   def GetResultsForTeam(self, request, context):
     # missing associated documentation comment in .proto file
@@ -35,6 +59,16 @@ class ResultServiceServicer(object):
 
 def add_ResultServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
+      'GetHistoricalResultsForFixture': grpc.unary_stream_rpc_method_handler(
+          servicer.GetHistoricalResultsForFixture,
+          request_deserializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.HistoricalResultRequest.FromString,
+          response_serializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.Result.SerializeToString,
+      ),
+      'GetResultsForSeason': grpc.unary_stream_rpc_method_handler(
+          servicer.GetResultsForSeason,
+          request_deserializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.SeasonRequest.FromString,
+          response_serializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.Result.SerializeToString,
+      ),
       'GetResultsForTeam': grpc.unary_stream_rpc_method_handler(
           servicer.GetResultsForTeam,
           request_deserializer=app_dot_grpc_dot_proto_dot_result_dot_result__pb2.TeamRequest.FromString,
@@ -42,5 +76,5 @@ def add_ResultServiceServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'statistico_data.ResultService', rpc_method_handlers)
+      'result.ResultService', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

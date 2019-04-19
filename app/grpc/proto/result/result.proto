@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package statistico_data;
+package result;
 
 import "google/protobuf/wrappers.proto";
 import "app/grpc/proto/competition/competition.proto";
@@ -9,7 +9,26 @@ import "app/grpc/proto/team/team.proto";
 import "app/grpc/proto/venue/venue.proto";
 
 service ResultService {
+    rpc GetHistoricalResultsForFixture(HistoricalResultRequest) returns (stream Result) {}
+    rpc GetResultsForSeason(SeasonRequest) returns (stream Result) {}
     rpc GetResultsForTeam(TeamRequest) returns (stream Result) {}
+}
+
+message SeasonRequest {
+    // The Season ID that the Result set relates to
+    int64 season_id = 1;
+}
+
+message HistoricalResultRequest {
+    // The Home Team ID that the Result set relates to
+    uint64 home_team_id = 1;
+    // The Away Team ID that the Result set relates to
+    uint64 away_team_id = 2;
+    // The number of results to return
+    uint32 limit = 3;
+    // A filter to return Results before a specific date
+    // RFC3339 formatted string i.e "2006-01-02T15:04:05Z07:00"
+    string date_before = 4;
 }
 
 message TeamRequest {
@@ -25,17 +44,17 @@ message TeamRequest {
 
 message Result {
     int64 id = 1;
-    Competition competition = 2;
-    Season season = 3;
-    Venue venue = 4;
+    competition.Competition competition = 2;
+    season.Season season = 3;
+    venue.Venue venue = 4;
     google.protobuf.Int64Value referee_id = 5;
     int64 date_time = 6;
     MatchData match_data = 7;
 }
 
 message MatchData {
-    Team home_team = 1;
-    Team away_team = 2;
+    team.Team home_team = 1;
+    team.Team away_team = 2;
     MatchStats stats = 3;
 }
 

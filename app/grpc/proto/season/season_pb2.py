@@ -17,10 +17,10 @@ from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='app/grpc/proto/season/season.proto',
-  package='statistico_data',
+  package='season',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\"app/grpc/proto/season/season.proto\x12\x0fstatistico_data\x1a\x1egoogle/protobuf/wrappers.proto\"R\n\x06Season\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12.\n\nis_current\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValueb\x06proto3')
+  serialized_pb=_b('\n\"app/grpc/proto/season/season.proto\x12\x06season\x1a\x1egoogle/protobuf/wrappers.proto\"R\n\x06Season\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12.\n\nis_current\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValueb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -29,27 +29,27 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _SEASON = _descriptor.Descriptor(
   name='Season',
-  full_name='statistico_data.Season',
+  full_name='season.Season',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='statistico_data.Season.id', index=0,
+      name='id', full_name='season.Season.id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='name', full_name='statistico_data.Season.name', index=1,
+      name='name', full_name='season.Season.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='is_current', full_name='statistico_data.Season.is_current', index=2,
+      name='is_current', full_name='season.Season.is_current', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -67,8 +67,8 @@ _SEASON = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=87,
-  serialized_end=169,
+  serialized_start=78,
+  serialized_end=160,
 )
 
 _SEASON.fields_by_name['is_current'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
@@ -78,7 +78,7 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Season = _reflection.GeneratedProtocolMessageType('Season', (_message.Message,), dict(
   DESCRIPTOR = _SEASON,
   __module__ = 'app.grpc.proto.season.season_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.Season)
+  # @@protoc_insertion_point(class_scope:season.Season)
   ))
 _sym_db.RegisterMessage(Season)
 

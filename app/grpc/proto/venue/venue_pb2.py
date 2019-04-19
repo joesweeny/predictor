@@ -17,10 +17,10 @@ from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='app/grpc/proto/venue/venue.proto',
-  package='statistico_data',
+  package='venue',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n app/grpc/proto/venue/venue.proto\x12\x0fstatistico_data\x1a\x1egoogle/protobuf/wrappers.proto\"\\\n\x05Venue\x12\'\n\x02id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x04name\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueb\x06proto3')
+  serialized_pb=_b('\n app/grpc/proto/venue/venue.proto\x12\x05venue\x1a\x1egoogle/protobuf/wrappers.proto\"\\\n\x05Venue\x12\'\n\x02id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x04name\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -29,20 +29,20 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _VENUE = _descriptor.Descriptor(
   name='Venue',
-  full_name='statistico_data.Venue',
+  full_name='venue.Venue',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='statistico_data.Venue.id', index=0,
+      name='id', full_name='venue.Venue.id', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='name', full_name='statistico_data.Venue.name', index=1,
+      name='name', full_name='venue.Venue.name', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -60,8 +60,8 @@ _VENUE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=85,
-  serialized_end=177,
+  serialized_start=75,
+  serialized_end=167,
 )
 
 _VENUE.fields_by_name['id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
@@ -72,7 +72,7 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Venue = _reflection.GeneratedProtocolMessageType('Venue', (_message.Message,), dict(
   DESCRIPTOR = _VENUE,
   __module__ = 'app.grpc.proto.venue.venue_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.Venue)
+  # @@protoc_insertion_point(class_scope:venue.Venue)
   ))
 _sym_db.RegisterMessage(Venue)
 
