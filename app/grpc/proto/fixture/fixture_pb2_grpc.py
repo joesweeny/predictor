@@ -15,12 +15,12 @@ class FixtureServiceStub(object):
       channel: A grpc.Channel.
     """
     self.ListFixtures = channel.unary_stream(
-        '/statistico_data.FixtureService/ListFixtures',
+        '/fixture.FixtureService/ListFixtures',
         request_serializer=app_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.DateRangeRequest.SerializeToString,
         response_deserializer=app_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.Fixture.FromString,
         )
     self.FixtureByID = channel.unary_unary(
-        '/statistico_data.FixtureService/FixtureByID',
+        '/fixture.FixtureService/FixtureByID',
         request_serializer=app_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.FixtureRequest.SerializeToString,
         response_deserializer=app_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.Fixture.FromString,
         )
@@ -59,5 +59,5 @@ def add_FixtureServiceServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'statistico_data.FixtureService', rpc_method_handlers)
+      'fixture.FixtureService', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

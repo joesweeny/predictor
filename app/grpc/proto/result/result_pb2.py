@@ -21,39 +21,122 @@ from app.grpc.proto.venue import venue_pb2 as app_dot_grpc_dot_proto_dot_venue_d
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='app/grpc/proto/result/result.proto',
-  package='statistico_data',
+  package='result',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\"app/grpc/proto/result/result.proto\x12\x0fstatistico_data\x1a\x1egoogle/protobuf/wrappers.proto\x1a,app/grpc/proto/competition/competition.proto\x1a\"app/grpc/proto/season/season.proto\x1a\x1e\x61pp/grpc/proto/team/team.proto\x1a app/grpc/proto/venue/venue.proto\"_\n\x0bTeamRequest\x12\x0f\n\x07team_id\x18\x01 \x01(\x03\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x13\n\x0b\x64\x61te_before\x18\x03 \x01(\t\"\x8b\x02\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x31\n\x0b\x63ompetition\x18\x02 \x01(\x0b\x32\x1c.statistico_data.Competition\x12\'\n\x06season\x18\x03 \x01(\x0b\x32\x17.statistico_data.Season\x12%\n\x05venue\x18\x04 \x01(\x0b\x32\x16.statistico_data.Venue\x12/\n\nreferee_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\tdate_time\x18\x06 \x01(\x03\x12.\n\nmatch_data\x18\x07 \x01(\x0b\x32\x1a.statistico_data.MatchData\"\x8b\x01\n\tMatchData\x12(\n\thome_team\x18\x01 \x01(\x0b\x32\x15.statistico_data.Team\x12(\n\taway_team\x18\x02 \x01(\x0b\x32\x15.statistico_data.Team\x12*\n\x05stats\x18\x03 \x01(\x0b\x32\x1b.statistico_data.MatchStats\"\xfd\x06\n\nMatchStats\x12+\n\x05pitch\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0ehome_formation\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0e\x61way_formation\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12/\n\nhome_score\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\naway_score\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0ehome_pen_score\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0e\x61way_pen_score\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x35\n\x0fhalf_time_score\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x35\n\x0f\x66ull_time_score\x18\t \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x36\n\x10\x65xtra_time_score\x18\n \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x39\n\x14home_league_position\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x39\n\x14\x61way_league_position\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07minutes\x18\r \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07seconds\x18\x0e \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nadded_time\x18\x0f \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nextra_time\x18\x10 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x30\n\x0binjury_time\x18\x11 \x01(\x0b\x32\x1b.google.protobuf.Int32Value2_\n\rResultService\x12N\n\x11GetResultsForTeam\x12\x1c.statistico_data.TeamRequest\x1a\x17.statistico_data.Result\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\"app/grpc/proto/result/result.proto\x12\x06result\x1a\x1egoogle/protobuf/wrappers.proto\x1a,app/grpc/proto/competition/competition.proto\x1a\"app/grpc/proto/season/season.proto\x1a\x1e\x61pp/grpc/proto/team/team.proto\x1a app/grpc/proto/venue/venue.proto\"\"\n\rSeasonRequest\x12\x11\n\tseason_id\x18\x01 \x01(\x03\"i\n\x17HistoricalResultRequest\x12\x14\n\x0chome_team_id\x18\x01 \x01(\x04\x12\x14\n\x0c\x61way_team_id\x18\x02 \x01(\x04\x12\r\n\x05limit\x18\x03 \x01(\r\x12\x13\n\x0b\x64\x61te_before\x18\x04 \x01(\t\"_\n\x0bTeamRequest\x12\x0f\n\x07team_id\x18\x01 \x01(\x03\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x13\n\x0b\x64\x61te_before\x18\x03 \x01(\t\"\xeb\x01\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x03\x12-\n\x0b\x63ompetition\x18\x02 \x01(\x0b\x32\x18.competition.Competition\x12\x1e\n\x06season\x18\x03 \x01(\x0b\x32\x0e.season.Season\x12\x1b\n\x05venue\x18\x04 \x01(\x0b\x32\x0c.venue.Venue\x12/\n\nreferee_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\tdate_time\x18\x06 \x01(\x03\x12%\n\nmatch_data\x18\x07 \x01(\x0b\x32\x11.result.MatchData\"l\n\tMatchData\x12\x1d\n\thome_team\x18\x01 \x01(\x0b\x32\n.team.Team\x12\x1d\n\taway_team\x18\x02 \x01(\x0b\x32\n.team.Team\x12!\n\x05stats\x18\x03 \x01(\x0b\x32\x12.result.MatchStats\"\xfd\x06\n\nMatchStats\x12+\n\x05pitch\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0ehome_formation\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0e\x61way_formation\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12/\n\nhome_score\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\naway_score\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0ehome_pen_score\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0e\x61way_pen_score\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x35\n\x0fhalf_time_score\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x35\n\x0f\x66ull_time_score\x18\t \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x36\n\x10\x65xtra_time_score\x18\n \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x39\n\x14home_league_position\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x39\n\x14\x61way_league_position\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07minutes\x18\r \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07seconds\x18\x0e \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nadded_time\x18\x0f \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nextra_time\x18\x10 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x30\n\x0binjury_time\x18\x11 \x01(\x0b\x32\x1b.google.protobuf.Int32Value2\xe6\x01\n\rResultService\x12U\n\x1eGetHistoricalResultsForFixture\x12\x1f.result.HistoricalResultRequest\x1a\x0e.result.Result\"\x00\x30\x01\x12@\n\x13GetResultsForSeason\x12\x15.result.SeasonRequest\x1a\x0e.result.Result\"\x00\x30\x01\x12<\n\x11GetResultsForTeam\x12\x13.result.TeamRequest\x1a\x0e.result.Result\"\x00\x30\x01\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,app_dot_grpc_dot_proto_dot_competition_dot_competition__pb2.DESCRIPTOR,app_dot_grpc_dot_proto_dot_season_dot_season__pb2.DESCRIPTOR,app_dot_grpc_dot_proto_dot_team_dot_team__pb2.DESCRIPTOR,app_dot_grpc_dot_proto_dot_venue_dot_venue__pb2.DESCRIPTOR,])
 
 
 
 
-_TEAMREQUEST = _descriptor.Descriptor(
-  name='TeamRequest',
-  full_name='statistico_data.TeamRequest',
+_SEASONREQUEST = _descriptor.Descriptor(
+  name='SeasonRequest',
+  full_name='result.SeasonRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='team_id', full_name='statistico_data.TeamRequest.team_id', index=0,
+      name='season_id', full_name='result.SeasonRequest.season_id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=226,
+  serialized_end=260,
+)
+
+
+_HISTORICALRESULTREQUEST = _descriptor.Descriptor(
+  name='HistoricalResultRequest',
+  full_name='result.HistoricalResultRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='home_team_id', full_name='result.HistoricalResultRequest.home_team_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='away_team_id', full_name='result.HistoricalResultRequest.away_team_id', index=1,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='result.HistoricalResultRequest.limit', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='date_before', full_name='result.HistoricalResultRequest.date_before', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=262,
+  serialized_end=367,
+)
+
+
+_TEAMREQUEST = _descriptor.Descriptor(
+  name='TeamRequest',
+  full_name='result.TeamRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='team_id', full_name='result.TeamRequest.team_id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='statistico_data.TeamRequest.limit', index=1,
+      name='limit', full_name='result.TeamRequest.limit', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='date_before', full_name='statistico_data.TeamRequest.date_before', index=2,
+      name='date_before', full_name='result.TeamRequest.date_before', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -71,62 +154,62 @@ _TEAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=235,
-  serialized_end=330,
+  serialized_start=369,
+  serialized_end=464,
 )
 
 
 _RESULT = _descriptor.Descriptor(
   name='Result',
-  full_name='statistico_data.Result',
+  full_name='result.Result',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='statistico_data.Result.id', index=0,
+      name='id', full_name='result.Result.id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='competition', full_name='statistico_data.Result.competition', index=1,
+      name='competition', full_name='result.Result.competition', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='season', full_name='statistico_data.Result.season', index=2,
+      name='season', full_name='result.Result.season', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='venue', full_name='statistico_data.Result.venue', index=3,
+      name='venue', full_name='result.Result.venue', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='referee_id', full_name='statistico_data.Result.referee_id', index=4,
+      name='referee_id', full_name='result.Result.referee_id', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='date_time', full_name='statistico_data.Result.date_time', index=5,
+      name='date_time', full_name='result.Result.date_time', index=5,
       number=6, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='match_data', full_name='statistico_data.Result.match_data', index=6,
+      name='match_data', full_name='result.Result.match_data', index=6,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -144,34 +227,34 @@ _RESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=333,
-  serialized_end=600,
+  serialized_start=467,
+  serialized_end=702,
 )
 
 
 _MATCHDATA = _descriptor.Descriptor(
   name='MatchData',
-  full_name='statistico_data.MatchData',
+  full_name='result.MatchData',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='home_team', full_name='statistico_data.MatchData.home_team', index=0,
+      name='home_team', full_name='result.MatchData.home_team', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='away_team', full_name='statistico_data.MatchData.away_team', index=1,
+      name='away_team', full_name='result.MatchData.away_team', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='stats', full_name='statistico_data.MatchData.stats', index=2,
+      name='stats', full_name='result.MatchData.stats', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -189,132 +272,132 @@ _MATCHDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=603,
-  serialized_end=742,
+  serialized_start=704,
+  serialized_end=812,
 )
 
 
 _MATCHSTATS = _descriptor.Descriptor(
   name='MatchStats',
-  full_name='statistico_data.MatchStats',
+  full_name='result.MatchStats',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pitch', full_name='statistico_data.MatchStats.pitch', index=0,
+      name='pitch', full_name='result.MatchStats.pitch', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='home_formation', full_name='statistico_data.MatchStats.home_formation', index=1,
+      name='home_formation', full_name='result.MatchStats.home_formation', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='away_formation', full_name='statistico_data.MatchStats.away_formation', index=2,
+      name='away_formation', full_name='result.MatchStats.away_formation', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='home_score', full_name='statistico_data.MatchStats.home_score', index=3,
+      name='home_score', full_name='result.MatchStats.home_score', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='away_score', full_name='statistico_data.MatchStats.away_score', index=4,
+      name='away_score', full_name='result.MatchStats.away_score', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='home_pen_score', full_name='statistico_data.MatchStats.home_pen_score', index=5,
+      name='home_pen_score', full_name='result.MatchStats.home_pen_score', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='away_pen_score', full_name='statistico_data.MatchStats.away_pen_score', index=6,
+      name='away_pen_score', full_name='result.MatchStats.away_pen_score', index=6,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='half_time_score', full_name='statistico_data.MatchStats.half_time_score', index=7,
+      name='half_time_score', full_name='result.MatchStats.half_time_score', index=7,
       number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='full_time_score', full_name='statistico_data.MatchStats.full_time_score', index=8,
+      name='full_time_score', full_name='result.MatchStats.full_time_score', index=8,
       number=9, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='extra_time_score', full_name='statistico_data.MatchStats.extra_time_score', index=9,
+      name='extra_time_score', full_name='result.MatchStats.extra_time_score', index=9,
       number=10, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='home_league_position', full_name='statistico_data.MatchStats.home_league_position', index=10,
+      name='home_league_position', full_name='result.MatchStats.home_league_position', index=10,
       number=11, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='away_league_position', full_name='statistico_data.MatchStats.away_league_position', index=11,
+      name='away_league_position', full_name='result.MatchStats.away_league_position', index=11,
       number=12, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='minutes', full_name='statistico_data.MatchStats.minutes', index=12,
+      name='minutes', full_name='result.MatchStats.minutes', index=12,
       number=13, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='seconds', full_name='statistico_data.MatchStats.seconds', index=13,
+      name='seconds', full_name='result.MatchStats.seconds', index=13,
       number=14, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='added_time', full_name='statistico_data.MatchStats.added_time', index=14,
+      name='added_time', full_name='result.MatchStats.added_time', index=14,
       number=15, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='extra_time', full_name='statistico_data.MatchStats.extra_time', index=15,
+      name='extra_time', full_name='result.MatchStats.extra_time', index=15,
       number=16, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='injury_time', full_name='statistico_data.MatchStats.injury_time', index=16,
+      name='injury_time', full_name='result.MatchStats.injury_time', index=16,
       number=17, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -332,8 +415,8 @@ _MATCHSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=745,
-  serialized_end=1638,
+  serialized_start=815,
+  serialized_end=1708,
 )
 
 _TEAMREQUEST.fields_by_name['limit'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
@@ -362,37 +445,53 @@ _MATCHSTATS.fields_by_name['seconds'].message_type = google_dot_protobuf_dot_wra
 _MATCHSTATS.fields_by_name['added_time'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
 _MATCHSTATS.fields_by_name['extra_time'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
 _MATCHSTATS.fields_by_name['injury_time'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
+DESCRIPTOR.message_types_by_name['SeasonRequest'] = _SEASONREQUEST
+DESCRIPTOR.message_types_by_name['HistoricalResultRequest'] = _HISTORICALRESULTREQUEST
 DESCRIPTOR.message_types_by_name['TeamRequest'] = _TEAMREQUEST
 DESCRIPTOR.message_types_by_name['Result'] = _RESULT
 DESCRIPTOR.message_types_by_name['MatchData'] = _MATCHDATA
 DESCRIPTOR.message_types_by_name['MatchStats'] = _MATCHSTATS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
+SeasonRequest = _reflection.GeneratedProtocolMessageType('SeasonRequest', (_message.Message,), dict(
+  DESCRIPTOR = _SEASONREQUEST,
+  __module__ = 'app.grpc.proto.result.result_pb2'
+  # @@protoc_insertion_point(class_scope:result.SeasonRequest)
+  ))
+_sym_db.RegisterMessage(SeasonRequest)
+
+HistoricalResultRequest = _reflection.GeneratedProtocolMessageType('HistoricalResultRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HISTORICALRESULTREQUEST,
+  __module__ = 'app.grpc.proto.result.result_pb2'
+  # @@protoc_insertion_point(class_scope:result.HistoricalResultRequest)
+  ))
+_sym_db.RegisterMessage(HistoricalResultRequest)
+
 TeamRequest = _reflection.GeneratedProtocolMessageType('TeamRequest', (_message.Message,), dict(
   DESCRIPTOR = _TEAMREQUEST,
   __module__ = 'app.grpc.proto.result.result_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.TeamRequest)
+  # @@protoc_insertion_point(class_scope:result.TeamRequest)
   ))
 _sym_db.RegisterMessage(TeamRequest)
 
 Result = _reflection.GeneratedProtocolMessageType('Result', (_message.Message,), dict(
   DESCRIPTOR = _RESULT,
   __module__ = 'app.grpc.proto.result.result_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.Result)
+  # @@protoc_insertion_point(class_scope:result.Result)
   ))
 _sym_db.RegisterMessage(Result)
 
 MatchData = _reflection.GeneratedProtocolMessageType('MatchData', (_message.Message,), dict(
   DESCRIPTOR = _MATCHDATA,
   __module__ = 'app.grpc.proto.result.result_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.MatchData)
+  # @@protoc_insertion_point(class_scope:result.MatchData)
   ))
 _sym_db.RegisterMessage(MatchData)
 
 MatchStats = _reflection.GeneratedProtocolMessageType('MatchStats', (_message.Message,), dict(
   DESCRIPTOR = _MATCHSTATS,
   __module__ = 'app.grpc.proto.result.result_pb2'
-  # @@protoc_insertion_point(class_scope:statistico_data.MatchStats)
+  # @@protoc_insertion_point(class_scope:result.MatchStats)
   ))
 _sym_db.RegisterMessage(MatchStats)
 
@@ -400,17 +499,35 @@ _sym_db.RegisterMessage(MatchStats)
 
 _RESULTSERVICE = _descriptor.ServiceDescriptor(
   name='ResultService',
-  full_name='statistico_data.ResultService',
+  full_name='result.ResultService',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1640,
-  serialized_end=1735,
+  serialized_start=1711,
+  serialized_end=1941,
   methods=[
   _descriptor.MethodDescriptor(
-    name='GetResultsForTeam',
-    full_name='statistico_data.ResultService.GetResultsForTeam',
+    name='GetHistoricalResultsForFixture',
+    full_name='result.ResultService.GetHistoricalResultsForFixture',
     index=0,
+    containing_service=None,
+    input_type=_HISTORICALRESULTREQUEST,
+    output_type=_RESULT,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetResultsForSeason',
+    full_name='result.ResultService.GetResultsForSeason',
+    index=1,
+    containing_service=None,
+    input_type=_SEASONREQUEST,
+    output_type=_RESULT,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetResultsForTeam',
+    full_name='result.ResultService.GetResultsForTeam',
+    index=2,
     containing_service=None,
     input_type=_TEAMREQUEST,
     output_type=_RESULT,

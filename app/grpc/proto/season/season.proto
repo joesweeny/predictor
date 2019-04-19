@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package statistico_data;
+package season;
 
 import "google/protobuf/wrappers.proto";
 
