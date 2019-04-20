@@ -14,7 +14,14 @@ jobs:
       - run:
           name: Build Release Image
           command: |
-            docker-compose -f docker-compose.dev.yml up -d --build
+            pip3 install pipenv
+            pipenv install --system --deploy --ignore-pipfile
+            docker-compose -f docker-compose.build.yml up -d --build
+
+      - run:
+          name: Test Release Image
+          command: |
+            docker-compose -f docker-compose.build.yml run pipenv run flake8
 
       - deploy:
           name: Deploy
