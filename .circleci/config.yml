@@ -14,6 +14,7 @@ jobs:
       - run:
           name: Build Release Image
           command: |
+            sudo apt-get install python3.7.2
             pip3 install pipenv
             pipenv install --system --deploy --ignore-pipfile
             docker-compose -f docker-compose.build.yml up -d --build
