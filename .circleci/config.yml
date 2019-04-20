@@ -2,7 +2,8 @@ version: 2
 jobs:
   build:
     working_directory: ~/statistico-predictor
-    machine: true
+    machine:
+      image: circleci/classic:201808-01
 
     steps:
       - checkout
@@ -14,7 +15,15 @@ jobs:
       - run:
           name: Build Release Image
           command: |
-            docker-compose -f docker-compose.dev.yml up -d --build
+            pyenv global 3.7.0
+            pip3 install pipenv
+            pipenv install --system --deploy --ignore-pipfile
+            docker-compose -f docker-compose.build.yml up -d --build
+
+      - run:
+          name: Test Release Image
+          command: |
+            docker-compose -f docker-compose.build.yml run grpc pipenv run flake8
 
       - deploy:
           name: Deploy

@@ -11,7 +11,11 @@ class MatchGoalsAggregrator(object):
 
         results = []
 
-        for res in ResultClient().GetResultsForTeam(team_id=team_id, limit=limit, date_before=now.isoformat()):
+        for res in ResultClient().GetResultsForTeam(
+                team_id=team_id,
+                limit=limit,
+                date_before=now.isoformat()
+        ):
             results.append(self.__resultToRow(res))
 
         df = pd.DataFrame(results)
@@ -36,4 +40,3 @@ class MatchGoalsAggregrator(object):
             'Season ID': result.season.id,
         }
         return d
-

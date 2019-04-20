@@ -1,0 +1,3 @@
+#!/bin/bash
+
+bin/docker-dev run grpc pipenv run flake8
