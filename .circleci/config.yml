@@ -2,8 +2,7 @@ version: 2
 jobs:
   build:
     working_directory: ~/statistico-predictor
-    machine:
-      image: circleci/classic:201808-01
+    machine: true
 
     steps:
       - checkout
@@ -15,9 +14,7 @@ jobs:
       - run:
           name: Build Release Image
           command: |
-            pyenv global 3.7.0
-            pip3 install pipenv
-            pipenv install --system --deploy --ignore-pipfile
+            pyenv versions
             docker-compose -f docker-compose.build.yml up -d --build
 
       - run:
