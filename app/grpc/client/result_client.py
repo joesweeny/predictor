@@ -15,11 +15,21 @@ class ResultClient:
     def GetResultsForTeam(self, team_id, limit, date_before):
         client = self.__client()
         limit = wrappers_pb2.Int32Value(value=limit)
-        request = result_pb2.TeamRequest(team_id=team_id, limit=limit, date_before=date_before)
+        request = result_pb2.TeamRequest(
+            team_id=team_id,
+            limit=limit,
+            date_before=date_before
+        )
         for result in client.GetResultsForTeam(request):
             yield result
 
-    def GetHistoricalResultsForFixture(self, home_team_id, away_team_id, limit, date_before):
+    def GetHistoricalResultsForFixture(
+            self,
+            home_team_id,
+            away_team_id,
+            limit,
+            date_before
+    ):
         client = self.__client()
         request = result_pb2.HistoricalResultRequest(
             home_team_id=home_team_id,
