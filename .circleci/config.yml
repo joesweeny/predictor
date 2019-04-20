@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Test Release Image
           command: |
-            docker-compose -f docker-compose.build.yml run pipenv run flake8
+            docker-compose -f docker-compose.build.yml run grpc pipenv run flake8
 
       - deploy:
           name: Deploy
