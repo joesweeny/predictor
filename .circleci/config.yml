@@ -14,9 +14,6 @@ jobs:
       - run:
           name: Build Release Image
           command: |
-            pyenv global 3.5.2
-            pip3 install pipenv
-            pipenv install --system --deploy --ignore-pipfile
             docker-compose -f docker-compose.build.yml up -d --build
 
       - run:

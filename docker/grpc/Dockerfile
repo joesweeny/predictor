@@ -5,7 +5,7 @@ RUN apt-get update && pip install --upgrade pip
 COPY ./ ./opt
 
 RUN pip3 install pipenv
-RUN cd /opt && pipenv install --system --deploy --ignore-pipfile
+RUN cd /opt && pipenv install --dev --system --deploy --ignore-pipfile
 
 EXPOSE 50051
 WORKDIR /opt
