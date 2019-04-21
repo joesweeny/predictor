@@ -12,6 +12,3 @@ def cli():
 def hello(name):
     """Enter your name to receive a welcome message"""
     print(f"Hello {name} you are gorgeous")
-
-
-cli()
