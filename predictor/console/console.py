@@ -1,7 +1,17 @@
 import click
 
 
-@click.command()
+@click.group()
 def cli():
-    """Enter a name to receive a welcome message"""
-    click.echo('Hello Joe')
+    """Statistico Predictor Command Line Application"""
+    pass
+
+
+@cli.command()
+@click.argument('name')
+def hello(name):
+    """Enter your name to receive a welcome message"""
+    print(f"Hello {name} you are gorgeous")
+
+
+cli()
