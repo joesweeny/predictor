@@ -1,7 +1,7 @@
 import grpc
 import os
-from app.grpc.proto.result import result_pb2
-from app.grpc.proto.result import result_pb2_grpc
+from predictor.grpc.proto.result import result_pb2
+from predictor.grpc.proto.result import result_pb2_grpc
 from google.protobuf import wrappers_pb2
 
 

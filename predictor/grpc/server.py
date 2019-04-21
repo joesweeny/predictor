@@ -2,7 +2,7 @@ from concurrent import futures
 from grpc_reflection.v1alpha import reflection
 import time
 import grpc
-from app.grpc.proto.prediction import prediction_pb2_grpc, prediction_pb2
+from predictor.grpc.proto.prediction import prediction_pb2_grpc, prediction_pb2
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
