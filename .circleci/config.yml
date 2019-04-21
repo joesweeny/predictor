@@ -14,14 +14,13 @@ jobs:
       - run:
           name: Build Release Image
           command: |
-            pyenv global 3.5.2
-            pip3 install pipenv
-            pipenv install --system --deploy --ignore-pipfile
             docker-compose -f docker-compose.build.yml up -d --build
+            docker-compose -f docker-compose.build.yml run build pipenv install --system --deploy --ignore-pipfile
 
       - run:
           name: Test Release Image
           command: |
+            docker-compose -f docker-compose.build.yml run build pipenv install --dev --system --deploy --ignore-pipfile
             docker-compose -f docker-compose.build.yml run grpc pipenv run flake8
 
       - deploy:

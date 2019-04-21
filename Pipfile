@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+flake8 = "*"
 
 [packages]
 grpcio = "==1.18.0"
@@ -11,7 +12,6 @@ grpcio-tools = "==1.18.0"
 grpcio-reflection = "==1.18.0"
 python-dotenv = "*"
 pandas = "*"
-flake8 = "*"
 
 [requires]
 python_version = "3.7.1"
