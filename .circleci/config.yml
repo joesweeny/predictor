@@ -15,7 +15,7 @@ jobs:
           name: Build Release Image
           command: |
             docker-compose -f docker-compose.build.yml up -d --build
-            docker-compose -f docker-compose.build.yml run build pipenv install --system --deploy --ignore-pipfile
+            docker-compose -f docker-compose.build.yml run grpc pipenv install --system --deploy --ignore-pipfile
 
       - run:
           name: Test Release Image
