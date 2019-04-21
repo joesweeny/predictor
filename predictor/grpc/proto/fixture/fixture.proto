@@ -3,10 +3,10 @@ syntax = "proto3";
 package fixture;
 
 import "google/protobuf/wrappers.proto";
-import "app/grpc/proto/competition/competition.proto";
-import "app/grpc/proto/season/season.proto";
-import "app/grpc/proto/team/team.proto";
-import "app/grpc/proto/venue/venue.proto";
+import "predictor/grpc/proto/competition/competition.proto";
+import "predictor/grpc/proto/season/season.proto";
+import "predictor/grpc/proto/team/team.proto";
+import "predictor/grpc/proto/venue/venue.proto";
 
 service FixtureService {
     rpc ListFixtures(DateRangeRequest) returns (stream Fixture) {}

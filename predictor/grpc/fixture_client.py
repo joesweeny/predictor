@@ -1,7 +1,7 @@
 import grpc
 import os
-from app.grpc.proto.fixture import fixture_pb2
-from app.grpc.proto.fixture import fixture_pb2_grpc
+from predictor.grpc.proto.fixture import fixture_pb2
+from predictor.grpc.proto.fixture import fixture_pb2_grpc
 
 
 class FixtureClient:

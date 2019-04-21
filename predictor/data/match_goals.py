@@ -1,4 +1,4 @@
-from app.grpc.client.result_client import ResultClient
+from predictor.grpc.result_client import ResultClient
 from datetime import datetime, date, time
 import pandas as pd
 
