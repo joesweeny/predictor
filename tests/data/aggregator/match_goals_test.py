@@ -1,8 +1,9 @@
-import pandas as pd
+from predictor.data.aggregator.match_goals import MatchGoals
 
 
-class MatchGoals:
-    __columns = [
+def test_for_season_dataframe_columns():
+    df = MatchGoals().ForSeason()
+    columns = [
         'Match_ID',
         'Competition ID',
         'Season ID',
@@ -28,7 +29,6 @@ class MatchGoals:
         'Total Goals in Match',
     ]
 
-    def ForSeason(self):
-        df = pd.DataFrame(columns=self.__columns)
+    df_columns = df.columns
 
-        return df
+    assert (df_columns == columns).all()
