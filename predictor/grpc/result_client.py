@@ -1,11 +1,14 @@
 import grpc
-import os
 from predictor.grpc.proto.result import result_pb2
 from predictor.grpc.proto.result import result_pb2_grpc
 from google.protobuf import wrappers_pb2
 
 
 class ResultClient:
+    def __init__(self, host, port):
+        self.host = host
+        self.port = port
+
     def GetResultsForSeason(self, season_id):
         client = self.__client()
         request = result_pb2.SeasonRequest(season_id=season_id)
@@ -40,9 +43,7 @@ class ResultClient:
         for result in client.GetHistoricalResultsForFixture(request):
             yield result
 
-    @staticmethod
-    def __client():
-        data_server = os.getenv('DATA_SERVER_HOST')
-        channel = grpc.insecure_channel(data_server + ':50051')
+    def __client(self):
+        channel = grpc.insecure_channel(self.host + ':' + self.port)
         stub = result_pb2_grpc.ResultServiceStub(channel)
         return stub
