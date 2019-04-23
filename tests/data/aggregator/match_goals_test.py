@@ -1,20 +1,34 @@
+import pytest
 from predictor.data.aggregator.match_goals import MatchGoals
+from predictor.grpc.proto.competition import competition_pb2
+from predictor.grpc.proto.result import result_pb2
+from predictor.grpc.proto.season import season_pb2
+from predictor.grpc.proto.team import team_pb2
+from predictor.grpc.proto.venue import venue_pb2
+from predictor.grpc.result_client import ResultClient
+from mock import MagicMock
+from google.protobuf import wrappers_pb2
 
 
-def test_for_season_dataframe_columns():
-    df = MatchGoals().ForSeason()
+def test_for_season_dataframe_columns(mock_result_client, match_goals):
+    df = match_goals.ForSeason(5)
+
+    mock_result_client.GetResultsForSeason.assert_called_with(5)
+    mock_result_client.GetResultsForSeason.return_value = iter([])
+
     columns = [
-        'Match_ID',
-        'Competition ID',
-        'Season ID',
-        'Referee ID',
-        'Venue ID',
-        'Is Cup',
-        'Is Current Season',
-        'Date',
-        'Days Since Last Match',
+        'Match ID',
         'Home Team ID',
         'Away Team ID',
+        'Competition ID',
+        'Is Cup',
+        'Season ID',
+        'Is Current Season',
+        'Referee ID',
+        'Venue ID',
+        'Date',
+        'Home Days Since Last Match',
+        'Away Days Since Last Match',
         'Home League Position',
         'Away League Position',
         'Home Formation',
@@ -25,10 +39,85 @@ def test_for_season_dataframe_columns():
         'Away Avg Goals Conceded Last 20',
         'Home Goals in Lineup',
         'Away Goals in Lineup',
-        'Average Goals in Fixture',
+        'Average Goals for Fixture',
         'Total Goals in Match',
     ]
 
     df_columns = df.columns
 
     assert (df_columns == columns).all()
+
+
+def test_for_season_converts_result_object_into_dataframe_row(mock_result_client, match_goals):
+    df = match_goals.ForSeason(5)
+
+    mock_result_client.GetResultsForSeason.assert_called_with(5)
+    mock_result_client.GetResultsForSeason.return_value = [1, 2, 3]
+
+    expected = [
+        66,
+        7901,
+        496,
+        55,
+        False,
+        39910,
+        True,
+        3412,
+        88,
+        1556043338,
+        'Calculate Home Days',
+        'Calculate Away Days',
+        3,
+        15,
+        '4-4-2',
+        '5-3-1-1',
+        'Calculate Home Goals Scored',
+        'Calculate Away Goals Scored',
+        'Calculate Home Goals Conceded',
+        'Calculate Away Goals Conceded',
+        'Calculate Home Goals in Lineup',
+        'Calculate Away Goals in Lineup',
+        'Calculate Average Goals for Fixture',
+        4
+    ]
+
+    row = df.iloc[0, :].values.tolist()
+
+    assert row == expected
+
+
+@pytest.fixture
+def mock_result_client():
+    return MagicMock(spec=ResultClient)
+
+
+@pytest.fixture()
+def match_goals(mock_result_client):
+    return MatchGoals(mock_result_client)
+
+
+@pytest.fixture()
+def result():
+    result = result_pb2.Result()
+    result.id = 66
+
+    result.competition.id = 55
+    result.competition.is_cup.value = False
+
+    result.season.id = 39910
+    result.season.is_current.value = True
+
+    result.venue.id.value = 88
+    result.referee_id.value = 3412
+    result.date_time = 1556043338
+
+    result.match_data.home_team.id = 7901
+    result.match_data.away_team.id = 496
+    result.match_data.stats.home_formation.value = '4-4-2'
+    result.match_data.stats.away_formation.value = '5-3-1-1'
+    result.match_data.stats.home_league_position.value = 3
+    result.match_data.stats.away_league_position.value = 15
+    result.match_data.stats.home_score.value = 2
+    result.match_data.stats.away_score.value = 2
+
+    return result
