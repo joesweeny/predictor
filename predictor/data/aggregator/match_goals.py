@@ -1,6 +1,7 @@
 import pandas as pd
 from predictor.grpc.result_client import ResultClient
 from predictor.grpc.proto.result.result_pb2 import Result
+from predictor.data import calculator
 
 
 class MatchGoals:
@@ -42,7 +43,8 @@ class MatchGoals:
 
         return df
 
-    def __resultToRow(self, result: Result) -> dict:
+    @staticmethod
+    def __resultToRow(result: Result) -> dict:
         competition = result.competition
         season = result.season
         match_data = result.match_data
@@ -72,17 +74,7 @@ class MatchGoals:
             'Home Goals in Lineup': 'Calculate Home Goals in Lineup',
             'Away Goals in Lineup': 'Calculate Away Goals in Lineup',
             'Average Goals for Fixture': 'Calculate Average Goals for Fixture',
-            'Total Goals in Match': self.__calculateGoalsInMatch(
-                match_stats.home_score.value,
-                match_stats.away_score.value
-            ),
+            'Total Goals in Match': calculator.TotalGoals(match_stats),
         }
 
         return data
-
-    @staticmethod
-    def __calculateGoalsInMatch(home_goals, away_goals):
-        if home_goals is None or away_goals is None:
-            return
-
-        return home_goals + away_goals
