@@ -1,5 +1,6 @@
 import pandas as pd
 from predictor.grpc.result_client import ResultClient
+from predictor.grpc.proto.result.result_pb2 import Result
 
 
 class MatchGoals:
@@ -33,7 +34,7 @@ class MatchGoals:
         'Total Goals in Match',
     ]
 
-    def ForSeason(self, season_id):
+    def ForSeason(self, season_id: int) -> pd.DataFrame:
         df = pd.DataFrame(columns=self.__columns)
 
         for result in self.result_client.GetResultsForSeason(season_id):
@@ -41,7 +42,7 @@ class MatchGoals:
 
         return df
 
-    def __resultToRow(self, result):
+    def __resultToRow(self, result: Result) -> dict:
         competition = result.competition
         season = result.season
         match_data = result.match_data
