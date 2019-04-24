@@ -6,7 +6,8 @@ from predictor.grpc.result_client import ResultClient
 
 
 def test_for_season_dataframe_columns(mock_result_client, match_goals):
-    mock_result_client.GetResultsForSeason.return_value.__iter__.return_value = iter([])
+    value = mock_result_client.GetResultsForSeason.return_value
+    value.__iter__.return_value = iter([])
 
     df = match_goals.ForSeason(5)
 
@@ -44,8 +45,12 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
     assert (df_columns == columns).all()
 
 
-def test_for_season_converts_result_object_into_dataframe_row(mock_result_client, match_goals, result):
-    mock_result_client.GetResultsForSeason.return_value.__iter__.return_value = iter([result])
+def test_for_season_converts_result_object_into_dataframe_row(
+    mock_result_client,
+    match_goals, result
+):
+    value = mock_result_client.GetResultsForSeason.return_value
+    value.__iter__.return_value = iter([result])
 
     df = match_goals.ForSeason(5)
 
@@ -83,8 +88,13 @@ def test_for_season_converts_result_object_into_dataframe_row(mock_result_client
     assert row == expected
 
 
-def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(mock_result_client, match_goals, result):
-    mock_result_client.GetResultsForSeason.return_value.__iter__.return_value = iter([result, result, result])
+def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
+    mock_result_client,
+    match_goals,
+    result
+):
+    value = mock_result_client.GetResultsForSeason.return_value
+    value.__iter__.return_value = iter([result, result, result])
 
     df = match_goals.ForSeason(5)
 
