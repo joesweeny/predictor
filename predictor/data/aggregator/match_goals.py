@@ -74,7 +74,7 @@ class MatchGoals:
             'Home Goals in Lineup': 'Calculate Home Goals in Lineup',
             'Away Goals in Lineup': 'Calculate Away Goals in Lineup',
             'Average Goals for Fixture': 'Calculate Average Goals for Fixture',
-            'Total Goals in Match': calculator.TotalGoals(match_stats),
+            'Total Goals in Match': calculator.TotalGoalsForMatch(match_stats),
         }
 
         return data

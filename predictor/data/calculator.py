@@ -6,7 +6,7 @@ HOME_SCORE = 'home_score'
 AWAY_SCORE = 'away_score'
 
 
-def TotalGoals(stats: MatchStats) -> Optional[int]:
+def TotalGoalsForMatch(stats: MatchStats) -> Optional[int]:
     """
     Calculate the combined home and away goals for a given MatchStats data set
     """

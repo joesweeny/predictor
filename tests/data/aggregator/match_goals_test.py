@@ -47,7 +47,8 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
 
 def test_for_season_converts_result_object_into_dataframe_row(
     mock_result_client,
-    match_goals, result
+    match_goals,
+    result
 ):
     value = mock_result_client.GetResultsForSeason.return_value
     value.__iter__.return_value = iter([result])
