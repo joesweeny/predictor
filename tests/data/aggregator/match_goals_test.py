@@ -83,6 +83,16 @@ def test_for_season_converts_result_object_into_dataframe_row(mock_result_client
     assert row == expected
 
 
+def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(mock_result_client, match_goals, result):
+    mock_result_client.GetResultsForSeason.return_value.__iter__.return_value = iter([result, result, result])
+
+    df = match_goals.ForSeason(5)
+
+    mock_result_client.GetResultsForSeason.assert_called_with(5)
+
+    assert df.shape == (3, 24)
+
+
 @pytest.fixture
 def mock_result_client():
     return MagicMock(spec=ResultClient)
