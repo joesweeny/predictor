@@ -1,20 +1,16 @@
 import pytest
-from predictor.data.aggregator.match_goals import MatchGoals
-from predictor.grpc.proto.competition import competition_pb2
-from predictor.grpc.proto.result import result_pb2
-from predictor.grpc.proto.season import season_pb2
-from predictor.grpc.proto.team import team_pb2
-from predictor.grpc.proto.venue import venue_pb2
-from predictor.grpc.result_client import ResultClient
 from mock import MagicMock
-from google.protobuf import wrappers_pb2
+from predictor.data.aggregator.match_goals import MatchGoals
+from predictor.grpc.proto.result import result_pb2
+from predictor.grpc.result_client import ResultClient
 
 
 def test_for_season_dataframe_columns(mock_result_client, match_goals):
+    mock_result_client.GetResultsForSeason.return_value.__iter__.return_value = iter([])
+
     df = match_goals.ForSeason(5)
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
-    mock_result_client.GetResultsForSeason.return_value = iter([])
 
     columns = [
         'Match ID',
@@ -48,11 +44,12 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
     assert (df_columns == columns).all()
 
 
-def test_for_season_converts_result_object_into_dataframe_row(mock_result_client, match_goals):
+def test_for_season_converts_result_object_into_dataframe_row(mock_result_client, match_goals, result):
+    mock_result_client.GetResultsForSeason.return_value.__iter__.return_value = iter([result])
+
     df = match_goals.ForSeason(5)
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
-    mock_result_client.GetResultsForSeason.return_value = [1, 2, 3]
 
     expected = [
         66,

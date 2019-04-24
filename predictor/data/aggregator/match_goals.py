@@ -36,63 +36,34 @@ class MatchGoals:
     def ForSeason(self, season_id):
         df = pd.DataFrame(columns=self.__columns)
 
-        df = df.append(self.__resultToRow(), ignore_index=True)
-
         for result in self.result_client.GetResultsForSeason(season_id):
-            print(result)
+            df = df.append(self.__resultToRow(result), ignore_index=True)
 
         return df
 
-    def __resultToRow(self):
-        # competition = result.competition
-        # season = result.season
-        # match_data = result.match_data
-        # match_stats = match_data.stats
-
-        # data = [
-        #     result.id,
-        #     competition.id,
-        #     competition.is_cup.value,
-        #     season.id,
-        #     season.is_current.value,
-        #     result.referee_id.value,
-        #     result.venue.id.value,
-        #     result.date_time,
-        #     'Calculate Home Days',
-        #     'Calculate Away Days',
-        #     match_data.home_team.id,
-        #     match_data.away_team.id,
-        #     match_stats.home_league_position.value,
-        #     match_stats.away_league_position.value,
-        #     match_stats.home_formation.value,
-        #     match_stats.away_formation.value,
-        #     'Calculate Home Goals Scored',
-        #     'Calculate Away Goals Scored',
-        #     'Calculate Home Goals Conceded',
-        #     'Calculate Away Goals Conceded',
-        #     'Calculate Home Goals in Lineup',
-        #     'Calculate Away Goals in Lineup',
-        #     'Calculate Average Goals for Fixture',
-        #     self.__calculateGoalsInMatch(match_stats.home_score.value, match_stats.away_score.value)
-        # ]
+    def __resultToRow(self, result):
+        competition = result.competition
+        season = result.season
+        match_data = result.match_data
+        match_stats = match_data.stats
 
         data = {
-            'Match ID': 66,
-            'Home Team ID': 7901,
-            'Away Team ID': 496,
-            'Competition ID': 55,
-            'Is Cup': False,
-            'Season ID': 39910,
-            'Is Current Season': True,
-            'Referee ID': 3412,
-            'Venue ID': 88,
-            'Date': 1556043338,
+            'Match ID': result.id,
+            'Home Team ID': match_data.home_team.id,
+            'Away Team ID': match_data.away_team.id,
+            'Competition ID': competition.id,
+            'Is Cup': competition.is_cup.value,
+            'Season ID': season.id,
+            'Is Current Season': season.is_current.value,
+            'Referee ID': result.referee_id.value,
+            'Venue ID': result.venue.id.value,
+            'Date': result.date_time,
             'Home Days Since Last Match': 'Calculate Home Days',
             'Away Days Since Last Match': 'Calculate Away Days',
-            'Home League Position': 3,
-            'Away League Position': 15,
-            'Home Formation': '4-4-2',
-            'Away Formation': '5-3-1-1',
+            'Home League Position': match_stats.home_league_position.value,
+            'Away League Position': match_stats.away_league_position.value,
+            'Home Formation': match_stats.home_formation.value,
+            'Away Formation': match_stats.away_formation.value,
             'Home Avg Goals Scored Last 20': 'Calculate Home Goals Scored',
             'Home Avg Goals Conceded Last 20': 'Calculate Away Goals Scored',
             'Away Avg Goals Scored Last 20': 'Calculate Home Goals Conceded',
@@ -100,7 +71,10 @@ class MatchGoals:
             'Home Goals in Lineup': 'Calculate Home Goals in Lineup',
             'Away Goals in Lineup': 'Calculate Away Goals in Lineup',
             'Average Goals for Fixture': 'Calculate Average Goals for Fixture',
-            'Total Goals in Match': 4,
+            'Total Goals in Match': self.__calculateGoalsInMatch(
+                match_stats.home_score.value,
+                match_stats.away_score.value
+            ),
         }
 
         return data
