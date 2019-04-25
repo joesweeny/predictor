@@ -1,4 +1,5 @@
-from predictor.grpc.proto.result.result_pb2 import MatchStats
+from predictor.grpc.proto.result.result_pb2 import MatchStats, Result
+from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
 from predictor.data import calculator
 
 
@@ -29,3 +30,15 @@ def test_total_goals_can_handle_zero_values():
     stats.away_score.value = 0
 
     assert calculator.TotalGoalsForMatch(stats) == 0
+
+
+def test_days_since_last_match_returns_total_days_between_two_matches():
+    last = Result()
+    last.date_time = 1556209112
+
+    current = Fixture()
+    current.date_time = 1555891200
+
+    days = calculator.DaysSinceLastMatch(current, last)
+
+    assert days == 3
