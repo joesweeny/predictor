@@ -57,7 +57,17 @@ def test_for_season_converts_result_object_into_dataframe_row(
 
     mock_result_client.GetResultsForTeam.side_effect = [
         [home_past_result],
-        [away_past_result]
+        [away_past_result],
+        [
+            home_past_result,
+            home_past_result,
+            away_past_result,
+        ],
+        [
+            away_past_result,
+            away_past_result,
+            home_past_result,
+        ]
     ]
 
     df = match_goals.ForSeason(5)
@@ -81,9 +91,9 @@ def test_for_season_converts_result_object_into_dataframe_row(
         15,
         '4-4-2',
         '5-3-1-1',
-        'Calculate Home Goals Scored',
-        'Calculate Away Goals Scored',
+        4.33,
         'Calculate Home Goals Conceded',
+        1.33,
         'Calculate Away Goals Conceded',
         'Calculate Home Goals in Lineup',
         'Calculate Away Goals in Lineup',
@@ -107,6 +117,12 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
     value.__iter__.return_value = iter([result, result, result])
 
     mock_result_client.GetResultsForTeam.side_effect = [
+        [home_past_result],
+        [away_past_result],
+        [home_past_result],
+        [away_past_result],
+        [home_past_result],
+        [away_past_result],
         [home_past_result],
         [away_past_result],
         [home_past_result],
@@ -163,6 +179,10 @@ def result():
 def home_past_result():
     result = result_pb2.Result()
     result.date_time = 1555761600
+    result.match_data.home_team.id = 7901
+    result.match_data.away_team.id = 496
+    result.match_data.stats.home_score.value = 5
+    result.match_data.stats.away_score.value = 2
     return result
 
 
@@ -170,4 +190,8 @@ def home_past_result():
 def away_past_result():
     result = result_pb2.Result()
     result.date_time = 1555549200
+    result.match_data.home_team.id = 496
+    result.match_data.away_team.id = 7901
+    result.match_data.stats.home_score.value = 1
+    result.match_data.stats.away_score.value = 3
     return result
