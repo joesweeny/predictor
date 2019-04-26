@@ -1,3 +1,4 @@
+import pytest
 from predictor.grpc.proto.result.result_pb2 import MatchStats, Result
 from predictor.data import calculator
 
@@ -53,3 +54,42 @@ def test_days_between_results_casts_negative_days_to_positive():
     days = calculator.DaysBetweenResults(last, current)
 
     assert days == 3
+
+
+def test_average_goals_scored_by_team_returns_float(home_result, away_result):
+    results = [
+        home_result,
+        home_result,
+        home_result,
+        away_result,
+        home_result,
+        away_result,
+        away_result,
+        away_result,
+        home_result,
+    ]
+
+    assert calculator.AverageGoalsScoredByTeam(results, 7901) == 1.56
+    assert calculator.AverageGoalsScoredByTeam(results, 496) == 1.33
+
+
+@pytest.fixture()
+def home_result():
+    result = Result()
+    result.match_data.home_team.id = 7901
+    result.match_data.away_team.id = 496
+    result.match_data.stats.home_score.value = 2
+    result.match_data.stats.away_score.value = 0
+
+    return result
+
+
+@pytest.fixture()
+def away_result():
+    result = Result()
+    result.match_data.home_team.id = 496
+    result.match_data.away_team.id = 7901
+    result.match_data.stats.home_score.value = 3
+    result.match_data.stats.away_score.value = 1
+
+    return result

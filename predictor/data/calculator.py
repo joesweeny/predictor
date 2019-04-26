@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 from predictor.grpc.proto.result.result_pb2 import MatchStats, Result
 
@@ -36,3 +36,20 @@ def DaysBetweenResults(current: Result, previous: Result) -> int:
     days = (previous - current).days
 
     return abs(days)
+
+
+def AverageGoalsScoredByTeam(results: List[Result], team_id: int) -> float:
+    """
+    Calculate the average goals scored by a Team for a given set of Results
+    """
+    goals = []
+
+    for res in results:
+        match_data = res.match_data
+
+        if match_data.home_team.id == team_id:
+            goals.append(match_data.stats.home_score.value)
+        else:
+            goals.append(match_data.stats.away_score.value)
+
+    return round(sum(goals) / len(goals), 2)
