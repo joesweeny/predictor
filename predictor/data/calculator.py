@@ -24,13 +24,15 @@ def TotalGoalsForMatch(stats: MatchStats) -> Optional[int]:
     return home_goals + away_goals
 
 
-def DaysSinceLastMatch(current_match: Fixture, last_match: Result) -> int:
+def DaysBetweenResults(recent: Result, previous: Result) -> int:
     """
-    Calculate the total days between a Fixture and a previous Result
+    Calculate the total days between two Results
     """
-    last = datetime.utcfromtimestamp(last_match.date_time)
+    last = datetime.utcfromtimestamp(previous.date_time)
     last = last.replace(hour=0, minute=0, second=0, microsecond=0)
-    current = datetime.utcfromtimestamp(current_match.date_time)
+    current = datetime.utcfromtimestamp(recent.date_time)
     current = current.replace(hour=0, minute=0, second=0, microsecond=0)
 
-    return (last - current).days
+    days = (last - current).days
+
+    return abs(days)
