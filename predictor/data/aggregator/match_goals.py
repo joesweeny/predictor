@@ -91,7 +91,11 @@ class MatchGoals:
 
         return data
 
-    def __getPreviousResult(self, current_result: Result, team_id: int) -> Result:
+    def __getPreviousResult(
+            self,
+            current_result:
+            Result, team_id: int
+    ) -> Result:
         date = datetime.utcfromtimestamp(current_result.date_time).astimezone()
 
         results = self.result_client.GetResultsForTeam(

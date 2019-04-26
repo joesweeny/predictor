@@ -56,7 +56,10 @@ def test_for_season_converts_result_object_into_dataframe_row(
     value.__iter__.return_value = iter([result])
 
     past_result_value = mock_result_client.GetResultsForTeam.return_value
-    past_result_value.__iter__.return_value = iter([home_past_result, away_past_result])
+    past_result_value.__iter__.return_value = iter([
+        home_past_result,
+        away_past_result
+    ])
 
     df = match_goals.ForSeason(5)
 
