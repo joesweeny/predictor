@@ -69,11 +69,11 @@ class MatchGoals:
             'Date': result.date_time,
             'Home Days Since Last Match': calculator.DaysBetweenResults(
                 result,
-                self.__getPreviousResult(result, home_team.id),
+                self.__getPreviousResults(result, home_team.id, 1)[0],
             ),
             'Away Days Since Last Match': calculator.DaysBetweenResults(
                 result,
-                self.__getPreviousResult(result, away_team.id)
+                self.__getPreviousResults(result, away_team.id, 1)[0]
             ),
             'Home League Position': match_stats.home_league_position.value,
             'Away League Position': match_stats.away_league_position.value,
@@ -91,18 +91,18 @@ class MatchGoals:
 
         return data
 
-    def __getPreviousResult(
+    def __getPreviousResults(
             self,
-            current_result:
-            Result, team_id: int
+            current_result: Result,
+            team_id: int,
+            limit: int
     ) -> Result:
         date = datetime.utcfromtimestamp(current_result.date_time).astimezone()
 
         results = self.result_client.GetResultsForTeam(
             team_id=team_id,
-            limit=1,
+            limit=limit,
             date_before=date.isoformat()
         )
 
-        for res in results:
-            return res
+        return results[0:limit]
