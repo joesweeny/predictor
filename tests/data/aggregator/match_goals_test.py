@@ -46,11 +46,11 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
 
 
 def test_for_season_converts_result_object_into_dataframe_row(
-    mock_result_client,
-    match_goals,
-    result,
-    home_past_result,
-    away_past_result
+        mock_result_client,
+        match_goals,
+        result,
+        home_past_result,
+        away_past_result
 ):
     value = mock_result_client.GetResultsForSeason.return_value
     value.__iter__.return_value = iter([result])
@@ -95,12 +95,24 @@ def test_for_season_converts_result_object_into_dataframe_row(
 
 
 def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
-    mock_result_client,
-    match_goals,
-    result,
+        mock_result_client,
+        match_goals,
+        result,
+        home_past_result,
+        away_past_result
 ):
     value = mock_result_client.GetResultsForSeason.return_value
     value.__iter__.return_value = iter([result, result, result])
+
+    past_result_value = mock_result_client.GetResultsForTeam.return_value
+    past_result_value.__iter__.return_value = iter([
+        home_past_result,
+        away_past_result,
+        home_past_result,
+        away_past_result,
+        home_past_result,
+        away_past_result,
+    ])
 
     df = match_goals.ForSeason(5)
 
