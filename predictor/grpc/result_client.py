@@ -23,8 +23,13 @@ class ResultClient:
             limit=limit,
             date_before=date_before
         )
+
+        results = []
+
         for result in client.GetResultsForTeam(request):
-            yield result
+            results.append(result)
+
+        return results
 
     def GetHistoricalResultsForFixture(
             self,

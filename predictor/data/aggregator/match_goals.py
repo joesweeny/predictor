@@ -69,19 +69,25 @@ class MatchGoals:
             'Date': result.date_time,
             'Home Days Since Last Match': calculator.DaysBetweenResults(
                 result,
-                self.__getPreviousResult(result, home_team.id),
+                self.__getPreviousResults(result, home_team.id, 1)[0],
             ),
             'Away Days Since Last Match': calculator.DaysBetweenResults(
                 result,
-                self.__getPreviousResult(result, away_team.id)
+                self.__getPreviousResults(result, away_team.id, 1)[0]
             ),
             'Home League Position': match_stats.home_league_position.value,
             'Away League Position': match_stats.away_league_position.value,
             'Home Formation': match_stats.home_formation.value,
             'Away Formation': match_stats.away_formation.value,
-            'Home Avg Goals Scored Last 20': 'Calculate Home Goals Scored',
-            'Home Avg Goals Conceded Last 20': 'Calculate Away Goals Scored',
-            'Away Avg Goals Scored Last 20': 'Calculate Home Goals Conceded',
+            'Home Avg Goals Scored Last 20': calculator.AverageGoalsScoredByTeam(
+                self.__getPreviousResults(result, home_team.id, 20),
+                home_team.id
+            ),
+            'Home Avg Goals Conceded Last 20': 'Calculate Home Goals Conceded',
+            'Away Avg Goals Scored Last 20': calculator.AverageGoalsScoredByTeam(
+                self.__getPreviousResults(result, away_team.id, 20),
+                away_team.id
+            ),
             'Away Avg Goals Conceded Last 20': 'Calculate Away Goals Conceded',
             'Home Goals in Lineup': 'Calculate Home Goals in Lineup',
             'Away Goals in Lineup': 'Calculate Away Goals in Lineup',
@@ -91,18 +97,13 @@ class MatchGoals:
 
         return data
 
-    def __getPreviousResult(
-            self,
-            current_result:
-            Result, team_id: int
-    ) -> Result:
+    def __getPreviousResults(self, current_result: Result, team_id: int, limit: int):
         date = datetime.utcfromtimestamp(current_result.date_time).astimezone()
 
         results = self.result_client.GetResultsForTeam(
             team_id=team_id,
-            limit=1,
+            limit=limit,
             date_before=date.isoformat()
         )
 
-        for res in results:
-            return res
+        return results[0:limit]
