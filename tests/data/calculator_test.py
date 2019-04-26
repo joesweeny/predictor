@@ -1,5 +1,4 @@
 from predictor.grpc.proto.result.result_pb2 import MatchStats, Result
-from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
 from predictor.data import calculator
 
 
@@ -36,7 +35,7 @@ def test_days_between_results_returns_total_days_between_two_results():
     last = Result()
     last.date_time = 1556209112
 
-    current = Fixture()
+    current = Result()
     current.date_time = 1555891200
 
     days = calculator.DaysBetweenResults(current, last)
@@ -48,7 +47,7 @@ def test_days_between_results_casts_negative_days_to_positive():
     last = Result()
     last.date_time = 1556209112
 
-    current = Fixture()
+    current = Result()
     current.date_time = 1555891200
 
     days = calculator.DaysBetweenResults(last, current)
