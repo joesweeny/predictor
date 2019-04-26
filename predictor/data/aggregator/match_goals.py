@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 from predictor.grpc.result_client import ResultClient
 from predictor.grpc.proto.result.result_pb2 import Result
 from predictor.data import calculator
@@ -39,16 +40,21 @@ class MatchGoals:
         df = pd.DataFrame(columns=self.__columns)
 
         for result in self.result_client.GetResultsForSeason(season_id):
-            df = df.append(self.__resultToRow(result), ignore_index=True)
+            try:
+                df = df.append(self.__resultToRow(result), ignore_index=True)
+            except StopIteration:
+                """Log exception here"""
+                continue
 
         return df
 
-    @staticmethod
-    def __resultToRow(result: Result) -> dict:
+    def __resultToRow(self, result: Result) -> dict:
         competition = result.competition
         season = result.season
         match_data = result.match_data
         match_stats = match_data.stats
+        home_team = match_data.home_team
+        away_team = match_data.away_team
 
         data = {
             'Match ID': result.id,
@@ -61,8 +67,14 @@ class MatchGoals:
             'Referee ID': result.referee_id.value,
             'Venue ID': result.venue.id.value,
             'Date': result.date_time,
-            'Home Days Since Last Match': 'Calculate Home Days',
-            'Away Days Since Last Match': 'Calculate Away Days',
+            'Home Days Since Last Match': calculator.DaysBetweenResults(
+                result,
+                self.__getPreviousResult(result, home_team.id),
+            ),
+            'Away Days Since Last Match': calculator.DaysBetweenResults(
+                result,
+                self.__getPreviousResult(result, away_team.id)
+            ),
             'Home League Position': match_stats.home_league_position.value,
             'Away League Position': match_stats.away_league_position.value,
             'Home Formation': match_stats.home_formation.value,
@@ -78,3 +90,15 @@ class MatchGoals:
         }
 
         return data
+
+    def __getPreviousResult(self, current_result: Result, team_id: int) -> Result:
+        date = datetime.utcfromtimestamp(current_result.date_time).astimezone()
+
+        results = self.result_client.GetResultsForTeam(
+            team_id=team_id,
+            limit=1,
+            date_before=date.isoformat()
+        )
+
+        for res in results:
+            return res

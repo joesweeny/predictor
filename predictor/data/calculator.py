@@ -1,7 +1,6 @@
 from typing import Optional
 from datetime import datetime
 from predictor.grpc.proto.result.result_pb2 import MatchStats, Result
-from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
 
 
 HOME_SCORE = 'home_score'
@@ -24,15 +23,16 @@ def TotalGoalsForMatch(stats: MatchStats) -> Optional[int]:
     return home_goals + away_goals
 
 
-def DaysBetweenResults(recent: Result, previous: Result) -> int:
+def DaysBetweenResults(current: Result, previous: Result) -> int:
     """
     Calculate the total days between two Results
     """
-    last = datetime.utcfromtimestamp(previous.date_time)
-    last = last.replace(hour=0, minute=0, second=0, microsecond=0)
-    current = datetime.utcfromtimestamp(recent.date_time)
+    current = datetime.utcfromtimestamp(current.date_time)
     current = current.replace(hour=0, minute=0, second=0, microsecond=0)
 
-    days = (last - current).days
+    previous = datetime.utcfromtimestamp(previous.date_time)
+    previous = previous.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    days = (previous - current).days
 
     return abs(days)
