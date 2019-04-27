@@ -56,6 +56,9 @@ class MatchGoals:
         home_team = match_data.home_team
         away_team = match_data.away_team
 
+        home_previous_results = self.__getPreviousResults(result, home_team.id, 20)
+        away_previous_results = self.__getPreviousResults(result, away_team.id, 20)
+
         data = {
             'Match ID': result.id,
             'Home Team ID': match_data.home_team.id,
@@ -69,26 +72,32 @@ class MatchGoals:
             'Date': result.date_time,
             'Home Days Since Last Match': calculator.DaysBetweenResults(
                 result,
-                self.__getPreviousResults(result, home_team.id, 1)[0],
+                home_previous_results[0],
             ),
             'Away Days Since Last Match': calculator.DaysBetweenResults(
                 result,
-                self.__getPreviousResults(result, away_team.id, 1)[0]
+                away_previous_results[0]
             ),
             'Home League Position': match_stats.home_league_position.value,
             'Away League Position': match_stats.away_league_position.value,
             'Home Formation': match_stats.home_formation.value,
             'Away Formation': match_stats.away_formation.value,
             'Home Avg Goals Scored Last 20': calculator.AverageGoalsScoredByTeam(
-                self.__getPreviousResults(result, home_team.id, 20),
+                home_previous_results,
                 home_team.id
             ),
-            'Home Avg Goals Conceded Last 20': 'Calculate Home Goals Conceded',
+            'Home Avg Goals Conceded Last 20': calculator.AverageGoalsConcededByTeam(
+                home_previous_results,
+                home_team.id
+            ),
             'Away Avg Goals Scored Last 20': calculator.AverageGoalsScoredByTeam(
-                self.__getPreviousResults(result, away_team.id, 20),
+                away_previous_results,
                 away_team.id
             ),
-            'Away Avg Goals Conceded Last 20': 'Calculate Away Goals Conceded',
+            'Away Avg Goals Conceded Last 20': calculator.AverageGoalsConcededByTeam(
+                away_previous_results,
+                away_team.id
+            ),
             'Home Goals in Lineup': 'Calculate Home Goals in Lineup',
             'Away Goals in Lineup': 'Calculate Away Goals in Lineup',
             'Average Goals for Fixture': 'Calculate Average Goals for Fixture',
