@@ -56,8 +56,6 @@ def test_for_season_converts_result_object_into_dataframe_row(
     value.__iter__.return_value = iter([result])
 
     mock_result_client.GetResultsForTeam.side_effect = [
-        [home_past_result],
-        [away_past_result],
         [
             home_past_result,
             home_past_result,
@@ -92,9 +90,9 @@ def test_for_season_converts_result_object_into_dataframe_row(
         '4-4-2',
         '5-3-1-1',
         4.33,
-        'Calculate Home Goals Conceded',
+        1.67,
         1.33,
-        'Calculate Away Goals Conceded',
+        3.67,
         'Calculate Home Goals in Lineup',
         'Calculate Away Goals in Lineup',
         'Calculate Average Goals for Fixture',
@@ -128,7 +126,6 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
         [home_past_result],
         [away_past_result],
         [home_past_result],
-        [away_past_result],
     ]
 
     df = match_goals.ForSeason(5)

@@ -73,6 +73,23 @@ def test_average_goals_scored_by_team_returns_float(home_result, away_result):
     assert calculator.AverageGoalsScoredByTeam(results, 496) == 1.33
 
 
+def test_average_goals_conceded_by_team_returns_float(home_result, away_result):
+    results = [
+        home_result,
+        home_result,
+        home_result,
+        away_result,
+        home_result,
+        away_result,
+        away_result,
+        away_result,
+        home_result,
+    ]
+
+    assert calculator.AverageGoalsConcededByTeam(results, 7901) == 1.33
+    assert calculator.AverageGoalsConcededByTeam(results, 496) == 1.56
+
+
 @pytest.fixture()
 def home_result():
     result = Result()
