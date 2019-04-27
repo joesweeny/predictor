@@ -53,3 +53,20 @@ def AverageGoalsScoredByTeam(results: List[Result], team_id: int) -> float:
             goals.append(match_data.stats.away_score.value)
 
     return round(sum(goals) / len(goals), 2)
+
+
+def AverageGoalsConcededByTeam(results: List[Result], team_id: int) -> float:
+    """
+    Calculate the average goals conceded by a Team for a given set of Results
+    """
+    goals = []
+
+    for res in results:
+        match_data = res.match_data
+
+        if match_data.home_team.id == team_id:
+            goals.append(match_data.stats.away_score.value)
+        else:
+            goals.append(match_data.stats.home_score.value)
+
+    return round(sum(goals) / len(goals), 2)
