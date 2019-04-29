@@ -12,7 +12,9 @@ class MatchGoals:
     __columns = [
         'Match ID',
         'Home Team ID',
+        'Home Team Name',
         'Away Team ID',
+        'Away Team Name',
         'Competition ID',
         'Is Cup',
         'Season ID',
@@ -30,8 +32,6 @@ class MatchGoals:
         'Home Avg Goals Conceded Last 20',
         'Away Avg Goals Scored Last 20',
         'Away Avg Goals Conceded Last 20',
-        'Home Goals in Lineup',
-        'Away Goals in Lineup',
         'Average Goals for Fixture',
         'Total Goals in Match',
     ]
@@ -59,8 +59,10 @@ class MatchGoals:
 
         data = {
             'Match ID': result.id,
-            'Home Team ID': match_data.home_team.id,
-            'Away Team ID': match_data.away_team.id,
+            'Home Team ID': home_team.id,
+            'Home Team Name': home_team.name,
+            'Away Team ID': away_team.id,
+            'Away Team Name': away_team.name,
             'Competition ID': competition.id,
             'Is Cup': competition.is_cup.value,
             'Season ID': season.id,
@@ -96,8 +98,6 @@ class MatchGoals:
                 away_previous_results,
                 away_team.id
             ),
-            'Home Goals in Lineup': 'Calculate Home Goals in Lineup',
-            'Away Goals in Lineup': 'Calculate Away Goals in Lineup',
             'Average Goals for Fixture': calculator.AverageGoalsForResults(
                 historical_results
             ),
