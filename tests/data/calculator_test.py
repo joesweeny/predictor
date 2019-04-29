@@ -90,6 +90,40 @@ def test_average_goals_conceded_by_team_returns_float(home_result, away_result):
     assert calculator.AverageGoalsConcededByTeam(results, 496) == 1.56
 
 
+def test_average_goals_for_results_returns_float(home_result, away_result):
+    results = [
+        home_result,
+        away_result,
+        home_result,
+    ]
+
+    assert calculator.AverageGoalsForResults(results) == 2.67
+
+
+def test_average_goals_for_results_can_handle_results_without_goals_set(home_result):
+    results = [
+        home_result,
+        home_result,
+        Result(),
+    ]
+
+    assert calculator.AverageGoalsForResults(results) == 2.00
+
+
+def test_average_goals_for_results_can_handle_games_where_goals_are_zero():
+    result = Result()
+    result.match_data.stats.home_score.value = 0
+    result.match_data.stats.away_score.value = 0
+
+    results = [
+        result,
+        result,
+        result,
+    ]
+
+    assert calculator.AverageGoalsForResults(results) == 0.00
+
+
 @pytest.fixture()
 def home_result():
     result = Result()

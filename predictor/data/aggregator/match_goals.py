@@ -40,11 +40,7 @@ class MatchGoals:
         df = pd.DataFrame(columns=self.__columns)
 
         for result in self.result_client.GetResultsForSeason(season_id):
-            try:
-                df = df.append(self.__resultToRow(result), ignore_index=True)
-            except StopIteration:
-                """Log exception here"""
-                continue
+            df = df.append(self.__resultToRow(result), ignore_index=True)
 
         return df
 
@@ -58,6 +54,8 @@ class MatchGoals:
 
         home_previous_results = self.__getPreviousResults(result, home_team.id, 20)
         away_previous_results = self.__getPreviousResults(result, away_team.id, 20)
+
+        historical_results = self.__getHistoricalResults(result, 10)
 
         data = {
             'Match ID': result.id,
@@ -100,11 +98,28 @@ class MatchGoals:
             ),
             'Home Goals in Lineup': 'Calculate Home Goals in Lineup',
             'Away Goals in Lineup': 'Calculate Away Goals in Lineup',
-            'Average Goals for Fixture': 'Calculate Average Goals for Fixture',
+            'Average Goals for Fixture': calculator.AverageGoalsForResults(
+                historical_results
+            ),
             'Total Goals in Match': calculator.TotalGoalsForMatch(match_stats),
         }
 
         return data
+
+    def __getHistoricalResults(self, current_result: Result, limit: int):
+        date = datetime.utcfromtimestamp(current_result.date_time).astimezone()
+
+        home_team = current_result.match_data.home_team
+        away_team = current_result.match_data.away_team
+
+        results = self.result_client.GetHistoricalResultsForFixture(
+            home_team_id=home_team.id,
+            away_team_id=away_team.id,
+            date_before=date.isoformat(),
+            limit=limit
+        )
+
+        return results[0:limit]
 
     def __getPreviousResults(self, current_result: Result, team_id: int, limit: int):
         date = datetime.utcfromtimestamp(current_result.date_time).astimezone()
