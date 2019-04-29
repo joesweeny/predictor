@@ -40,11 +40,7 @@ class MatchGoals:
         df = pd.DataFrame(columns=self.__columns)
 
         for result in self.result_client.GetResultsForSeason(season_id):
-            try:
-                df = df.append(self.__resultToRow(result), ignore_index=True)
-            except StopIteration:
-                """Log exception here"""
-                continue
+            df = df.append(self.__resultToRow(result), ignore_index=True)
 
         return df
 
