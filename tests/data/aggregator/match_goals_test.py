@@ -16,7 +16,9 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
     columns = [
         'Match ID',
         'Home Team ID',
+        'Home Team Name',
         'Away Team ID',
+        'Away Team Name',
         'Competition ID',
         'Is Cup',
         'Season ID',
@@ -34,8 +36,6 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
         'Home Avg Goals Conceded Last 20',
         'Away Avg Goals Scored Last 20',
         'Away Avg Goals Conceded Last 20',
-        'Home Goals in Lineup',
-        'Away Goals in Lineup',
         'Average Goals for Fixture',
         'Total Goals in Match',
     ]
@@ -83,7 +83,9 @@ def test_for_season_converts_result_object_into_dataframe_row(
     expected = [
         66,
         7901,
+        'West Ham United',
         496,
+        'Tottenham Hotspur',
         55,
         False,
         39910,
@@ -101,8 +103,6 @@ def test_for_season_converts_result_object_into_dataframe_row(
         1.67,
         1.33,
         3.67,
-        'Calculate Home Goals in Lineup',
-        'Calculate Away Goals in Lineup',
         6.00,
         4
     ]
@@ -187,7 +187,9 @@ def result():
     result.date_time = 1556043338
 
     result.match_data.home_team.id = 7901
+    result.match_data.home_team.name = 'West Ham United'
     result.match_data.away_team.id = 496
+    result.match_data.away_team.name = 'Tottenham Hotspur'
     result.match_data.stats.home_formation.value = '4-4-2'
     result.match_data.stats.away_formation.value = '5-3-1-1'
     result.match_data.stats.home_league_position.value = 3
@@ -203,7 +205,9 @@ def home_past_result():
     result = result_pb2.Result()
     result.date_time = 1555761600
     result.match_data.home_team.id = 7901
+    result.match_data.home_team.name = 'West Ham United'
     result.match_data.away_team.id = 496
+    result.match_data.away_team.name = 'Tottenham Hotspur'
     result.match_data.stats.home_score.value = 5
     result.match_data.stats.away_score.value = 2
     return result
@@ -214,7 +218,9 @@ def away_past_result():
     result = result_pb2.Result()
     result.date_time = 1555549200
     result.match_data.home_team.id = 496
+    result.match_data.home_team.name = 'Manchester City'
     result.match_data.away_team.id = 7901
+    result.match_data.away_team.name = 'Liverpool'
     result.match_data.stats.home_score.value = 1
     result.match_data.stats.away_score.value = 3
     return result
