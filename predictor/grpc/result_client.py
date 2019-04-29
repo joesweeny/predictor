@@ -45,8 +45,13 @@ class ResultClient:
             limit=limit,
             date_before=date_before
         )
+
+        results = []
+
         for result in client.GetHistoricalResultsForFixture(request):
-            yield result
+            results.append(result)
+
+        return results
 
     def __client(self):
         channel = grpc.insecure_channel(self.host + ':' + self.port)
