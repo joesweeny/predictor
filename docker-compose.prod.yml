@@ -5,4 +5,7 @@ services:
       image: joesweeny/statisticopredictor_grpc:$RELEASE
       ports:
         - "50051:50051"
+      environment:
+        DATA_SERVER_HOST: $DATA_SERVER_HOST
+        DATA_SERVER_PORT: $DATA_SERVER_PORT
       tty: true

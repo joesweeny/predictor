@@ -124,6 +124,10 @@ def test_average_goals_for_results_can_handle_games_where_goals_are_zero():
     assert calculator.AverageGoalsForResults(results) == 0.00
 
 
+def test_average_goals_for_results_can_handle_results_can_do_not_contain_goals():
+    assert calculator.AverageGoalsForResults([Result()]) is None
+
+
 @pytest.fixture()
 def home_result():
     result = Result()

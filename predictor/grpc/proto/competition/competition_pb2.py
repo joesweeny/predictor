@@ -19,8 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='predictor/grpc/proto/competition/competition.proto',
   package='competition',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n2predictor/grpc/proto/competition/competition.proto\x12\x0b\x63ompetition\x1a\x1egoogle/protobuf/wrappers.proto\"S\n\x0b\x43ompetition\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12*\n\x06is_cup\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValueb\x06proto3')
+  serialized_options=_b('Z@github.com/statistico/statistico-data/internal/proto/competition'),
+  serialized_pb=_b('\n2predictor/grpc/proto/competition/competition.proto\x12\x0b\x63ompetition\x1a\x1egoogle/protobuf/wrappers.proto\"S\n\x0b\x43ompetition\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12*\n\x06is_cup\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValueBBZ@github.com/statistico/statistico-data/internal/proto/competitionb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -83,4 +83,5 @@ Competition = _reflection.GeneratedProtocolMessageType('Competition', (_message.
 _sym_db.RegisterMessage(Competition)
 
 
+DESCRIPTOR._options = None
 # @@protoc_insertion_point(module_scope)

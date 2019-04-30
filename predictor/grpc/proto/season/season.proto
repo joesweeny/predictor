@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = "github.com/statistico/statistico-data/internal/proto/season";
+
 package season;
 
 import "google/protobuf/wrappers.proto";

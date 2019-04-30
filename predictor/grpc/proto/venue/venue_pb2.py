@@ -19,8 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='predictor/grpc/proto/venue/venue.proto',
   package='venue',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n&predictor/grpc/proto/venue/venue.proto\x12\x05venue\x1a\x1egoogle/protobuf/wrappers.proto\"\\\n\x05Venue\x12\'\n\x02id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x04name\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueb\x06proto3')
+  serialized_options=_b('Z:github.com/statistico/statistico-data/internal/proto/venue'),
+  serialized_pb=_b('\n&predictor/grpc/proto/venue/venue.proto\x12\x05venue\x1a\x1egoogle/protobuf/wrappers.proto\"\\\n\x05Venue\x12\'\n\x02id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x04name\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueB<Z:github.com/statistico/statistico-data/internal/proto/venueb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -77,4 +77,5 @@ Venue = _reflection.GeneratedProtocolMessageType('Venue', (_message.Message,), d
 _sym_db.RegisterMessage(Venue)
 
 
+DESCRIPTOR._options = None
 # @@protoc_insertion_point(module_scope)

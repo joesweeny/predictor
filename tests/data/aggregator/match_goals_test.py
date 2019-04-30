@@ -20,6 +20,7 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
         'Away Team ID',
         'Away Team Name',
         'Competition ID',
+        'Round',
         'Is Cup',
         'Season ID',
         'Is Current Season',
@@ -87,6 +88,7 @@ def test_for_season_converts_result_object_into_dataframe_row(
         496,
         'Tottenham Hotspur',
         55,
+        '4',
         False,
         39910,
         True,
@@ -158,7 +160,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
 
-    assert df.shape == (3, 24)
+    assert df.shape == (3, 25)
 
 
 @pytest.fixture
@@ -178,6 +180,8 @@ def result():
 
     result.competition.id = 55
     result.competition.is_cup.value = False
+
+    result.round.name = '4'
 
     result.season.id = 39910
     result.season.is_current.value = True

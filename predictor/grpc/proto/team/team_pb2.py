@@ -18,8 +18,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='predictor/grpc/proto/team/team.proto',
   package='team',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n$predictor/grpc/proto/team/team.proto\x12\x04team\" \n\x04Team\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\tb\x06proto3')
+  serialized_options=_b('Z9github.com/statistico/statistico-data/internal/proto/team'),
+  serialized_pb=_b('\n$predictor/grpc/proto/team/team.proto\x12\x04team\" \n\x04Team\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\tB;Z9github.com/statistico/statistico-data/internal/proto/teamb\x06proto3')
 )
 
 
@@ -73,4 +73,5 @@ Team = _reflection.GeneratedProtocolMessageType('Team', (_message.Message,), dic
 _sym_db.RegisterMessage(Team)
 
 
+DESCRIPTOR._options = None
 # @@protoc_insertion_point(module_scope)
