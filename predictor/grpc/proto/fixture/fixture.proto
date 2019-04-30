@@ -1,9 +1,12 @@
 syntax = "proto3";
 
+option go_package = "github.com/statistico/statistico-data/internal/proto/fixture";
+
 package fixture;
 
 import "google/protobuf/wrappers.proto";
 import "predictor/grpc/proto/competition/competition.proto";
+import "predictor/grpc/proto/round/round.proto";
 import "predictor/grpc/proto/season/season.proto";
 import "predictor/grpc/proto/team/team.proto";
 import "predictor/grpc/proto/venue/venue.proto";
@@ -29,9 +32,10 @@ message Fixture {
     int64 id = 1;
     competition.Competition competition = 2;
     season.Season season = 3;
-    team.Team home_team = 4;
-    team.Team away_team = 5;
-    venue.Venue venue = 6;
-    google.protobuf.Int64Value referee_id = 7;
-    int64 date_time = 8;
+    round.Round round = 4;
+    team.Team home_team = 5;
+    team.Team away_team = 6;
+    venue.Venue venue = 7;
+    google.protobuf.Int64Value referee_id = 8;
+    int64 date_time = 9;
 }

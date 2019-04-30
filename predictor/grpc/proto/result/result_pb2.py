@@ -14,6 +14,7 @@ _sym_db = _symbol_database.Default()
 
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from predictor.grpc.proto.competition import competition_pb2 as predictor_dot_grpc_dot_proto_dot_competition_dot_competition__pb2
+from predictor.grpc.proto.round import round_pb2 as predictor_dot_grpc_dot_proto_dot_round_dot_round__pb2
 from predictor.grpc.proto.season import season_pb2 as predictor_dot_grpc_dot_proto_dot_season_dot_season__pb2
 from predictor.grpc.proto.team import team_pb2 as predictor_dot_grpc_dot_proto_dot_team_dot_team__pb2
 from predictor.grpc.proto.venue import venue_pb2 as predictor_dot_grpc_dot_proto_dot_venue_dot_venue__pb2
@@ -23,12 +24,57 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='predictor/grpc/proto/result/result.proto',
   package='result',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n(predictor/grpc/proto/result/result.proto\x12\x06result\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x32predictor/grpc/proto/competition/competition.proto\x1a(predictor/grpc/proto/season/season.proto\x1a$predictor/grpc/proto/team/team.proto\x1a&predictor/grpc/proto/venue/venue.proto\"\"\n\rSeasonRequest\x12\x11\n\tseason_id\x18\x01 \x01(\x03\"i\n\x17HistoricalResultRequest\x12\x14\n\x0chome_team_id\x18\x01 \x01(\x04\x12\x14\n\x0c\x61way_team_id\x18\x02 \x01(\x04\x12\r\n\x05limit\x18\x03 \x01(\r\x12\x13\n\x0b\x64\x61te_before\x18\x04 \x01(\t\"_\n\x0bTeamRequest\x12\x0f\n\x07team_id\x18\x01 \x01(\x03\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x13\n\x0b\x64\x61te_before\x18\x03 \x01(\t\"\xeb\x01\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x03\x12-\n\x0b\x63ompetition\x18\x02 \x01(\x0b\x32\x18.competition.Competition\x12\x1e\n\x06season\x18\x03 \x01(\x0b\x32\x0e.season.Season\x12\x1b\n\x05venue\x18\x04 \x01(\x0b\x32\x0c.venue.Venue\x12/\n\nreferee_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\tdate_time\x18\x06 \x01(\x03\x12%\n\nmatch_data\x18\x07 \x01(\x0b\x32\x11.result.MatchData\"l\n\tMatchData\x12\x1d\n\thome_team\x18\x01 \x01(\x0b\x32\n.team.Team\x12\x1d\n\taway_team\x18\x02 \x01(\x0b\x32\n.team.Team\x12!\n\x05stats\x18\x03 \x01(\x0b\x32\x12.result.MatchStats\"\xfd\x06\n\nMatchStats\x12+\n\x05pitch\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0ehome_formation\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0e\x61way_formation\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12/\n\nhome_score\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\naway_score\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0ehome_pen_score\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0e\x61way_pen_score\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x35\n\x0fhalf_time_score\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x35\n\x0f\x66ull_time_score\x18\t \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x36\n\x10\x65xtra_time_score\x18\n \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x39\n\x14home_league_position\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x39\n\x14\x61way_league_position\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07minutes\x18\r \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07seconds\x18\x0e \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nadded_time\x18\x0f \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nextra_time\x18\x10 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x30\n\x0binjury_time\x18\x11 \x01(\x0b\x32\x1b.google.protobuf.Int32Value2\xe6\x01\n\rResultService\x12U\n\x1eGetHistoricalResultsForFixture\x12\x1f.result.HistoricalResultRequest\x1a\x0e.result.Result\"\x00\x30\x01\x12@\n\x13GetResultsForSeason\x12\x15.result.SeasonRequest\x1a\x0e.result.Result\"\x00\x30\x01\x12<\n\x11GetResultsForTeam\x12\x13.result.TeamRequest\x1a\x0e.result.Result\"\x00\x30\x01\x62\x06proto3')
+  serialized_options=_b('Z;github.com/statistico/statistico-data/internal/proto/result'),
+  serialized_pb=_b('\n(predictor/grpc/proto/result/result.proto\x12\x06result\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x32predictor/grpc/proto/competition/competition.proto\x1a&predictor/grpc/proto/round/round.proto\x1a(predictor/grpc/proto/season/season.proto\x1a$predictor/grpc/proto/team/team.proto\x1a&predictor/grpc/proto/venue/venue.proto\"_\n\x0bTeamRequest\x12\x0f\n\x07team_id\x18\x01 \x01(\x03\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x13\n\x0b\x64\x61te_before\x18\x03 \x01(\t\"\"\n\rSeasonRequest\x12\x11\n\tseason_id\x18\x01 \x01(\x03\"i\n\x17HistoricalResultRequest\x12\x14\n\x0chome_team_id\x18\x01 \x01(\x04\x12\x14\n\x0c\x61way_team_id\x18\x02 \x01(\x04\x12\r\n\x05limit\x18\x03 \x01(\r\x12\x13\n\x0b\x64\x61te_before\x18\x04 \x01(\t\"\x88\x02\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x03\x12-\n\x0b\x63ompetition\x18\x02 \x01(\x0b\x32\x18.competition.Competition\x12\x1e\n\x06season\x18\x03 \x01(\x0b\x32\x0e.season.Season\x12\x1b\n\x05round\x18\x04 \x01(\x0b\x32\x0c.round.Round\x12\x1b\n\x05venue\x18\x05 \x01(\x0b\x32\x0c.venue.Venue\x12/\n\nreferee_id\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\tdate_time\x18\x07 \x01(\x03\x12%\n\nmatch_data\x18\x08 \x01(\x0b\x32\x11.result.MatchData\"l\n\tMatchData\x12\x1d\n\thome_team\x18\x01 \x01(\x0b\x32\n.team.Team\x12\x1d\n\taway_team\x18\x02 \x01(\x0b\x32\n.team.Team\x12!\n\x05stats\x18\x03 \x01(\x0b\x32\x12.result.MatchStats\"\xfd\x06\n\nMatchStats\x12+\n\x05pitch\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0ehome_formation\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0e\x61way_formation\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12/\n\nhome_score\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\naway_score\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0ehome_pen_score\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0e\x61way_pen_score\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x35\n\x0fhalf_time_score\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x35\n\x0f\x66ull_time_score\x18\t \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x36\n\x10\x65xtra_time_score\x18\n \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x39\n\x14home_league_position\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x39\n\x14\x61way_league_position\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07minutes\x18\r \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07seconds\x18\x0e \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nadded_time\x18\x0f \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nextra_time\x18\x10 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x30\n\x0binjury_time\x18\x11 \x01(\x0b\x32\x1b.google.protobuf.Int32Value2\xe6\x01\n\rResultService\x12U\n\x1eGetHistoricalResultsForFixture\x12\x1f.result.HistoricalResultRequest\x1a\x0e.result.Result\"\x00\x30\x01\x12@\n\x13GetResultsForSeason\x12\x15.result.SeasonRequest\x1a\x0e.result.Result\"\x00\x30\x01\x12<\n\x11GetResultsForTeam\x12\x13.result.TeamRequest\x1a\x0e.result.Result\"\x00\x30\x01\x42=Z;github.com/statistico/statistico-data/internal/proto/resultb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,predictor_dot_grpc_dot_proto_dot_competition_dot_competition__pb2.DESCRIPTOR,predictor_dot_grpc_dot_proto_dot_season_dot_season__pb2.DESCRIPTOR,predictor_dot_grpc_dot_proto_dot_team_dot_team__pb2.DESCRIPTOR,predictor_dot_grpc_dot_proto_dot_venue_dot_venue__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,predictor_dot_grpc_dot_proto_dot_competition_dot_competition__pb2.DESCRIPTOR,predictor_dot_grpc_dot_proto_dot_round_dot_round__pb2.DESCRIPTOR,predictor_dot_grpc_dot_proto_dot_season_dot_season__pb2.DESCRIPTOR,predictor_dot_grpc_dot_proto_dot_team_dot_team__pb2.DESCRIPTOR,predictor_dot_grpc_dot_proto_dot_venue_dot_venue__pb2.DESCRIPTOR,])
 
 
+
+
+_TEAMREQUEST = _descriptor.Descriptor(
+  name='TeamRequest',
+  full_name='result.TeamRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='team_id', full_name='result.TeamRequest.team_id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='result.TeamRequest.limit', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='date_before', full_name='result.TeamRequest.date_before', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=296,
+  serialized_end=391,
+)
 
 
 _SEASONREQUEST = _descriptor.Descriptor(
@@ -57,8 +103,8 @@ _SEASONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=256,
-  serialized_end=290,
+  serialized_start=393,
+  serialized_end=427,
 )
 
 
@@ -109,53 +155,8 @@ _HISTORICALRESULTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=292,
-  serialized_end=397,
-)
-
-
-_TEAMREQUEST = _descriptor.Descriptor(
-  name='TeamRequest',
-  full_name='result.TeamRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='team_id', full_name='result.TeamRequest.team_id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='limit', full_name='result.TeamRequest.limit', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='date_before', full_name='result.TeamRequest.date_before', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=399,
-  serialized_end=494,
+  serialized_start=429,
+  serialized_end=534,
 )
 
 
@@ -188,29 +189,36 @@ _RESULT = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='venue', full_name='result.Result.venue', index=3,
+      name='round', full_name='result.Result.round', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='referee_id', full_name='result.Result.referee_id', index=4,
+      name='venue', full_name='result.Result.venue', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='date_time', full_name='result.Result.date_time', index=5,
-      number=6, type=3, cpp_type=2, label=1,
+      name='referee_id', full_name='result.Result.referee_id', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='date_time', full_name='result.Result.date_time', index=6,
+      number=7, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='match_data', full_name='result.Result.match_data', index=6,
-      number=7, type=11, cpp_type=10, label=1,
+      name='match_data', full_name='result.Result.match_data', index=7,
+      number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -227,8 +235,8 @@ _RESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=497,
-  serialized_end=732,
+  serialized_start=537,
+  serialized_end=801,
 )
 
 
@@ -272,8 +280,8 @@ _MATCHDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=734,
-  serialized_end=842,
+  serialized_start=803,
+  serialized_end=911,
 )
 
 
@@ -415,13 +423,14 @@ _MATCHSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=845,
-  serialized_end=1738,
+  serialized_start=914,
+  serialized_end=1807,
 )
 
 _TEAMREQUEST.fields_by_name['limit'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
 _RESULT.fields_by_name['competition'].message_type = predictor_dot_grpc_dot_proto_dot_competition_dot_competition__pb2._COMPETITION
 _RESULT.fields_by_name['season'].message_type = predictor_dot_grpc_dot_proto_dot_season_dot_season__pb2._SEASON
+_RESULT.fields_by_name['round'].message_type = predictor_dot_grpc_dot_proto_dot_round_dot_round__pb2._ROUND
 _RESULT.fields_by_name['venue'].message_type = predictor_dot_grpc_dot_proto_dot_venue_dot_venue__pb2._VENUE
 _RESULT.fields_by_name['referee_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 _RESULT.fields_by_name['match_data'].message_type = _MATCHDATA
@@ -445,13 +454,20 @@ _MATCHSTATS.fields_by_name['seconds'].message_type = google_dot_protobuf_dot_wra
 _MATCHSTATS.fields_by_name['added_time'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
 _MATCHSTATS.fields_by_name['extra_time'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
 _MATCHSTATS.fields_by_name['injury_time'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
+DESCRIPTOR.message_types_by_name['TeamRequest'] = _TEAMREQUEST
 DESCRIPTOR.message_types_by_name['SeasonRequest'] = _SEASONREQUEST
 DESCRIPTOR.message_types_by_name['HistoricalResultRequest'] = _HISTORICALRESULTREQUEST
-DESCRIPTOR.message_types_by_name['TeamRequest'] = _TEAMREQUEST
 DESCRIPTOR.message_types_by_name['Result'] = _RESULT
 DESCRIPTOR.message_types_by_name['MatchData'] = _MATCHDATA
 DESCRIPTOR.message_types_by_name['MatchStats'] = _MATCHSTATS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+TeamRequest = _reflection.GeneratedProtocolMessageType('TeamRequest', (_message.Message,), dict(
+  DESCRIPTOR = _TEAMREQUEST,
+  __module__ = 'predictor.grpc.proto.result.result_pb2'
+  # @@protoc_insertion_point(class_scope:result.TeamRequest)
+  ))
+_sym_db.RegisterMessage(TeamRequest)
 
 SeasonRequest = _reflection.GeneratedProtocolMessageType('SeasonRequest', (_message.Message,), dict(
   DESCRIPTOR = _SEASONREQUEST,
@@ -466,13 +482,6 @@ HistoricalResultRequest = _reflection.GeneratedProtocolMessageType('HistoricalRe
   # @@protoc_insertion_point(class_scope:result.HistoricalResultRequest)
   ))
 _sym_db.RegisterMessage(HistoricalResultRequest)
-
-TeamRequest = _reflection.GeneratedProtocolMessageType('TeamRequest', (_message.Message,), dict(
-  DESCRIPTOR = _TEAMREQUEST,
-  __module__ = 'predictor.grpc.proto.result.result_pb2'
-  # @@protoc_insertion_point(class_scope:result.TeamRequest)
-  ))
-_sym_db.RegisterMessage(TeamRequest)
 
 Result = _reflection.GeneratedProtocolMessageType('Result', (_message.Message,), dict(
   DESCRIPTOR = _RESULT,
@@ -496,6 +505,7 @@ MatchStats = _reflection.GeneratedProtocolMessageType('MatchStats', (_message.Me
 _sym_db.RegisterMessage(MatchStats)
 
 
+DESCRIPTOR._options = None
 
 _RESULTSERVICE = _descriptor.ServiceDescriptor(
   name='ResultService',
@@ -503,8 +513,8 @@ _RESULTSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1741,
-  serialized_end=1971,
+  serialized_start=1810,
+  serialized_end=2040,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetHistoricalResultsForFixture',

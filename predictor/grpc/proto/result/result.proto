@@ -1,9 +1,12 @@
 syntax = "proto3";
 
+option go_package = "github.com/statistico/statistico-data/internal/proto/result";
+
 package result;
 
 import "google/protobuf/wrappers.proto";
 import "predictor/grpc/proto/competition/competition.proto";
+import "predictor/grpc/proto/round/round.proto";
 import "predictor/grpc/proto/season/season.proto";
 import "predictor/grpc/proto/team/team.proto";
 import "predictor/grpc/proto/venue/venue.proto";
@@ -12,6 +15,17 @@ service ResultService {
     rpc GetHistoricalResultsForFixture(HistoricalResultRequest) returns (stream Result) {}
     rpc GetResultsForSeason(SeasonRequest) returns (stream Result) {}
     rpc GetResultsForTeam(TeamRequest) returns (stream Result) {}
+}
+
+message TeamRequest {
+    // The Team ID that the Result set relates to
+    int64 team_id = 1;
+    // The number of results to return. If limit is not set the whole Result set for the Team
+    // will be returned
+    google.protobuf.Int32Value limit = 2;
+    // A filter to return Results before a specific date
+    // RFC3339 formatted string i.e "2006-01-02T15:04:05Z07:00"
+    string date_before = 3;
 }
 
 message SeasonRequest {
@@ -31,25 +45,15 @@ message HistoricalResultRequest {
     string date_before = 4;
 }
 
-message TeamRequest {
-    // The Team ID that the Result set relates to
-    int64 team_id = 1;
-    // The number of results to return. If limit is not set the whole Result set for the Team
-    // will be returned
-    google.protobuf.Int32Value limit = 2;
-    // A filter to return Results before a specific date
-    // RFC3339 formatted string i.e "2006-01-02T15:04:05Z07:00"
-    string date_before = 3;
-}
-
 message Result {
     int64 id = 1;
     competition.Competition competition = 2;
     season.Season season = 3;
-    venue.Venue venue = 4;
-    google.protobuf.Int64Value referee_id = 5;
-    int64 date_time = 6;
-    MatchData match_data = 7;
+    round.Round round = 4;
+    venue.Venue venue = 5;
+    google.protobuf.Int64Value referee_id = 6;
+    int64 date_time = 7;
+    MatchData match_data = 8;
 }
 
 message MatchData {
