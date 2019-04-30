@@ -7,12 +7,12 @@ verify_ssl = true
 flake8 = "*"
 pytest = "*"
 mock = "*"
+python-dotenv = "*"
 
 [packages]
 grpcio = "==1.18.0"
 grpcio-tools = "==1.18.0"
 grpcio-reflection = "==1.18.0"
-python-dotenv = "*"
 pandas = "*"
 click = "==0.7"
 

@@ -1,5 +1,5 @@
 import click
-import pandas as pd
+import os
 from predictor.grpc.result_client import ResultClient
 from predictor.data.aggregator.match_goals import MatchGoals
 
@@ -23,7 +23,14 @@ def season_data(season_id: str):
     """
     Retrieve and parse data for a given season
     """
-    client = ResultClient(host='138.68.132.183', port='50051')
+    host = os.getenv('DATA_SERVER_HOST')
+    port = os.getenv('DATA_SERVER_PORT')
+
+    if host is None or port is None:
+        print('Host and port are required to executed this command')
+        return
+
+    client = ResultClient(host=host, port=port)
     collator = MatchGoals(client=client)
 
     df = collator.ForSeason(int(season_id))
