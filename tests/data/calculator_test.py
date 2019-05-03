@@ -128,6 +128,16 @@ def test_average_goals_for_results_can_handle_results_can_do_not_contain_goals()
     assert calculator.AverageGoalsForResults([Result()]) is None
 
 
+def test_goals_scored_in_match_returns_int(home_result):
+    assert calculator.GoalsScoredInMatch(home_result, 7901) == 2
+    assert calculator.GoalsScoredInMatch(home_result, 496) == 0
+
+
+def test_goals_conceded_in_match_returns_int(away_result):
+    assert calculator.GoalsConcededInMatch(away_result, 7901) == 3
+    assert calculator.GoalsConcededInMatch(away_result, 496) == 1
+
+
 @pytest.fixture()
 def home_result():
     result = Result()

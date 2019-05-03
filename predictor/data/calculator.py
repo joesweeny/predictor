@@ -23,6 +23,34 @@ def TotalGoalsForMatch(stats: MatchStats) -> Optional[int]:
     return home_goals + away_goals
 
 
+def GoalsScoredInMatch(result: Result, team_id: int) -> int:
+    """
+    Return the number of goals scored by a Team for a given Result
+    """
+    match_data = result.match_data
+
+    if match_data.home_team.id == team_id:
+        goals = match_data.stats.home_score.value
+    else:
+        goals = match_data.stats.away_score.value
+
+    return goals
+
+
+def GoalsConcededInMatch(result: Result, team_id: int) -> int:
+    """
+    Return the number of goals conceded by a Team for a given Result
+    """
+    match_data = result.match_data
+
+    if match_data.home_team.id == team_id:
+        goals = match_data.stats.away_score.value
+    else:
+        goals = match_data.stats.home_score.value
+
+    return goals
+
+
 def DaysBetweenResults(current: Result, previous: Result) -> int:
     """
     Calculate the total days between two Results
