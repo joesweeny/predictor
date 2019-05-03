@@ -33,10 +33,21 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
         'Away League Position',
         'Home Formation',
         'Away Formation',
+<<<<<<< HEAD
         'Home Avg Goals Scored Last 10',
         'Home Avg Goals Conceded Last 10',
         'Away Avg Goals Scored Last 10',
         'Away Avg Goals Conceded Last 10',
+=======
+        'Home Goals Scored Last Match',
+        'Home Goals Conceded Last Match',
+        'Away Goals Scored Last Match',
+        'Away Goals Conceded Last Match',
+        'Home Avg Goals Scored Last 20',
+        'Home Avg Goals Conceded Last 20',
+        'Away Avg Goals Scored Last 20',
+        'Away Avg Goals Conceded Last 20',
+>>>>>>> cf09b473d11a69cbcc1663894c6be2bd438d8f9b
         'Average Goals for Fixture',
         'Total Goals in Match',
     ]
@@ -101,6 +112,10 @@ def test_for_season_converts_result_object_into_dataframe_row(
         15,
         '4-4-2',
         '5-3-1-1',
+        5,
+        2,
+        1,
+        3,
         4.33,
         1.67,
         1.33,
@@ -160,7 +175,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
 
-    assert df.shape == (3, 25)
+    assert df.shape == (3, 29)
 
 
 @pytest.fixture
