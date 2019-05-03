@@ -33,21 +33,14 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
         'Away League Position',
         'Home Formation',
         'Away Formation',
-<<<<<<< HEAD
-        'Home Avg Goals Scored Last 10',
-        'Home Avg Goals Conceded Last 10',
-        'Away Avg Goals Scored Last 10',
-        'Away Avg Goals Conceded Last 10',
-=======
         'Home Goals Scored Last Match',
         'Home Goals Conceded Last Match',
         'Away Goals Scored Last Match',
         'Away Goals Conceded Last Match',
-        'Home Avg Goals Scored Last 20',
-        'Home Avg Goals Conceded Last 20',
-        'Away Avg Goals Scored Last 20',
-        'Away Avg Goals Conceded Last 20',
->>>>>>> cf09b473d11a69cbcc1663894c6be2bd438d8f9b
+        'Home Avg Goals Scored Last 10',
+        'Home Avg Goals Conceded Last 10',
+        'Away Avg Goals Scored Last 10',
+        'Away Avg Goals Conceded Last 10',
         'Average Goals for Fixture',
         'Total Goals in Match',
     ]
