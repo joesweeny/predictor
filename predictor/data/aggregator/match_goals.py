@@ -29,6 +29,10 @@ class MatchGoals:
         'Away League Position',
         'Home Formation',
         'Away Formation',
+        'Home Goals Scored Last Match',
+        'Home Goals Conceded Last Match',
+        'Away Goals Scored Last Match',
+        'Away Goals Conceded Last Match',
         'Home Avg Goals Scored Last 20',
         'Home Avg Goals Conceded Last 20',
         'Away Avg Goals Scored Last 20',
@@ -84,6 +88,22 @@ class MatchGoals:
             'Away League Position': match_stats.away_league_position.value,
             'Home Formation': match_stats.home_formation.value,
             'Away Formation': match_stats.away_formation.value,
+            'Home Goals Scored Last Match': calculator.GoalsScoredInMatch(
+                home_previous_results[0],
+                home_team.id
+            ),
+            'Home Goals Conceded Last Match': calculator.GoalsConcededInMatch(
+                home_previous_results[0],
+                home_team.id
+            ),
+            'Away Goals Scored Last Match': calculator.GoalsScoredInMatch(
+                away_previous_results[0],
+                away_team.id
+            ),
+            'Away Goals Conceded Last Match': calculator.GoalsConcededInMatch(
+                away_previous_results[0],
+                away_team.id
+            ),
             'Home Avg Goals Scored Last 20': calculator.AverageGoalsScoredByTeam(
                 home_previous_results,
                 home_team.id
