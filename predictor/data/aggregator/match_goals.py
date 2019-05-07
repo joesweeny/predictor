@@ -2,46 +2,69 @@ import pandas as pd
 from datetime import datetime
 from predictor.grpc.result_client import ResultClient
 from predictor.grpc.proto.result.result_pb2 import Result
+from predictor.grpc.team_stats_client import TeamStatsClient
 from predictor.data import calculator
 
 
 class MatchGoals:
-    def __init__(self, client: ResultClient):
-        self.result_client = client
+    def __init__(self, result_client: ResultClient, team_stats_client: TeamStatsClient):
+        self.result_client = result_client
+        self.team_stats_client = team_stats_client
 
     __columns = [
         'Match ID',
-        'Home Team ID',
-        'Home Team Name',
-        'Away Team ID',
-        'Away Team Name',
-        'Competition ID',
         'Round',
-        'Is Cup',
-        'Season ID',
-        'Is Current Season',
         'Referee ID',
         'Venue ID',
         'Date',
-        'Home Days Since Last Match',
-        'Away Days Since Last Match',
-        'Home League Position',
-        'Away League Position',
-        'Home Formation',
-        'Away Formation',
-        'Home Goals Scored Last Match',
-        'Home Goals Conceded Last Match',
-        'Away Goals Scored Last Match',
-        'Away Goals Conceded Last Match',
-        'Home Avg Goals Scored Last 10',
-        'Home Avg Goals Conceded Last 10',
-        'Away Avg Goals Scored Last 10',
-        'Away Avg Goals Conceded Last 10',
         'Average Goals for Fixture',
-        'Total Goals in Match',
+        'Home Team ID',
+        'Home Team Name',
+        'Home Days Since Last Match',
+        'Home Formation',
+        'Home Avg Goals Scored Last 5',
+        'Home Avg Goals Conceded Last 5',
+        'Home Goals',
+        'Home Shots Total',
+        'Home Shots On Goal',
+        'Home Shots Off Goal',
+        'Home Shots Inside Box',
+        'Home Shots Outside Box',
+        'Home Fouls',
+        'Home Corners',
+        'Home Saves',
+        'Home Possession',
+        'Home Yellow Cards',
+        'Home Red Cards',
+        'Home Pass Total',
+        'Home Pass Accuracy',
+        'Home Pass Percentage',
+        'Home Offsides',
+        'Away Team ID',
+        'Away Team Name',
+        'Away Days Since Last Match',
+        'Away Formation',
+        'Away Avg Goals Scored Last 5',
+        'Away Avg Goals Conceded Last 5',
+        'Away Goals',
+        'Away Shots Total',
+        'Away Shots On Goal',
+        'Away Shots Off Goal',
+        'Away Shots Inside Box',
+        'Away Shots Outside Box',
+        'Away Fouls',
+        'Away Corners',
+        'Away Saves',
+        'Away Possession',
+        'Away Yellow Cards',
+        'Away Red Cards',
+        'Away Pass Total',
+        'Away Pass Accuracy',
+        'Away Pass Percentage',
+        'Away Offsides',
     ]
 
-    def ForSeason(self, season_id: int) -> pd.DataFrame:
+    def for_season(self, season_id: int) -> pd.DataFrame:
         df = pd.DataFrame(columns=self.__columns)
 
         for result in self.result_client.GetResultsForSeason(season_id):
