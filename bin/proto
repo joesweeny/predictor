@@ -3,6 +3,7 @@
 pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./predictor/grpc/proto/fixture/fixture.proto
 pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./predictor/grpc/proto/prediction/prediction.proto
 pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./predictor/grpc/proto/result/result.proto
+pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./predictor/grpc/proto/stats/team/stats.proto
 pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./predictor/grpc/proto/competition/competition.proto
 pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./predictor/grpc/proto/round/round.proto
 pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./predictor/grpc/proto/season/season.proto
