@@ -1,9 +1,10 @@
 import pytest
-from mock import MagicMock
+from mock import MagicMock, Mock
 from predictor.data.aggregator.match_goals import MatchGoals
 from predictor.grpc.proto.result import result_pb2
 from predictor.grpc.result_client import ResultClient
 from predictor.grpc.team_stats_client import TeamStatsClient
+from predictor.grpc.proto.stats.team import stats_pb2
 
 
 def test_for_season_dataframe_columns(mock_result_client, match_goals):
@@ -15,7 +16,7 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
     mock_result_client.GetResultsForSeason.assert_called_with(5)
 
     columns = [
-         'Match ID',
+        'Match ID',
         'Round',
         'Referee ID',
         'Venue ID',
@@ -67,10 +68,12 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
 
 def test_for_season_converts_result_object_into_dataframe_row(
         mock_result_client,
+        mock_team_stats_client,
         match_goals,
         result,
         home_past_result,
-        away_past_result
+        away_past_result,
+        team_stats_response
 ):
     value = mock_result_client.GetResultsForSeason.return_value
     value.__iter__.return_value = iter([result])
@@ -96,9 +99,13 @@ def test_for_season_converts_result_object_into_dataframe_row(
         ]
     ]
 
+    mock_team_stats_client.get_team_stats_for_fixture.return_value = team_stats_response
+
     df = match_goals.for_season(5)
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
+
+    mock_team_stats_client.get_team_stats_for_fixture.assert_called_with(fixture_id=66)
 
     expected = [
         66,
@@ -115,16 +122,16 @@ def test_for_season_converts_result_object_into_dataframe_row(
         1.67,
         5,
         2,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
+        34,
+        12,
+        22,
+        15,
+        5,
+        None,
+        68,
+        300,
+        None,
+        90,
         496,
         'Tottenham Hotspur',
         5,
@@ -133,16 +140,16 @@ def test_for_season_converts_result_object_into_dataframe_row(
         3.67,
         1,
         3,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
+        34,
+        12,
+        22,
+        15,
+        5,
+        None,
+        68,
+        300,
+        None,
+        90,
         4
     ]
 
@@ -207,7 +214,7 @@ def mock_result_client():
 
 @pytest.fixture
 def mock_team_stats_client():
-    return MagicMock(spec=TeamStatsClient)
+    return Mock(spec=TeamStatsClient)
 
 
 @pytest.fixture()
@@ -270,3 +277,28 @@ def away_past_result():
     result.match_data.stats.home_score.value = 1
     result.match_data.stats.away_score.value = 3
     return result
+
+
+@pytest.fixture
+def team_stats_response():
+    response = stats_pb2.StatsResponse()
+
+    response.home_team.shots_total.value = 34
+    response.home_team.shots_on_goal.value = 12
+    response.home_team.shots_off_goal.value = 22
+    response.home_team.shots_inside_box.value = 15
+    response.home_team.shots_outside_box.value = 5
+    response.home_team.passes_total.value = 300
+    response.home_team.passes_percentage.value = 90
+    response.home_team.possession.value = 68
+
+    response.away_team.shots_total.value = 34
+    response.away_team.shots_on_goal.value = 12
+    response.away_team.shots_off_goal.value = 22
+    response.away_team.shots_inside_box.value = 15
+    response.away_team.shots_outside_box.value = 5
+    response.away_team.passes_total.value = 300
+    response.away_team.passes_percentage.value = 90
+    response.away_team.possession.value = 68
+
+    return response

@@ -3,6 +3,7 @@ from datetime import datetime
 from predictor.grpc.result_client import ResultClient
 from predictor.grpc.proto.result.result_pb2 import Result
 from predictor.grpc.team_stats_client import TeamStatsClient
+from predictor.grpc.proto.stats.team.stats_pb2 import TeamStats
 from predictor.data import calculator
 
 
@@ -76,6 +77,11 @@ class MatchGoals:
 
         historical_results = self.__get_historical_results(result, 10)
 
+        stats = self.team_stats_client.get_team_stats_for_fixture(fixture_id=result.id)
+
+        home_stats = stats.home_team
+        away_stats = stats.away_team
+
         data = {
             'Match ID': result.id,
             'Round': result.round.name,
@@ -108,16 +114,16 @@ class MatchGoals:
                 home_previous_results[0],
                 home_team.id
             ),
-            'Home Shots Total': 0,
-            'Home Shots On Goal': 0,
-            'Home Shots Off Goal': 0,
-            'Home Shots Inside Box': 0,
-            'Home Shots Outside Box': 0,
-            'Home Corners': 0,
-            'Home Possession': 0,
-            'Home Pass Total': 0,
-            'Home Pass Accuracy': 0,
-            'Home Pass Percentage': 0,
+            'Home Shots Total': self.__get_value('shots_total', home_stats),
+            'Home Shots On Goal': self.__get_value('shots_on_goal', home_stats),
+            'Home Shots Off Goal': self.__get_value('shots_off_goal', home_stats),
+            'Home Shots Inside Box': self.__get_value('shots_inside_box', home_stats),
+            'Home Shots Outside Box': self.__get_value('shots_outside_box', home_stats),
+            'Home Corners': self.__get_value('corners', home_stats),
+            'Home Possession': self.__get_value('possession', home_stats),
+            'Home Pass Total': self.__get_value('passes_total', home_stats),
+            'Home Pass Accuracy': self.__get_value('passes_accuracy', home_stats),
+            'Home Pass Percentage': self.__get_value('passes_percentage', home_stats),
             'Away Team ID': away_team.id,
             'Away Team Name': away_team.name,
             'Away Days Since Last Match': calculator.DaysBetweenResults(
@@ -141,16 +147,16 @@ class MatchGoals:
                 away_previous_results[0],
                 away_team.id
             ),
-            'Away Shots Total': 0,
-            'Away Shots On Goal': 0,
-            'Away Shots Off Goal': 0,
-            'Away Shots Inside Box': 0,
-            'Away Shots Outside Box': 0,
-            'Away Corners': 0,
-            'Away Possession': 0,
-            'Away Pass Total': 0,
-            'Away Pass Accuracy': 0,
-            'Away Pass Percentage': 0,
+            'Away Shots Total': self.__get_value('shots_total', away_stats),
+            'Away Shots On Goal': self.__get_value('shots_on_goal', away_stats),
+            'Away Shots Off Goal': self.__get_value('shots_off_goal', away_stats),
+            'Away Shots Inside Box': self.__get_value('shots_inside_box', away_stats),
+            'Away Shots Outside Box': self.__get_value('shots_outside_box', away_stats),
+            'Away Corners': self.__get_value('corners', away_stats),
+            'Away Possession': self.__get_value('possession', away_stats),
+            'Away Pass Total': self.__get_value('passes_total', away_stats),
+            'Away Pass Accuracy': self.__get_value('passes_accuracy', away_stats),
+            'Away Pass Percentage': self.__get_value('passes_percentage', away_stats),
             'Total Goals in Match': calculator.TotalGoalsForMatch(match_stats),
         }
 
@@ -181,3 +187,11 @@ class MatchGoals:
         )
 
         return results[0:limit]
+
+    @staticmethod
+    def __get_value(prop: str, stats: TeamStats):
+        if stats.HasField(prop):
+            p = getattr(stats, prop)
+            return p.value
+
+        return
