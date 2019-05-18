@@ -35,6 +35,8 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
         'Home Shots Off Goal',
         'Home Shots Inside Box',
         'Home Shots Outside Box',
+        'Home Attacks Total',
+        'Home Attacks Dangerous',
         'Home Corners',
         'Home Possession',
         'Home Pass Total',
@@ -53,6 +55,8 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
         'Away Shots Off Goal',
         'Away Shots Inside Box',
         'Away Shots Outside Box',
+        'Away Attacks Total',
+        'Away Attacks Dangerous',
         'Away Corners',
         'Away Possession',
         'Away Pass Total',
@@ -128,6 +132,8 @@ def test_for_season_converts_result_object_into_dataframe_row(
         15,
         5,
         None,
+        None,
+        None,
         68,
         300,
         None,
@@ -145,6 +151,8 @@ def test_for_season_converts_result_object_into_dataframe_row(
         22,
         15,
         5,
+        None,
+        None,
         None,
         68,
         300,
@@ -204,7 +212,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
 
-    assert df.shape == (3, 43)
+    assert df.shape == (3, 47)
 
 
 @pytest.fixture
