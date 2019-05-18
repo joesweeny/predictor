@@ -33,7 +33,10 @@ def season_data(season_id: str):
 
     result_client = ResultClient(host=host, port=port)
     team_stats_client = TeamStatsClient(host=host, port=port)
-    collator = MatchGoals(result_client=result_client, team_stats_client=team_stats_client)
+    collator = MatchGoals(
+        result_client=result_client, 
+        team_stats_client=team_stats_client
+    )
 
     df = collator.for_season(int(season_id))
 
