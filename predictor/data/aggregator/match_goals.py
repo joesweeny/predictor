@@ -91,7 +91,7 @@ class MatchGoals:
             'Round': result.round.name,
             'Referee ID': result.referee_id.value,
             'Venue ID': result.venue.id.value,
-            'Date': result.date_time,
+            'Date': datetime.utcfromtimestamp(result.date_time).strftime('%Y-%m-%dT%H:%M:%SZ'),
             'Average Goals for Fixture': calculator.AverageGoalsForResults(
                 historical_results
             ),
