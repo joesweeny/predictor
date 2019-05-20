@@ -75,7 +75,6 @@ class MatchGoals:
     def __result_to_row(self, result: Result) -> dict:
         match_data = result.match_data
         match_stats = match_data.stats
-        
         home_team = match_data.home_team
         away_team = match_data.away_team
 
@@ -89,12 +88,14 @@ class MatchGoals:
         home_stats = stats.home_team
         away_stats = stats.away_team
 
+        date = datetime.utcfromtimestamp(result.date_time).strftime('%Y-%m-%dT%H:%M:%S')
+
         data = {
             'matchID': result.id,
             'round': result.round.name,
             'refereeID': result.referee_id.value,
             'venueID': result.venue.id.value,
-            'date': datetime.utcfromtimestamp(result.date_time).strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'date': date,
             'season': result.season.name,
             'averageGoalsForFixture': calculator.AverageGoalsForResults(
                 historical_results
