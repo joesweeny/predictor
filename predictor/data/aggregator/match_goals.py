@@ -18,6 +18,7 @@ class MatchGoals:
         'refereeID',
         'venueID',
         'date',
+        'season',
         'averageGoalsForFixture',
         'homeTeamID',
         'homeTeam',
@@ -39,7 +40,7 @@ class MatchGoals:
         'homePassTotal',
         'homePassAccuracy',
         'homePassPercentage',
-        'homeGoals'
+        'homeGoals',
         'awayTeamID',
         'awayTeam',
         'awayDaysSinceLastMatch',
@@ -74,6 +75,7 @@ class MatchGoals:
     def __result_to_row(self, result: Result) -> dict:
         match_data = result.match_data
         match_stats = match_data.stats
+        
         home_team = match_data.home_team
         away_team = match_data.away_team
 
@@ -88,85 +90,87 @@ class MatchGoals:
         away_stats = stats.away_team
 
         data = {
-            'Match ID': result.id,
-            'Round': result.round.name,
-            'Referee ID': result.referee_id.value,
-            'Venue ID': result.venue.id.value,
-            'Date': datetime.utcfromtimestamp(result.date_time).strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'Average Goals for Fixture': calculator.AverageGoalsForResults(
+            'matchID': result.id,
+            'round': result.round.name,
+            'refereeID': result.referee_id.value,
+            'venueID': result.venue.id.value,
+            'date': datetime.utcfromtimestamp(result.date_time).strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'season': result.season.name,
+            'averageGoalsForFixture': calculator.AverageGoalsForResults(
                 historical_results
             ),
-            'Home Team ID': home_team.id,
-            'Home Team Name': home_team.name,
-            'Home Days Since Last Match': calculator.DaysBetweenResults(
+            'homeTeamID': home_team.id,
+            'homeTeam': home_team.name,
+            'homeDaysSinceLastMatch': calculator.DaysBetweenResults(
                 result,
                 home_previous_results[0],
             ),
-            'Home Formation': match_stats.home_formation.value,
-            'Home Avg Goals Scored Last 5': calculator.AverageGoalsScoredByTeam(
+            'homeFormation': match_stats.home_formation.value,
+            'homeAvgScoredLast5': calculator.AverageGoalsScoredByTeam(
                 home_previous_results,
                 home_team.id
             ),
-            'Home Avg Goals Conceded Last 5': calculator.AverageGoalsConcededByTeam(
+            'homeAvgConcededLast5': calculator.AverageGoalsConcededByTeam(
                 home_previous_results,
                 home_team.id
             ),
-            'Home Goals Scored Last Match': calculator.GoalsScoredInMatch(
+            'homeScoredLastMatch': calculator.GoalsScoredInMatch(
                 home_previous_results[0],
                 home_team.id
             ),
-            'Home Goals Conceded Last Match': calculator.GoalsConcededInMatch(
+            'homeConcededLastMatch': calculator.GoalsConcededInMatch(
                 home_previous_results[0],
                 home_team.id
             ),
-            'Home Shots Total': self.__get_value('shots_total', home_stats),
-            'Home Shots On Goal': self.__get_value('shots_on_goal', home_stats),
-            'Home Shots Off Goal': self.__get_value('shots_off_goal', home_stats),
-            'Home Shots Inside Box': self.__get_value('shots_inside_box', home_stats),
-            'Home Shots Outside Box': self.__get_value('shots_outside_box', home_stats),
-            'Home Attacks Total': self.__get_value('attacks_total', home_stats),
-            'Home Attacks Dangerous': self.__get_value('attacks_dangerous', home_stats),
-            'Home Corners': self.__get_value('corners', home_stats),
-            'Home Possession': self.__get_value('possession', home_stats),
-            'Home Pass Total': self.__get_value('passes_total', home_stats),
-            'Home Pass Accuracy': self.__get_value('passes_accuracy', home_stats),
-            'Home Pass Percentage': self.__get_value('passes_percentage', home_stats),
-            'Away Team ID': away_team.id,
-            'Away Team Name': away_team.name,
-            'Away Days Since Last Match': calculator.DaysBetweenResults(
+            'homeShotsTotal': self.__get_value('shots_total', home_stats),
+            'homeShotsOnGoal': self.__get_value('shots_on_goal', home_stats),
+            'homeShotsOffGoal': self.__get_value('shots_off_goal', home_stats),
+            'homeShotsInsideBox': self.__get_value('shots_inside_box', home_stats),
+            'homeShotsOutsideBox': self.__get_value('shots_outside_box', home_stats),
+            'homeAttacksTotal': self.__get_value('attacks_total', home_stats),
+            'homeAttacksDangerous': self.__get_value('attacks_dangerous', home_stats),
+            'homeCorners': self.__get_value('corners', home_stats),
+            'homePossession': self.__get_value('possession', home_stats),
+            'homePassTotal': self.__get_value('passes_total', home_stats),
+            'homePassAccuracy': self.__get_value('passes_accuracy', home_stats),
+            'homePassPercentage': self.__get_value('passes_percentage', home_stats),
+            'homeGoals': self.__get_value('home_score', match_stats),
+            'awayTeamID': away_team.id,
+            'awayTeam': away_team.name,
+            'awayDaysSinceLastMatch': calculator.DaysBetweenResults(
                 result,
                 away_previous_results[0]
             ),
-            'Away Formation': match_stats.away_formation.value,
-            'Away Avg Goals Scored Last 5': calculator.AverageGoalsScoredByTeam(
+            'awayFormation': match_stats.away_formation.value,
+            'awayAvgScoredLast5': calculator.AverageGoalsScoredByTeam(
                 away_previous_results,
                 away_team.id
             ),
-            'Away Avg Goals Conceded Last 5': calculator.AverageGoalsConcededByTeam(
+            'awayAvgConcededLast5': calculator.AverageGoalsConcededByTeam(
                 away_previous_results,
                 away_team.id
             ),
-            'Away Goals Scored Last Match': calculator.GoalsScoredInMatch(
+            'awayScoredLastMatch': calculator.GoalsScoredInMatch(
                 away_previous_results[0],
                 away_team.id
             ),
-            'Away Goals Conceded Last Match': calculator.GoalsConcededInMatch(
+            'awayConcededLastMatch': calculator.GoalsConcededInMatch(
                 away_previous_results[0],
                 away_team.id
             ),
-            'Away Shots Total': self.__get_value('shots_total', away_stats),
-            'Away Shots On Goal': self.__get_value('shots_on_goal', away_stats),
-            'Away Shots Off Goal': self.__get_value('shots_off_goal', away_stats),
-            'Away Shots Inside Box': self.__get_value('shots_inside_box', away_stats),
-            'Away Shots Outside Box': self.__get_value('shots_outside_box', away_stats),
-            'Away Attacks Total': self.__get_value('attacks_total', away_stats),
-            'Away Attacks Dangerous': self.__get_value('attacks_dangerous', away_stats),
-            'Away Corners': self.__get_value('corners', away_stats),
-            'Away Possession': self.__get_value('possession', away_stats),
-            'Away Pass Total': self.__get_value('passes_total', away_stats),
-            'Away Pass Accuracy': self.__get_value('passes_accuracy', away_stats),
-            'Away Pass Percentage': self.__get_value('passes_percentage', away_stats),
-            'Total Goals in Match': calculator.TotalGoalsForMatch(match_stats),
+            'awayShotsTotal': self.__get_value('shots_total', away_stats),
+            'awayShotsOnGoal': self.__get_value('shots_on_goal', away_stats),
+            'awayShotsOffGoal': self.__get_value('shots_off_goal', away_stats),
+            'awayShotsInsideBox': self.__get_value('shots_inside_box', away_stats),
+            'awayShotsOutsideBox': self.__get_value('shots_outside_box', away_stats),
+            'awayAttacksTotal': self.__get_value('attacks_total', away_stats),
+            'awayAttacksDangerous': self.__get_value('attacks_dangerous', away_stats),
+            'awayCorners': self.__get_value('corners', away_stats),
+            'awayPossession': self.__get_value('possession', away_stats),
+            'awayPassTotal': self.__get_value('passes_total', away_stats),
+            'awayPassAccuracy': self.__get_value('passes_accuracy', away_stats),
+            'awayPassPercentage': self.__get_value('passes_percentage', away_stats),
+            'awayGoals': self.__get_value('away_score', match_stats),
         }
 
         return data

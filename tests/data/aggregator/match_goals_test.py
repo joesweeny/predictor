@@ -21,6 +21,7 @@ def test_for_season_data_frame_columns(mock_result_client, match_goals):
         'refereeID',
         'venueID',
         'date',
+        'season',
         'averageGoalsForFixture',
         'homeTeamID',
         'homeTeam',
@@ -42,7 +43,7 @@ def test_for_season_data_frame_columns(mock_result_client, match_goals):
         'homePassTotal',
         'homePassAccuracy',
         'homePassPercentage',
-        'homeGoals'
+        'homeGoals',
         'awayTeamID',
         'awayTeam',
         'awayDaysSinceLastMatch',
@@ -118,6 +119,7 @@ def test_for_season_converts_result_object_into_data_frame_row(
         3412,
         88,
         '2019-04-23T18:15:38Z',
+        '2018/19',
         6.00,
         7901,
         'West Ham United',
@@ -139,6 +141,7 @@ def test_for_season_converts_result_object_into_data_frame_row(
         300,
         None,
         90,
+        2,
         496,
         'Tottenham Hotspur',
         5,
@@ -159,7 +162,7 @@ def test_for_season_converts_result_object_into_data_frame_row(
         300,
         None,
         90,
-        4
+        2,
     ]
 
     row = df.iloc[0, :].values.tolist()
@@ -213,7 +216,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
 
-    assert df.shape == (3, 47)
+    assert df.shape == (3, 49)
 
 
 @pytest.fixture
@@ -238,6 +241,8 @@ def result():
 
     result.competition.id = 55
     result.competition.is_cup.value = False
+
+    result.season.name = '2018/19'
 
     result.round.name = '4'
 
