@@ -1,48 +1,70 @@
 import pytest
-from mock import MagicMock
+from mock import MagicMock, Mock
 from predictor.data.aggregator.match_goals import MatchGoals
 from predictor.grpc.proto.result import result_pb2
 from predictor.grpc.result_client import ResultClient
+from predictor.grpc.team_stats_client import TeamStatsClient
+from predictor.grpc.proto.stats.team import stats_pb2
 
 
-def test_for_season_dataframe_columns(mock_result_client, match_goals):
+def test_for_season_data_frame_columns(mock_result_client, match_goals):
     value = mock_result_client.GetResultsForSeason.return_value
     value.__iter__.return_value = iter([])
 
-    df = match_goals.ForSeason(5)
+    df = match_goals.for_season(5)
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
 
     columns = [
-        'Match ID',
-        'Home Team ID',
-        'Home Team Name',
-        'Away Team ID',
-        'Away Team Name',
-        'Competition ID',
-        'Round',
-        'Is Cup',
-        'Season ID',
-        'Is Current Season',
-        'Referee ID',
-        'Venue ID',
-        'Date',
-        'Home Days Since Last Match',
-        'Away Days Since Last Match',
-        'Home League Position',
-        'Away League Position',
-        'Home Formation',
-        'Away Formation',
-        'Home Goals Scored Last Match',
-        'Home Goals Conceded Last Match',
-        'Away Goals Scored Last Match',
-        'Away Goals Conceded Last Match',
-        'Home Avg Goals Scored Last 10',
-        'Home Avg Goals Conceded Last 10',
-        'Away Avg Goals Scored Last 10',
-        'Away Avg Goals Conceded Last 10',
-        'Average Goals for Fixture',
-        'Total Goals in Match',
+        'matchID',
+        'round',
+        'refereeID',
+        'venueID',
+        'date',
+        'season',
+        'averageGoalsForFixture',
+        'homeTeamID',
+        'homeTeam',
+        'homeDaysSinceLastMatch',
+        'homeFormation',
+        'homeAvgScoredLast5',
+        'homeAvgConcededLast5',
+        'homeScoredLastMatch',
+        'homeConcededLastMatch',
+        'homeShotsTotal',
+        'homeShotsOnGoal',
+        'homeShotsOffGoal',
+        'homeShotsInsideBox',
+        'homeShotsOutsideBox',
+        'homeAttacksTotal',
+        'homeAttacksDangerous',
+        'homeCorners',
+        'homePossession',
+        'homePassTotal',
+        'homePassAccuracy',
+        'homePassPercentage',
+        'homeGoals',
+        'awayTeamID',
+        'awayTeam',
+        'awayDaysSinceLastMatch',
+        'awayFormation',
+        'awayAvgScoredLast5',
+        'awayAvgConcededLast5',
+        'awayScoredLastMatch',
+        'awayConcededLastMatch',
+        'awayShotsTotal',
+        'awayShotsOnGoal',
+        'awayShotsOffGoal',
+        'awayShotsInsideBox',
+        'awayShotsOutsideBox',
+        'awayAttacksTotal',
+        'awayAttacksDangerous',
+        'awayCorners',
+        'awayPossession',
+        'awayPassTotal',
+        'awayPassAccuracy',
+        'awayPassPercentage',
+        'awayGoals',
     ]
 
     df_columns = df.columns
@@ -50,12 +72,14 @@ def test_for_season_dataframe_columns(mock_result_client, match_goals):
     assert (df_columns == columns).all()
 
 
-def test_for_season_converts_result_object_into_dataframe_row(
+def test_for_season_converts_result_object_into_data_frame_row(
         mock_result_client,
+        mock_team_stats_client,
         match_goals,
         result,
         home_past_result,
-        away_past_result
+        away_past_result,
+        team_stats_response
 ):
     value = mock_result_client.GetResultsForSeason.return_value
     value.__iter__.return_value = iter([result])
@@ -81,40 +105,64 @@ def test_for_season_converts_result_object_into_dataframe_row(
         ]
     ]
 
-    df = match_goals.ForSeason(5)
+    mock_team_stats_client.get_team_stats_for_fixture.return_value = team_stats_response
+
+    df = match_goals.for_season(5)
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
 
+    mock_team_stats_client.get_team_stats_for_fixture.assert_called_with(fixture_id=66)
+
     expected = [
         66,
-        7901,
-        'West Ham United',
-        496,
-        'Tottenham Hotspur',
-        55,
         '4',
-        False,
-        39910,
-        True,
         3412,
         88,
-        1556043338,
+        '2019-04-23T18:15:38',
+        '2018/19',
+        6.00,
+        7901,
+        'West Ham United',
         3,
-        5,
-        3,
-        15,
         '4-4-2',
-        '5-3-1-1',
-        5,
-        2,
-        1,
-        3,
         4.33,
         1.67,
+        5,
+        2,
+        34,
+        12,
+        22,
+        15,
+        5,
+        None,
+        None,
+        None,
+        68,
+        300,
+        None,
+        90,
+        2,
+        496,
+        'Tottenham Hotspur',
+        5,
+        '5-3-1-1',
         1.33,
         3.67,
-        6.00,
-        4
+        1,
+        3,
+        34,
+        12,
+        22,
+        15,
+        5,
+        None,
+        None,
+        None,
+        68,
+        300,
+        None,
+        90,
+        2,
     ]
 
     row = df.iloc[0, :].values.tolist()
@@ -164,11 +212,11 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
         ]
     ]
 
-    df = match_goals.ForSeason(5)
+    df = match_goals.for_season(5)
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
 
-    assert df.shape == (3, 29)
+    assert df.shape == (3, 49)
 
 
 @pytest.fixture
@@ -176,9 +224,14 @@ def mock_result_client():
     return MagicMock(spec=ResultClient)
 
 
+@pytest.fixture
+def mock_team_stats_client():
+    return Mock(spec=TeamStatsClient)
+
+
 @pytest.fixture()
-def match_goals(mock_result_client):
-    return MatchGoals(mock_result_client)
+def match_goals(mock_result_client, mock_team_stats_client):
+    return MatchGoals(mock_result_client, mock_team_stats_client)
 
 
 @pytest.fixture()
@@ -188,6 +241,8 @@ def result():
 
     result.competition.id = 55
     result.competition.is_cup.value = False
+
+    result.season.name = '2018/19'
 
     result.round.name = '4'
 
@@ -236,3 +291,28 @@ def away_past_result():
     result.match_data.stats.home_score.value = 1
     result.match_data.stats.away_score.value = 3
     return result
+
+
+@pytest.fixture
+def team_stats_response():
+    response = stats_pb2.StatsResponse()
+
+    response.home_team.shots_total.value = 34
+    response.home_team.shots_on_goal.value = 12
+    response.home_team.shots_off_goal.value = 22
+    response.home_team.shots_inside_box.value = 15
+    response.home_team.shots_outside_box.value = 5
+    response.home_team.passes_total.value = 300
+    response.home_team.passes_percentage.value = 90
+    response.home_team.possession.value = 68
+
+    response.away_team.shots_total.value = 34
+    response.away_team.shots_on_goal.value = 12
+    response.away_team.shots_off_goal.value = 22
+    response.away_team.shots_inside_box.value = 15
+    response.away_team.shots_outside_box.value = 5
+    response.away_team.passes_total.value = 300
+    response.away_team.passes_percentage.value = 90
+    response.away_team.possession.value = 68
+
+    return response
