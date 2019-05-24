@@ -1,6 +1,8 @@
 import pytest
 from mock import MagicMock, Mock
 from predictor.data.aggregator.match_goals import MatchGoals
+from predictor.grpc.fixture_client import FixtureClient
+from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
 from predictor.grpc.proto.result import result_pb2
 from predictor.grpc.result_client import ResultClient
 from predictor.grpc.team_stats_client import TeamStatsClient
@@ -204,6 +206,63 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
     assert df.shape == (3, 37)
 
 
+def test_for_fixture_data_frame_columns(mock_fixture_client, match_goals, fixture):
+    mock_fixture_client.get_fixture_by_id.return_value = fixture
+
+    df = match_goals.for_fixture(66)
+
+    mock_fixture_client.get_fixture_by_id.assert_called_with(fixture_id=66)
+
+    columns = [
+        'matchID',
+        'round',
+        'date',
+        'season',
+        'averageGoalsForFixture',
+        'homeTeamID',
+        'homeTeam',
+        'homeDaysSinceLastMatch',
+        'homeFormation',
+        'homeAvgScoredLast5',
+        'homeAvgConcededLast5',
+        'homeScoredLastMatch',
+        'homeConcededLastMatch',
+        'homeShotsTotal',
+        'homeShotsOnGoal',
+        'homeShotsOffGoal',
+        'homeShotsInsideBox',
+        'homeShotsOutsideBox',
+        'homeAttacksTotal',
+        'homeAttacksDangerous',
+        'homeGoals',
+        'awayTeamID',
+        'awayTeam',
+        'awayDaysSinceLastMatch',
+        'awayFormation',
+        'awayAvgScoredLast5',
+        'awayAvgConcededLast5',
+        'awayScoredLastMatch',
+        'awayConcededLastMatch',
+        'awayShotsTotal',
+        'awayShotsOnGoal',
+        'awayShotsOffGoal',
+        'awayShotsInsideBox',
+        'awayShotsOutsideBox',
+        'awayAttacksTotal',
+        'awayAttacksDangerous',
+        'awayGoals',
+    ]
+
+    df_columns = df.columns
+
+    assert (df_columns == columns).all()
+
+
+@pytest.fixture
+def mock_fixture_client():
+    return Mock(spec=FixtureClient)
+
+
 @pytest.fixture
 def mock_result_client():
     return MagicMock(spec=ResultClient)
@@ -215,8 +274,8 @@ def mock_team_stats_client():
 
 
 @pytest.fixture()
-def match_goals(mock_result_client, mock_team_stats_client):
-    return MatchGoals(mock_result_client, mock_team_stats_client)
+def match_goals(mock_fixture_client, mock_result_client, mock_team_stats_client):
+    return MatchGoals(mock_fixture_client, mock_result_client, mock_team_stats_client)
 
 
 @pytest.fixture()
@@ -242,8 +301,6 @@ def result():
     result.match_data.away_team.name = 'Tottenham Hotspur'
     result.match_data.stats.home_formation.value = '4-4-2'
     result.match_data.stats.away_formation.value = '5-3-1-1'
-    result.match_data.stats.home_league_position.value = 3
-    result.match_data.stats.away_league_position.value = 15
     result.match_data.stats.home_score.value = 2
     result.match_data.stats.away_score.value = 2
 
@@ -293,3 +350,28 @@ def team_stats_response():
     response.away_team.shots_outside_box.value = 5
 
     return response
+
+
+@pytest.fixture()
+def fixture():
+    result = Fixture()
+    result.id = 66
+
+    result.competition.id = 55
+    result.competition.is_cup.value = False
+
+    result.season.name = '2018/19'
+
+    result.round.name = '4'
+
+    result.season.id = 39910
+    result.season.is_current.value = True
+
+    result.date_time = 1556043338
+
+    result.home_team.id = 7901
+    result.home_team.name = 'West Ham United'
+    result.away_team.id = 496
+    result.away_team.name = 'Tottenham Hotspur'
+
+    return result

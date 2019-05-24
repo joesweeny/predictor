@@ -51,12 +51,11 @@ def GoalsConcededInMatch(result: Result, team_id: int) -> int:
     return goals
 
 
-def DaysBetweenResults(current: Result, previous: Result) -> int:
+def days_between_results(current_date: datetime, previous: Result) -> int:
     """
     Calculate the total days between two Results
     """
-    current = datetime.utcfromtimestamp(current.date_time)
-    current = current.replace(hour=0, minute=0, second=0, microsecond=0)
+    current = current_date.replace(hour=0, minute=0, second=0, microsecond=0)
 
     previous = datetime.utcfromtimestamp(previous.date_time)
     previous = previous.replace(hour=0, minute=0, second=0, microsecond=0)

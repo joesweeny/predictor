@@ -5,7 +5,7 @@ from predictor.grpc.proto.fixture import fixture_pb2_grpc
 
 
 class FixtureClient:
-    def GetFixtureById(self, fixture_id: int) -> fixture_pb2.Fixture:
+    def get_fixture_by_id(self, fixture_id: int) -> fixture_pb2.Fixture:
         client = self.__client()
         request = fixture_pb2.FixtureRequest(fixture_id=fixture_id)
         return client.FixtureByID(request)
