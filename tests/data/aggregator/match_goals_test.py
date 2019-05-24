@@ -1,6 +1,7 @@
 import pytest
 from mock import MagicMock, Mock
 from predictor.data.aggregator.match_goals import MatchGoals
+from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
 from predictor.grpc.proto.result import result_pb2
 from predictor.grpc.result_client import ResultClient
 from predictor.grpc.team_stats_client import TeamStatsClient
@@ -204,6 +205,135 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
     assert df.shape == (3, 37)
 
 
+def test_for_fixture_data_frame_columns(
+    match_goals,
+    fixture,
+    mock_result_client,
+    home_past_result,
+    away_past_result
+):
+    mock_result_client.get_results_for_team.side_effect = [
+        [
+            home_past_result,
+            home_past_result,
+            away_past_result,
+        ],
+        [
+            away_past_result,
+            away_past_result,
+            home_past_result,
+        ]
+    ]
+
+    mock_result_client.get_historical_results_for_fixture.side_effect = [
+        [
+            home_past_result,
+            home_past_result,
+            away_past_result,
+        ]
+    ]
+
+    df = match_goals.for_fixture(fixture=fixture)
+
+    columns = [
+        'matchID',
+        'round',
+        'date',
+        'season',
+        'averageGoalsForFixture',
+        'homeTeamID',
+        'homeTeam',
+        'homeDaysSinceLastMatch',
+        'homeFormation',
+        'homeAvgScoredLast5',
+        'homeAvgConcededLast5',
+        'homeScoredLastMatch',
+        'homeConcededLastMatch',
+        'homeShotsTotal',
+        'homeShotsOnGoal',
+        'homeShotsOffGoal',
+        'homeShotsInsideBox',
+        'homeShotsOutsideBox',
+        'homeAttacksTotal',
+        'homeAttacksDangerous',
+        'homeGoals',
+        'awayTeamID',
+        'awayTeam',
+        'awayDaysSinceLastMatch',
+        'awayFormation',
+        'awayAvgScoredLast5',
+        'awayAvgConcededLast5',
+        'awayScoredLastMatch',
+        'awayConcededLastMatch',
+        'awayShotsTotal',
+        'awayShotsOnGoal',
+        'awayShotsOffGoal',
+        'awayShotsInsideBox',
+        'awayShotsOutsideBox',
+        'awayAttacksTotal',
+        'awayAttacksDangerous',
+        'awayGoals',
+    ]
+
+    df_columns = df.columns
+
+    assert (df_columns == columns).all()
+    assert df.shape == (1, 37)
+
+
+def test_for_fixture_returns_dataframe_of_collated_fixture_data(
+    match_goals,
+    fixture,
+    mock_result_client,
+    home_past_result,
+    away_past_result
+):
+    mock_result_client.get_results_for_team.side_effect = [
+        [
+            home_past_result,
+            home_past_result,
+            away_past_result,
+        ],
+        [
+            away_past_result,
+            away_past_result,
+            home_past_result,
+        ]
+    ]
+
+    mock_result_client.get_historical_results_for_fixture.side_effect = [
+        [
+            home_past_result,
+            home_past_result,
+            away_past_result,
+        ]
+    ]
+
+    df = match_goals.for_fixture(fixture=fixture)
+
+    row = df.iloc[0, :]
+
+    assert row['matchID'] == 66
+    assert row['round'] == '4'
+    assert row['date'] == '2019-04-23T18:15:38'
+    assert row['season'] == '2018/19'
+    assert row['averageGoalsForFixture'] == 6.00
+    assert row['homeTeamID'] == 7901
+    assert row['homeTeam'] == 'West Ham United'
+    assert row['homeDaysSinceLastMatch'] == 3
+    assert row['homeAvgScoredLast5'] == 4.33
+    assert row['homeAvgConcededLast5'] == 1.67
+    assert row['homeScoredLastMatch'] == 5
+    assert row['homeConcededLastMatch'] == 2
+    assert row['awayTeamID'] == 496
+    assert row['awayTeam'] == 'Tottenham Hotspur'
+    assert row['awayDaysSinceLastMatch'] == 5
+    assert row['awayAvgScoredLast5'] == 1.33
+    assert row['awayAvgConcededLast5'] == 3.67
+    assert row['awayScoredLastMatch'] == 1
+    assert row['awayConcededLastMatch'] == 3
+
+
 @pytest.fixture
 def mock_result_client():
     return MagicMock(spec=ResultClient)
@@ -242,8 +372,6 @@ def result():
     result.match_data.away_team.name = 'Tottenham Hotspur'
     result.match_data.stats.home_formation.value = '4-4-2'
     result.match_data.stats.away_formation.value = '5-3-1-1'
-    result.match_data.stats.home_league_position.value = 3
-    result.match_data.stats.away_league_position.value = 15
     result.match_data.stats.home_score.value = 2
     result.match_data.stats.away_score.value = 2
 
@@ -293,3 +421,28 @@ def team_stats_response():
     response.away_team.shots_outside_box.value = 5
 
     return response
+
+
+@pytest.fixture()
+def fixture():
+    fixture = Fixture()
+    fixture.id = 66
+
+    fixture.competition.id = 55
+    fixture.competition.is_cup.value = False
+
+    fixture.season.name = '2018/19'
+
+    fixture.round.name = '4'
+
+    fixture.season.id = 39910
+    fixture.season.is_current.value = True
+
+    fixture.date_time = 1556043338
+
+    fixture.home_team.id = 7901
+    fixture.home_team.name = 'West Ham United'
+    fixture.away_team.id = 496
+    fixture.away_team.name = 'Tottenham Hotspur'
+
+    return fixture
