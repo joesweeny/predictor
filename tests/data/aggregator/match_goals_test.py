@@ -278,6 +278,7 @@ def test_for_fixture_data_frame_columns(
     df_columns = df.columns
 
     assert (df_columns == columns).all()
+    assert df.shape == (1, 37)
 
 
 def test_for_fixture_returns_dataframe_of_collated_fixture_data(
