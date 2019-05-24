@@ -13,7 +13,10 @@ def test_for_season_data_frame_columns(mock_result_client, match_goals):
 
     df = match_goals.for_season(5, '2019-04-23T18:15:38+00:00')
 
-    mock_result_client.get_results_for_season.assert_called_with(season_id=5, date_before='2019-04-23T18:15:38+00:00')
+    mock_result_client.get_results_for_season.assert_called_with(
+        season_id=5,
+        date_before='2019-04-23T18:15:38+00:00'
+    )
 
     columns = [
         'matchID',
@@ -97,7 +100,10 @@ def test_for_season_converts_result_object_into_data_frame_row(
 
     df = match_goals.for_season(5, '2019-04-23T18:15:38+00:00')
 
-    mock_result_client.get_results_for_season.assert_called_with(season_id=5, date_before='2019-04-23T18:15:38+00:00')
+    mock_result_client.get_results_for_season.assert_called_with(
+        season_id=5,
+        date_before='2019-04-23T18:15:38+00:00'
+    )
 
     mock_team_stats_client.get_team_stats_for_fixture.assert_called_with(fixture_id=66)
 
@@ -190,7 +196,10 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
 
     df = match_goals.for_season(5, '2019-04-23T18:15:38+00:00')
 
-    mock_result_client.get_results_for_season.assert_called_with(season_id=5, date_before='2019-04-23T18:15:38+00:00')
+    mock_result_client.get_results_for_season.assert_called_with(
+        season_id=5,
+        date_before='2019-04-23T18:15:38+00:00'
+    )
 
     assert df.shape == (3, 37)
 
