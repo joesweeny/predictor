@@ -8,12 +8,15 @@ from predictor.grpc.proto.stats.team import stats_pb2
 
 
 def test_for_season_data_frame_columns(mock_result_client, match_goals):
-    value = mock_result_client.GetResultsForSeason.return_value
+    value = mock_result_client.get_results_for_season.return_value
     value.__iter__.return_value = iter([])
 
-    df = match_goals.for_season(5)
+    df = match_goals.for_season(5, '2019-04-23T18:15:38+00:00')
 
-    mock_result_client.GetResultsForSeason.assert_called_with(5)
+    mock_result_client.get_results_for_season.assert_called_with(
+        season_id=5,
+        date_before='2019-04-23T18:15:38+00:00'
+    )
 
     columns = [
         'matchID',
@@ -69,10 +72,10 @@ def test_for_season_converts_result_object_into_data_frame_row(
         away_past_result,
         team_stats_response
 ):
-    value = mock_result_client.GetResultsForSeason.return_value
+    value = mock_result_client.get_results_for_season.return_value
     value.__iter__.return_value = iter([result])
 
-    mock_result_client.GetResultsForTeam.side_effect = [
+    mock_result_client.get_results_for_team.side_effect = [
         [
             home_past_result,
             home_past_result,
@@ -85,7 +88,7 @@ def test_for_season_converts_result_object_into_data_frame_row(
         ]
     ]
 
-    mock_result_client.GetHistoricalResultsForFixture.side_effect = [
+    mock_result_client.get_historical_results_for_fixture.side_effect = [
         [
             home_past_result,
             home_past_result,
@@ -95,9 +98,12 @@ def test_for_season_converts_result_object_into_data_frame_row(
 
     mock_team_stats_client.get_team_stats_for_fixture.return_value = team_stats_response
 
-    df = match_goals.for_season(5)
+    df = match_goals.for_season(5, '2019-04-23T18:15:38+00:00')
 
-    mock_result_client.GetResultsForSeason.assert_called_with(5)
+    mock_result_client.get_results_for_season.assert_called_with(
+        season_id=5,
+        date_before='2019-04-23T18:15:38+00:00'
+    )
 
     mock_team_stats_client.get_team_stats_for_fixture.assert_called_with(fixture_id=66)
 
@@ -153,10 +159,10 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
         home_past_result,
         away_past_result
 ):
-    value = mock_result_client.GetResultsForSeason.return_value
+    value = mock_result_client.get_results_for_season.return_value
     value.__iter__.return_value = iter([result, result, result])
 
-    mock_result_client.GetResultsForTeam.side_effect = [
+    mock_result_client.get_results_for_team.side_effect = [
         [home_past_result],
         [away_past_result],
         [home_past_result],
@@ -170,7 +176,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
         [home_past_result],
     ]
 
-    mock_result_client.GetHistoricalResultsForFixture.side_effect = [
+    mock_result_client.get_historical_results_for_fixture.side_effect = [
         [
             home_past_result,
             home_past_result,
@@ -188,9 +194,12 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
         ]
     ]
 
-    df = match_goals.for_season(5)
+    df = match_goals.for_season(5, '2019-04-23T18:15:38+00:00')
 
-    mock_result_client.GetResultsForSeason.assert_called_with(5)
+    mock_result_client.get_results_for_season.assert_called_with(
+        season_id=5,
+        date_before='2019-04-23T18:15:38+00:00'
+    )
 
     assert df.shape == (3, 37)
 

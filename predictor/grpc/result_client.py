@@ -9,13 +9,13 @@ class ResultClient:
         self.host = host
         self.port = port
 
-    def GetResultsForSeason(self, season_id: int):
+    def get_results_for_season(self, season_id: int, date_before: str):
         client = self.__client()
-        request = result_pb2.SeasonRequest(season_id=season_id)
+        request = result_pb2.SeasonRequest(season_id=season_id, date_before=date_before)
         for result in client.GetResultsForSeason(request):
             yield result
 
-    def GetResultsForTeam(self, team_id, limit, date_before):
+    def get_results_for_team(self, team_id, limit, date_before):
         client = self.__client()
         limit = wrappers_pb2.Int32Value(value=limit)
         request = result_pb2.TeamRequest(
@@ -31,7 +31,7 @@ class ResultClient:
 
         return results
 
-    def GetHistoricalResultsForFixture(
+    def get_historical_results_for_fixture(
             self,
             home_team_id: int,
             away_team_id: int,
