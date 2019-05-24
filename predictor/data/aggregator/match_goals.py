@@ -9,7 +9,7 @@ from predictor.data import calculator
 
 
 class MatchGoals:
-    def __init__(self, result_client: ResultClient,team_stats_client: TeamStatsClient):
+    def __init__(self, result_client: ResultClient, team_stats_client: TeamStatsClient):
         self.result_client = result_client
         self.team_stats_client = team_stats_client
 
