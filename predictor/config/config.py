@@ -7,4 +7,3 @@ CONNECTIONS = {
         'database': os.getenv('REDIS_DATABASE')
     }
 }
-
