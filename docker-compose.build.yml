@@ -10,3 +10,10 @@ services:
     tty: true
     ports:
       - "50051:50051"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DATABASE=15
+
+  redis:
+    image: 'redis'
