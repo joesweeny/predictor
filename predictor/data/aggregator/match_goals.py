@@ -163,7 +163,7 @@ class MatchGoals:
         home_team = current_result.match_data.home_team
         away_team = current_result.match_data.away_team
 
-        results = self.result_client.GetHistoricalResultsForFixture(
+        results = self.result_client.get_historical_results_for_fixture(
             home_team_id=home_team.id,
             away_team_id=away_team.id,
             date_before=date.isoformat(),
@@ -175,7 +175,7 @@ class MatchGoals:
     def __get_previous_results(self, current_result: Result, team_id: int, limit: int):
         date = datetime.utcfromtimestamp(current_result.date_time).astimezone()
 
-        results = self.result_client.GetResultsForTeam(
+        results = self.result_client.get_results_for_team(
             team_id=team_id,
             limit=limit,
             date_before=date.isoformat()
