@@ -20,7 +20,8 @@ def hello(name: str):
 
 @cli.command()
 @click.argument('season_id')
-def season_data(season_id: str):
+@click.argument('date_before')
+def season_data(season_id: str, date_before: str):
     """
     Retrieve and parse data for a given season
     """
@@ -38,7 +39,7 @@ def season_data(season_id: str):
         team_stats_client=team_stats_client
     )
 
-    df = collator.for_season(int(season_id))
+    df = collator.for_season(season_id=int(season_id), date_before=date_before)
 
     filename = './data-files/season-{}.csv'.format(season_id)
 
