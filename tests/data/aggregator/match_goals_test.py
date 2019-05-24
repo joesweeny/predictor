@@ -18,8 +18,6 @@ def test_for_season_data_frame_columns(mock_result_client, match_goals):
     columns = [
         'matchID',
         'round',
-        'refereeID',
-        'venueID',
         'date',
         'season',
         'averageGoalsForFixture',
@@ -38,11 +36,6 @@ def test_for_season_data_frame_columns(mock_result_client, match_goals):
         'homeShotsOutsideBox',
         'homeAttacksTotal',
         'homeAttacksDangerous',
-        'homeCorners',
-        'homePossession',
-        'homePassTotal',
-        'homePassAccuracy',
-        'homePassPercentage',
         'homeGoals',
         'awayTeamID',
         'awayTeam',
@@ -59,11 +52,6 @@ def test_for_season_data_frame_columns(mock_result_client, match_goals):
         'awayShotsOutsideBox',
         'awayAttacksTotal',
         'awayAttacksDangerous',
-        'awayCorners',
-        'awayPossession',
-        'awayPassTotal',
-        'awayPassAccuracy',
-        'awayPassPercentage',
         'awayGoals',
     ]
 
@@ -116,8 +104,6 @@ def test_for_season_converts_result_object_into_data_frame_row(
     expected = [
         66,
         '4',
-        3412,
-        88,
         '2019-04-23T18:15:38',
         '2018/19',
         6.00,
@@ -136,11 +122,6 @@ def test_for_season_converts_result_object_into_data_frame_row(
         5,
         None,
         None,
-        None,
-        68,
-        300,
-        None,
-        90,
         2,
         496,
         'Tottenham Hotspur',
@@ -157,11 +138,6 @@ def test_for_season_converts_result_object_into_data_frame_row(
         5,
         None,
         None,
-        None,
-        68,
-        300,
-        None,
-        90,
         2,
     ]
 
@@ -216,7 +192,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
 
     mock_result_client.GetResultsForSeason.assert_called_with(5)
 
-    assert df.shape == (3, 49)
+    assert df.shape == (3, 37)
 
 
 @pytest.fixture
@@ -249,8 +225,6 @@ def result():
     result.season.id = 39910
     result.season.is_current.value = True
 
-    result.venue.id.value = 88
-    result.referee_id.value = 3412
     result.date_time = 1556043338
 
     result.match_data.home_team.id = 7901
@@ -302,17 +276,11 @@ def team_stats_response():
     response.home_team.shots_off_goal.value = 22
     response.home_team.shots_inside_box.value = 15
     response.home_team.shots_outside_box.value = 5
-    response.home_team.passes_total.value = 300
-    response.home_team.passes_percentage.value = 90
-    response.home_team.possession.value = 68
 
     response.away_team.shots_total.value = 34
     response.away_team.shots_on_goal.value = 12
     response.away_team.shots_off_goal.value = 22
     response.away_team.shots_inside_box.value = 15
     response.away_team.shots_outside_box.value = 5
-    response.away_team.passes_total.value = 300
-    response.away_team.passes_percentage.value = 90
-    response.away_team.possession.value = 68
 
     return response

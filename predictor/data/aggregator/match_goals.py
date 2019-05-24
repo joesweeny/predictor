@@ -15,8 +15,6 @@ class MatchGoals:
     __columns = [
         'matchID',
         'round',
-        'refereeID',
-        'venueID',
         'date',
         'season',
         'averageGoalsForFixture',
@@ -35,11 +33,6 @@ class MatchGoals:
         'homeShotsOutsideBox',
         'homeAttacksTotal',
         'homeAttacksDangerous',
-        'homeCorners',
-        'homePossession',
-        'homePassTotal',
-        'homePassAccuracy',
-        'homePassPercentage',
         'homeGoals',
         'awayTeamID',
         'awayTeam',
@@ -56,11 +49,6 @@ class MatchGoals:
         'awayShotsOutsideBox',
         'awayAttacksTotal',
         'awayAttacksDangerous',
-        'awayCorners',
-        'awayPossession',
-        'awayPassTotal',
-        'awayPassAccuracy',
-        'awayPassPercentage',
         'awayGoals',
     ]
 
@@ -93,8 +81,6 @@ class MatchGoals:
         data = {
             'matchID': result.id,
             'round': result.round.name,
-            'refereeID': result.referee_id.value,
-            'venueID': result.venue.id.value,
             'date': date,
             'season': result.season.name,
             'averageGoalsForFixture': calculator.AverageGoalsForResults(
@@ -130,11 +116,6 @@ class MatchGoals:
             'homeShotsOutsideBox': self.__get_value('shots_outside_box', home_stats),
             'homeAttacksTotal': self.__get_value('attacks_total', home_stats),
             'homeAttacksDangerous': self.__get_value('attacks_dangerous', home_stats),
-            'homeCorners': self.__get_value('corners', home_stats),
-            'homePossession': self.__get_value('possession', home_stats),
-            'homePassTotal': self.__get_value('passes_total', home_stats),
-            'homePassAccuracy': self.__get_value('passes_accuracy', home_stats),
-            'homePassPercentage': self.__get_value('passes_percentage', home_stats),
             'homeGoals': self.__get_value('home_score', match_stats),
             'awayTeamID': away_team.id,
             'awayTeam': away_team.name,
@@ -166,11 +147,6 @@ class MatchGoals:
             'awayShotsOutsideBox': self.__get_value('shots_outside_box', away_stats),
             'awayAttacksTotal': self.__get_value('attacks_total', away_stats),
             'awayAttacksDangerous': self.__get_value('attacks_dangerous', away_stats),
-            'awayCorners': self.__get_value('corners', away_stats),
-            'awayPossession': self.__get_value('possession', away_stats),
-            'awayPassTotal': self.__get_value('passes_total', away_stats),
-            'awayPassAccuracy': self.__get_value('passes_accuracy', away_stats),
-            'awayPassPercentage': self.__get_value('passes_percentage', away_stats),
             'awayGoals': self.__get_value('away_score', match_stats),
         }
 
