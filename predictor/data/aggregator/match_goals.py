@@ -52,10 +52,15 @@ class MatchGoals:
         'awayGoals',
     ]
 
-    def for_season(self, season_id: int) -> pd.DataFrame:
+    def for_season(self, season_id: int, date_before: str) -> pd.DataFrame:
         df = pd.DataFrame(columns=self.__columns)
 
-        for result in self.result_client.GetResultsForSeason(season_id):
+        results = self.result_client.get_results_for_season(
+            season_id=season_id,
+            date_before=date_before
+        )
+
+        for result in results:
             df = df.append(self.__result_to_row(result), ignore_index=True)
 
         return df
