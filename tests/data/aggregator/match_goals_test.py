@@ -1,7 +1,6 @@
 import pytest
 from mock import MagicMock, Mock
 from predictor.data.aggregator.match_goals import MatchGoals
-from predictor.grpc.fixture_client import FixtureClient
 from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
 from predictor.grpc.proto.result import result_pb2
 from predictor.grpc.result_client import ResultClient
@@ -206,12 +205,35 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
     assert df.shape == (3, 37)
 
 
-def test_for_fixture_data_frame_columns(mock_fixture_client, match_goals, fixture):
-    mock_fixture_client.get_fixture_by_id.return_value = fixture
+def test_for_fixture_data_frame_columns(
+    match_goals,
+    fixture,
+    mock_result_client,
+    home_past_result,
+    away_past_result
+):
+    mock_result_client.get_results_for_team.side_effect = [
+        [
+            home_past_result,
+            home_past_result,
+            away_past_result,
+        ],
+        [
+            away_past_result,
+            away_past_result,
+            home_past_result,
+        ]
+    ]
 
-    df = match_goals.for_fixture(66)
+    mock_result_client.get_historical_results_for_fixture.side_effect = [
+        [
+            home_past_result,
+            home_past_result,
+            away_past_result,
+        ]
+    ]
 
-    mock_fixture_client.get_fixture_by_id.assert_called_with(fixture_id=66)
+    df = match_goals.for_fixture(fixture=fixture)
 
     columns = [
         'matchID',
@@ -258,9 +280,57 @@ def test_for_fixture_data_frame_columns(mock_fixture_client, match_goals, fixtur
     assert (df_columns == columns).all()
 
 
-@pytest.fixture
-def mock_fixture_client():
-    return Mock(spec=FixtureClient)
+def test_for_fixture_returns_dataframe_of_collated_fixture_data(
+    match_goals,
+    fixture,
+    mock_result_client,
+    home_past_result,
+    away_past_result
+):
+    mock_result_client.get_results_for_team.side_effect = [
+        [
+            home_past_result,
+            home_past_result,
+            away_past_result,
+        ],
+        [
+            away_past_result,
+            away_past_result,
+            home_past_result,
+        ]
+    ]
+
+    mock_result_client.get_historical_results_for_fixture.side_effect = [
+        [
+            home_past_result,
+            home_past_result,
+            away_past_result,
+        ]
+    ]
+
+    df = match_goals.for_fixture(fixture=fixture)
+
+    row = df.iloc[0, :]
+
+    assert row['matchID'] == 66
+    assert row['round'] == '4'
+    assert row['date'] == '2019-04-23T18:15:38'
+    assert row['season'] == '2018/19'
+    assert row['averageGoalsForFixture'] == 6.00
+    assert row['homeTeamID'] == 7901
+    assert row['homeTeam'] == 'West Ham United'
+    assert row['homeDaysSinceLastMatch'] == 3
+    assert row['homeAvgScoredLast5'] == 4.33
+    assert row['homeAvgConcededLast5'] == 1.67
+    assert row['homeScoredLastMatch'] == 5
+    assert row['homeConcededLastMatch'] == 2
+    assert row['awayTeamID'] == 496
+    assert row['awayTeam'] == 'Tottenham Hotspur'
+    assert row['awayDaysSinceLastMatch'] == 5
+    assert row['awayAvgScoredLast5'] == 1.33
+    assert row['awayAvgConcededLast5'] == 3.67
+    assert row['awayScoredLastMatch'] == 1
+    assert row['awayConcededLastMatch'] == 3
 
 
 @pytest.fixture
@@ -274,8 +344,8 @@ def mock_team_stats_client():
 
 
 @pytest.fixture()
-def match_goals(mock_fixture_client, mock_result_client, mock_team_stats_client):
-    return MatchGoals(mock_fixture_client, mock_result_client, mock_team_stats_client)
+def match_goals(mock_result_client, mock_team_stats_client):
+    return MatchGoals(mock_result_client, mock_team_stats_client)
 
 
 @pytest.fixture()
@@ -354,24 +424,24 @@ def team_stats_response():
 
 @pytest.fixture()
 def fixture():
-    result = Fixture()
-    result.id = 66
+    fixture = Fixture()
+    fixture.id = 66
 
-    result.competition.id = 55
-    result.competition.is_cup.value = False
+    fixture.competition.id = 55
+    fixture.competition.is_cup.value = False
 
-    result.season.name = '2018/19'
+    fixture.season.name = '2018/19'
 
-    result.round.name = '4'
+    fixture.round.name = '4'
 
-    result.season.id = 39910
-    result.season.is_current.value = True
+    fixture.season.id = 39910
+    fixture.season.is_current.value = True
 
-    result.date_time = 1556043338
+    fixture.date_time = 1556043338
 
-    result.home_team.id = 7901
-    result.home_team.name = 'West Ham United'
-    result.away_team.id = 496
-    result.away_team.name = 'Tottenham Hotspur'
+    fixture.home_team.id = 7901
+    fixture.home_team.name = 'West Ham United'
+    fixture.away_team.id = 496
+    fixture.away_team.name = 'Tottenham Hotspur'
 
-    return result
+    return fixture

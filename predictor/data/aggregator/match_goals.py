@@ -1,6 +1,5 @@
 import pandas as pd
 from datetime import datetime
-from predictor.grpc.fixture_client import FixtureClient
 from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
 from predictor.grpc.result_client import ResultClient
 from predictor.grpc.proto.result.result_pb2 import Result
@@ -10,13 +9,7 @@ from predictor.data import calculator
 
 
 class MatchGoals:
-    def __init__(
-        self,
-        fixture_client: FixtureClient,
-        result_client: ResultClient,
-        team_stats_client: TeamStatsClient
-    ):
-        self.fixture_client = fixture_client
+    def __init__(self, result_client: ResultClient,team_stats_client: TeamStatsClient):
         self.result_client = result_client
         self.team_stats_client = team_stats_client
 
@@ -73,10 +66,8 @@ class MatchGoals:
 
         return df
 
-    def for_fixture(self, fixture_id: int) -> pd.DataFrame:
+    def for_fixture(self, fixture: Fixture) -> pd.DataFrame:
         df = pd.DataFrame(columns=self.__columns)
-
-        fixture = self.fixture_client.get_fixture_by_id(fixture_id=fixture_id)
 
         df = df.append(self.__fixture_to_row(fixture), ignore_index=True)
 
