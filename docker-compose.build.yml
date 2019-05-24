@@ -13,7 +13,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_DATABASE=0
+      - REDIS_DATABASE=15
 
   redis:
     image: 'redis'
