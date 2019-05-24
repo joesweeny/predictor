@@ -10,3 +10,6 @@ services:
     tty: true
     ports:
       - "50051:50051"
+
+  redis:
+    image: 'redis'
