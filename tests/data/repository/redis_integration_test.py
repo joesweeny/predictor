@@ -1,7 +1,7 @@
 import pytest
 import redis
 import pandas as pd
-from predictor.config import config
+from predictor.framework import config
 from predictor.data.repository.redis import RedisRepository
 
 
