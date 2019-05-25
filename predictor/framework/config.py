@@ -9,13 +9,22 @@ CONNECTIONS = {
 }
 
 SUPPORTED_COMPETITIONS = {
-    {
+    0: {
         'id': 8,
         'name': 'English Premier League',
-        'seasons': {
-            13: "2016/2017",
-            6397: "2017/2018",
-            12962: "2018/2019",
-        }
+        'seasons': [
+            {
+                'id': 13,
+                'name': "2016/2017",
+            },
+            {
+                'id': 6397,
+                'name': "2017/2018",
+            },
+            {
+                'id': 12962,
+                'name': "2018/2019"
+            },
+        ]
     }
 }
