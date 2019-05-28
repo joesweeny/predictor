@@ -53,12 +53,12 @@ class MatchGoals:
         'awayGoals',
     ]
 
-    def for_season(self, season_id: int, date_before: str) -> pd.DataFrame:
+    def for_season(self, season_id: int, date_before: datetime) -> pd.DataFrame:
         df = pd.DataFrame(columns=self.__columns)
 
         results = self.result_client.get_results_for_season(
             season_id=season_id,
-            date_before=date_before
+            date_before=date_before.isoformat()
         )
 
         for result in results:

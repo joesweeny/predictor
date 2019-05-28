@@ -1,4 +1,5 @@
 import pytest
+from datetime import datetime
 from mock import MagicMock, Mock
 from predictor.data.aggregator.match_goals import MatchGoals
 from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
@@ -12,7 +13,7 @@ def test_for_season_data_frame_columns(mock_result_client, match_goals):
     value = mock_result_client.get_results_for_season.return_value
     value.__iter__.return_value = iter([])
 
-    df = match_goals.for_season(5, '2019-04-23T18:15:38+00:00')
+    df = match_goals.for_season(5, datetime.fromisoformat('2019-04-23T18:15:38+00:00'))
 
     mock_result_client.get_results_for_season.assert_called_with(
         season_id=5,
@@ -99,7 +100,7 @@ def test_for_season_converts_result_object_into_data_frame_row(
 
     mock_team_stats_client.get_team_stats_for_fixture.return_value = team_stats_response
 
-    df = match_goals.for_season(5, '2019-04-23T18:15:38+00:00')
+    df = match_goals.for_season(5, datetime.fromisoformat('2019-04-23T18:15:38+00:00'))
 
     mock_result_client.get_results_for_season.assert_called_with(
         season_id=5,
@@ -195,7 +196,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
         ]
     ]
 
-    df = match_goals.for_season(5, '2019-04-23T18:15:38+00:00')
+    df = match_goals.for_season(5, datetime.fromisoformat('2019-04-23T18:15:38+00:00'))
 
     mock_result_client.get_results_for_season.assert_called_with(
         season_id=5,

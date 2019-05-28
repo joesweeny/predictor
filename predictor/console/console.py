@@ -1,5 +1,6 @@
 import click
 import os
+from datetime import datetime
 from predictor.grpc.result_client import ResultClient
 from predictor.grpc.team_stats_client import TeamStatsClient
 from predictor.data.aggregator.match_goals import MatchGoals
@@ -39,7 +40,9 @@ def season_data(season_id: str, date_before: str):
         team_stats_client=team_stats_client
     )
 
-    df = collator.for_season(season_id=int(season_id), date_before=date_before)
+    date = datetime.fromisoformat(date_before)
+
+    df = collator.for_season(season_id=int(season_id), date_before=date)
 
     filename = './data-files/season-{}.csv'.format(season_id)
 
