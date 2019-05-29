@@ -5,7 +5,12 @@ from predictor.framework import config
 
 
 class DataHandler:
-    def __init__(self, configuration: config, repository: RedisRepository, aggregator: MatchGoals):
+    def __init__(
+        self,
+        configuration: config,
+        repository: RedisRepository,
+        aggregator: MatchGoals
+    ):
         self._configuration = configuration
         self._repository = repository
         self._aggregator = aggregator
@@ -28,6 +33,9 @@ class DataHandler:
                     date_before=date_before
                 )
 
-                filename = "competition:" + str(competition_id) + ':season:' + str(season['id'])
+                filename = "competition:" \
+                           + str(competition_id) \
+                           + ':season:' \
+                           + str(season['id'])
 
                 self._repository.save_data_frame(key=filename, df=df)
