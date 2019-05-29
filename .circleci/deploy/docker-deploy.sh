@@ -12,5 +12,6 @@ ssh -t root@${PRODUCTION_SERVER} 'export RELEASE='"'$RELEASE'"' export DATA_SERV
 
 docker-compose -f ./docker-compose.prod.yml pull grpc && \
 
-docker-compose -f ./docker-compose.prod.yml up -d'
+docker-compose -f ./docker-compose.prod.yml pull console && \
 
+docker-compose -f ./docker-compose.prod.yml up -d'

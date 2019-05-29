@@ -15,5 +15,19 @@ services:
       - REDIS_PORT=6379
       - REDIS_DATABASE=15
 
+  console:
+    build:
+      dockerfile: ./docker/console/Dockerfile
+      context: ./
+    volumes:
+      - .:/opt
+    tty: true
+    ports:
+      - "50051:50051"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DATABASE=15
+
   redis:
     image: 'redis'
