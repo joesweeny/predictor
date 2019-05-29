@@ -9,7 +9,7 @@ from predictor.data.handling.data_handler import DataHandler
 
 
 def test_store_match_goals_data_for_supported_competitions_parses_and_stores_dataframe(handler):
-    handler.configuration.SUPPORTED_COMPETITIONS = {
+    handler._configuration.SUPPORTED_COMPETITIONS = {
         0: {
             'id': 8,
             'name': 'English Premier League',
@@ -30,7 +30,7 @@ def test_store_match_goals_data_for_supported_competitions_parses_and_stores_dat
 
     dataframe = pd.DataFrame.from_dict({0: {0: 'Hello'}})
 
-    handler.aggregator.for_season.side_effect = [dataframe, dataframe, dataframe]
+    handler._aggregator.for_season.side_effect = [dataframe, dataframe, dataframe]
 
     handler.store_match_goals_data_for_supported_competitions(date)
 
@@ -39,14 +39,14 @@ def test_store_match_goals_data_for_supported_competitions_parses_and_stores_dat
         call(season_id=6397, date_before=date),
     ]
 
-    handler.aggregator.for_season.assert_has_calls(aggregrator_calls)
+    handler._aggregator.for_season.assert_has_calls(aggregrator_calls)
 
     repository_calls = [
         call(key='competition:8:season:13', df=dataframe),
         call(key='competition:8:season:6397', df=dataframe),
     ]
 
-    handler.repository.save_data_frame.assert_has_calls(repository_calls)
+    handler._repository.save_data_frame.assert_has_calls(repository_calls)
 
 
 @pytest.fixture

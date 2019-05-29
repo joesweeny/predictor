@@ -6,9 +6,9 @@ from predictor.framework import config
 
 class DataHandler:
     def __init__(self, configuration: config, repository: RedisRepository, aggregator: MatchGoals):
-        self.configuration = configuration
-        self.repository = repository
-        self.aggregator = aggregator
+        self._configuration = configuration
+        self._repository = repository
+        self._aggregator = aggregator
 
     def store_match_goals_data_for_supported_competitions(self, date_before: datetime):
         """
@@ -16,18 +16,18 @@ class DataHandler:
             a) parse data into dataframe
             b) store dataframe to persistence layer
         """
-        competitions = self.configuration.SUPPORTED_COMPETITIONS
+        competitions = self._configuration.SUPPORTED_COMPETITIONS
 
         for i, competition in competitions.items():
             competition_id = competition['id']
             seasons = competition['seasons']
 
             for season in seasons:
-                df = self.aggregator.for_season(
+                df = self._aggregator.for_season(
                     season_id=season['id'],
                     date_before=date_before
                 )
 
                 filename = "competition:" + str(competition_id) + ':season:' + str(season['id'])
 
-                self.repository.save_data_frame(key=filename, df=df)
+                self._repository.save_data_frame(key=filename, df=df)
