@@ -1,6 +1,5 @@
 import os
 
-
 CONNECTIONS = {
     'redis': {
         'host': os.getenv('REDIS_HOST'),
