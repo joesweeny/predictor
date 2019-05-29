@@ -252,7 +252,7 @@ class MatchGoals:
         results = self.result_client.get_historical_results_for_fixture(
             home_team_id=home_team_id,
             away_team_id=away_team_id,
-            date_before=date_before.isoformat(),
+            date_before=date_before.strftime('%Y-%m-%dT%H:%M:%S+00:00'),
             limit=limit
         )
 
@@ -262,7 +262,7 @@ class MatchGoals:
         results = self.result_client.get_results_for_team(
             team_id=team_id,
             limit=limit,
-            date_before=date_before.isoformat()
+            date_before=date_before.strftime('%Y-%m-%dT%H:%M:%S+00:00')
         )
 
         return results[0:limit]

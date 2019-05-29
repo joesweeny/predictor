@@ -13,5 +13,15 @@ services:
         REDIS_DATABASE: 0
       tty: true
 
+    console:
+      image: joesweeny/statisticopredictor_console:$RELEASE
+      environment:
+        DATA_SERVER_HOST: $DATA_SERVER_HOST
+        DATA_SERVER_PORT: $DATA_SERVER_PORT
+        REDIS_HOST: redis
+        REDIS_PORT: 6379
+        REDIS_DATABASE: 0
+      tty: true
+
     redis:
       image: 'redis'

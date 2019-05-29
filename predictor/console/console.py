@@ -1,9 +1,6 @@
 import click
-import os
-from datetime import datetime
-from predictor.grpc.result_client import ResultClient
-from predictor.grpc.team_stats_client import TeamStatsClient
-from predictor.data.aggregator.match_goals import MatchGoals
+from datetime import datetime, timezone
+from predictor.framework.container import Container
 
 
 @click.group()
@@ -26,19 +23,7 @@ def season_data(season_id: str, date_before: str):
     """
     Retrieve and parse data for a given season
     """
-    host = os.getenv('DATA_SERVER_HOST')
-    port = os.getenv('DATA_SERVER_PORT')
-
-    if host is None or port is None:
-        print('Host and port are required to executed this command')
-        return
-
-    result_client = ResultClient(host=host, port=port)
-    team_stats_client = TeamStatsClient(host=host, port=port)
-    collator = MatchGoals(
-        result_client=result_client,
-        team_stats_client=team_stats_client
-    )
+    collator = Container().match_goals_aggregator()
 
     try:
         date = datetime.fromisoformat(date_before)
@@ -51,5 +36,21 @@ def season_data(season_id: str, date_before: str):
     filename = './data-files/season-{}.csv'.format(season_id)
 
     df.to_csv(filename, encoding='utf-8', index=False)
+
+    print('Data saved')
+
+
+@cli.command()
+def process_supported_competitions_data():
+    """
+    Parse and save data for supported competitions
+    """
+    handler = Container().data_handler()
+
+    now = datetime.now(timezone.utc).replace(microsecond=0)
+
+    handler.store_match_goals_data_for_supported_competitions(
+        date_before=now
+    )
 
     print('Data saved')
