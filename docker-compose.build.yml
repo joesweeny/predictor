@@ -22,8 +22,6 @@ services:
     volumes:
       - .:/opt
     tty: true
-    ports:
-      - "50051:50051"
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379

@@ -15,8 +15,6 @@ services:
 
     console:
       image: joesweeny/statisticopredictor_console:$RELEASE
-      ports:
-        - "50051:50051"
       environment:
         DATA_SERVER_HOST: $DATA_SERVER_HOST
         DATA_SERVER_PORT: $DATA_SERVER_PORT
