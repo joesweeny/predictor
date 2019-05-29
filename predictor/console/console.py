@@ -40,7 +40,11 @@ def season_data(season_id: str, date_before: str):
         team_stats_client=team_stats_client
     )
 
-    date = datetime.fromisoformat(date_before)
+    try:
+        date = datetime.fromisoformat(date_before)
+    except ValueError:
+        print('Date provided is not a valid RFC3339 date')
+        return
 
     df = collator.for_season(season_id=int(season_id), date_before=date)
 
