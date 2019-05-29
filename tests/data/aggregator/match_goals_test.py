@@ -9,13 +9,13 @@ from predictor.grpc.team_stats_client import TeamStatsClient
 from predictor.grpc.proto.stats.team import stats_pb2
 
 
-def test_for_season_data_frame_columns(mock_result_client, match_goals):
-    value = mock_result_client.get_results_for_season.return_value
+def test_for_season_data_frame_columns(match_goals):
+    value = match_goals.result_client.get_results_for_season.return_value
     value.__iter__.return_value = iter([])
 
     df = match_goals.for_season(5, datetime.fromisoformat('2019-04-23T18:15:38+00:00'))
 
-    mock_result_client.get_results_for_season.assert_called_with(
+    match_goals.result_client.get_results_for_season.assert_called_with(
         season_id=5,
         date_before='2019-04-23T18:15:38+00:00'
     )
@@ -330,19 +330,11 @@ def test_for_fixture_returns_dataframe_of_collated_fixture_data(
     assert row['awayConcededLastMatch'] == 3
 
 
-@pytest.fixture
-def mock_result_client():
-    return MagicMock(spec=ResultClient)
-
-
-@pytest.fixture
-def mock_team_stats_client():
-    return Mock(spec=TeamStatsClient)
-
-
 @pytest.fixture()
-def match_goals(mock_result_client, mock_team_stats_client):
-    return MatchGoals(mock_result_client, mock_team_stats_client)
+def match_goals():
+    result_client = MagicMock(spec=ResultClient)
+    team_stats_client = Mock(spec=TeamStatsClient)
+    return MatchGoals(result_client, team_stats_client)
 
 
 @pytest.fixture()
