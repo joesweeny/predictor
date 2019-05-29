@@ -35,8 +35,6 @@ def season_data(season_id: str, date_before: str):
 
     filename = './data-files/season-{}.csv'.format(season_id)
 
-    exit(filename)
-
     df.to_csv(filename, encoding='utf-8', index=False)
 
     print('Data saved')
