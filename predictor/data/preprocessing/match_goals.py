@@ -28,9 +28,9 @@ class MatchGoalsPreProcessor:
 
         predict_df = helpers.drop_non_features(fixture_df)
 
-        train_features = train_features.convert_objects(convert_numeric=True)
+        train_features = train_features.astype(float)
 
-        predict_df = predict_df.convert_objects(convert_numeric=True)
+        predict_df = predict_df.astype(float)
 
         return train_features, predict_df
 

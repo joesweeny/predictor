@@ -61,5 +61,7 @@ def process_supported_competitions_data():
 def process_feature_data(fixture_id):
     predictor = Container().match_goals_predictor()
 
-    return predictor.predict_for_fixture(fixture_id=int(fixture_id))
+    p = predictor.predict_for_fixture(fixture_id=int(fixture_id))
+
+    print(p)
 

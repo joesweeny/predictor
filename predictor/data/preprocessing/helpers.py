@@ -174,6 +174,7 @@ def drop_non_features(df: pd.DataFrame) -> pd.DataFrame:
     columns = [
         'matchID',
         'date',
+        'round',
         'season',
         'homeTeamID',
         'homeTeam',
