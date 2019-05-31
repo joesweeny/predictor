@@ -1,24 +1,19 @@
 from predictor.grpc.fixture_client import FixtureClient
-from predictor.data import preprocessing
-from predictor.data.aggregator.match_goals import MatchGoals
-from predictor.data.repository.redis import RedisRepository
+from predictor.data.preprocessing.match_goals import MatchGoalsPreProcessor
+from predictor.model.match_goals import predict_match_goals
 
 
 class MatchGoalsPredictor:
-    def __init__(self, fixture_client: FixtureClient, aggregator: MatchGoals, repository: RedisRepository):
+    def __init__(self, fixture_client: FixtureClient, preprocessor: MatchGoalsPreProcessor):
         self.__fixture_client = fixture_client
-        self.__aggregator = aggregator
-        self.__repository = repository
+        self.__preprocessor = preprocessor
 
     def predict_for_fixture(self, fixture_id: int):
         try:
             fixture = self.__fixture_client.get_fixture_by_id(fixture_id=fixture_id)
-        except:
-            print('Not found')
-            return
+        except Exception:
+            raise Exception('Fixture {} does not exist'.format(fixture_id))
 
-        fixture_df = self.__aggregator.for_fixture(fixture=fixture)
+        features, predict = self.__preprocessor.pre_process_data_for_fixture(fixture=fixture)
 
-
-
-    def __get_feature_dataframes(self, fixture):
+        return predict_match_goals(features=features, fixture=predict)

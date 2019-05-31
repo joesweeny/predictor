@@ -1,172 +1,97 @@
-import numpy as np
+from typing import List, Tuple
 import pandas as pd
+from predictor.data.preprocessing import helpers
+from predictor.data.aggregator.match_goals import MatchGoals
+from predictor.data.repository.redis import RedisRepository
+from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
 
 
-def create_feature_column(df: pd.DataFrame) -> pd.DataFrame:
-    df['over2.5Goals'] = np.where(df['homeGoals'] + df['awayGoals'] > 2, 1, 0)
+class MatchGoalsPreProcessor:
+    def __init__(self, aggregator: MatchGoals, repository: RedisRepository):
+        self.__aggregator = aggregator
+        self.__repository = repository
 
-    return df
+    def pre_process_data_for_fixture(self, fixture: Fixture) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        fixture_df = self.__aggregator.for_fixture(fixture=fixture)
 
+        features = self.__get_feature_data_frames(fixture.competition.id)
 
-def create_match_information_df(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Return a dataframe of reduced data containing basic match information
-    """
-    match_cols = [
-        'matchID',
-        'date',
-        'season',
-        'homeTeam',
-        'homeGoals',
-        'awayTeam',
-        'awayGoals',
-    ]
+        features_df = self.__prepared_feature_data(features)
 
-    team_info = df[match_cols].copy()
+        features_df, fixture_df = self.__assign_elos(features=features_df, fixture=fixture_df)
 
-    return team_info
+        fixture_df = self.__calculate_rolling_averages(features=features_df, fixture=fixture_df, limit=160)
 
+        features_df = helpers.create_target_variable_column(features_df)
 
-def revert_elos_to_mean(current_elos, soft_reset_factor):
-    """
-    Used to soft reset ELOs when a new seasons data is provided
-    """
-    elos_mean = np.mean(list(current_elos.values()))
+        train_features = helpers.drop_non_features(features_df)
 
-    new_elos_dict = {
-        team: (team_elo - elos_mean) * soft_reset_factor + elos_mean for team, team_elo in current_elos.items()
-    }
+        predict_df = helpers.drop_non_features(fixture_df)
 
-    return new_elos_dict
+        train_features = train_features.convert_objects(convert_numeric=True)
 
+        predict_df = predict_df.convert_objects(convert_numeric=True)
 
-def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_column):
-    """
-    Calculate rolling ELO ratings for teams based on results provided in dataframe
-    """
-    # Initialise a dictionary with default elos for each team
-    for team in df['homeTeam'].unique():
-        if team not in historic_elos.keys():
-            historic_elos[team] = 1500
+        return train_features, predict_df
 
-    elo_dict = historic_elos.copy()
-    elos, elo_probs = {}, {}
+    def __get_feature_data_frames(self, competition_id: int) -> List[pd.DataFrame]:
+        dfs = self.__repository.get_data_frames_for_competition(competition_id=competition_id)
 
-    last_season = 0
+        if not dfs:
+            raise FileExistsError('Unable to retrieve feature data frames for competition {}'.format(competition_id))
 
-    # Loop over the rows in the DataFrame
-    for index, row in df.iterrows():
-        # Get the current year
-        current_season = row['season']
+        return dfs
 
-        # If it is a new season, soft-reset elos
-        if current_season != last_season:
-            elo_dict = revert_elos_to_mean(elo_dict, soft_reset_factor)
+    @staticmethod
+    def __prepared_feature_data(features: List[pd.DataFrame]) -> pd.DataFrame:
+        """
+        Join all feature data frames into one data frame, sort by date and convert string formation data into
+        corresponding integer mapping. Finish by filling any missing data with their column mean value
+        """
+        features_df = helpers.append_and_sort(features)
 
-        # Get the Game ID
-        match_id = row[match_id_column]
+        features_df = helpers.map_formations(features_df)
 
-        # Get the team and opposition
-        home_team = row['homeTeam']
-        away_team = row['awayTeam']
+        features_df.fillna(features_df.mean(), inplace=True)
 
-        # Get the team and opposition elo score
-        home_team_elo = elo_dict[home_team]
-        away_team_elo = elo_dict[away_team]
+        return features_df
 
-        # Calculated the probability of winning for the team and opposition
-        prob_win_home = 1 / (1 + 10 ** ((away_team_elo - home_team_elo) / 400))
-        prob_win_away = 1 - prob_win_home
+    @staticmethod
+    def __assign_elos(features: pd.DataFrame, fixture: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        """
+        Calculate ELO ratings based on historic results and assign ratings to features and fixture data frames
+        """
+        elos, elo_probs, elos_current = helpers.elo_calculator(
+            df=features,
+            k_factor=25,
+            historic_elos={team: 1500 for team in features['homeTeam'].unique()},
+            soft_reset_factor=0.96,
+            match_id_column='matchID'
+        )
 
-        # Add the elos and probabilities our elos dictionary and elo_probs dictionary based on the Match ID
-        elos[match_id] = [home_team_elo, away_team_elo]
-        elo_probs[match_id] = [prob_win_home, prob_win_away]
+        features_df = helpers.apply_historic_elos(features, elos, elo_probs)
 
-        margin = row['homeGoals'] - row['awayGoals']
+        fixture_df = helpers.apply_current_elos(fixture, elos_current, elo_probs)
 
-        new_home_team_elo = home_team_elo
-        new_away_team_elo = away_team_elo
+        return features_df, fixture_df
 
-        # Calculate the new elos of each team
-        if margin == 1:  # Team wins; update both teams' elo
-            new_home_team_elo = home_team_elo + k_factor * (1 - prob_win_home) * 1
-            new_away_team_elo = away_team_elo + k_factor * (0 - prob_win_away) * 1
-        elif margin == 2:
-            new_home_team_elo = home_team_elo + k_factor * (1 - prob_win_home) * 1.5
-            new_away_team_elo = away_team_elo + k_factor * (0 - prob_win_away) * 1.5
-        elif margin == 3:
-            new_home_team_elo = home_team_elo + k_factor * (1 - prob_win_home) * 1.75
-            new_away_team_elo = away_team_elo + k_factor * (0 - prob_win_away) * 1.75
-        elif margin > 3:
-            new_home_team_elo = home_team_elo + k_factor * (1 - prob_win_home) * 1.75 * (margin - 3) / 8
-            new_away_team_elo = away_team_elo + k_factor * (0 - prob_win_away) * 1.75 * (margin - 3) / 8
-        elif margin == -1:  # Away team wins; update both teams' elo
-            new_home_team_elo = home_team_elo + k_factor * (0 - prob_win_home) * 1
-            new_away_team_elo = away_team_elo + k_factor * (1 - prob_win_away) * 1
-        elif margin == -2:  # Away team wins; update both teams' elo
-            new_home_team_elo = home_team_elo + k_factor * (0 - prob_win_home) * 1.5
-            new_away_team_elo = away_team_elo + k_factor * (1 - prob_win_away) * 1.5
-        elif margin == -3:  # Away team wins; update both teams' elo
-            new_home_team_elo = home_team_elo + k_factor * (0 - prob_win_home) * 1.75
-            new_away_team_elo = away_team_elo + k_factor * (1 - prob_win_away) * 1.75
-        elif margin < -3:  # Away team wins; update both teams' elo
-            new_home_team_elo = home_team_elo + k_factor * (0 - prob_win_home) * 1.75 * (margin - 3) / 8
-            new_away_team_elo = away_team_elo + k_factor * (1 - prob_win_away) * 1.75 * (margin - 3) / 8
-        elif margin == 0:  # Drawn game' update both teams' elo
-            new_home_team_elo = home_team_elo + k_factor * (0.5 - prob_win_home) * 1
-            new_away_team_elo = away_team_elo + k_factor * (0.5 - prob_win_away) * 1
+    def __calculate_rolling_averages(self, features: pd.DataFrame, fixture: pd.DataFrame, limit: int) -> pd.DataFrame:
+        """
+        Parse last 10 weeks fixtures (approx 5 home and 5 away fixtures per team) an missing feature data
+        in fixture data frame using exponential moving averages from recent fixtures
+        """
+        recent_fixtures = features[-limit:]
 
-        # Update elos in elo dictionary
-        elo_dict[home_team] = new_home_team_elo
-        elo_dict[away_team] = new_away_team_elo
+        combined_df = recent_fixtures.append(fixture)
 
-        last_season = current_season
+        combined_df = helpers.set_unknown_features(combined_df, 5)
 
-    return elos, elo_probs, elo_dict
+        row = combined_df[-1:]
+        check = combined_df[-1:]
 
+        check = check.drop(['homeGoals', 'awayGoals'], axis=1)
 
-def map_formations(df: pd.DataFrame) -> pd.DataFrame:
-    formation = {
-        1: '5-4-1',
-        2: '5-3-2',
-        3: '3-5-1-1',
-        4: '3-5-2',
-        5: '4-5-1',
-        6: '3-4-2-1',
-        7: '3-4-1-2',
-        8: '3-2-4-1',
-        9: '4-3-2-1',
-        10: '4-3-1-2',
-        11: '3-1-4-2',
-        12: '4-1-3-2',
-        13: '4-2-3-1',
-        14: '3-4-3',
-        15: '3-3-1-3',
-        16: '4-4-1-1',
-        17: '4-4-2',
-        18: '4-1-4-1',
-        19: '4-2-2-2',
-        20: '4-3-3'
-    }
+        if len(check.columns[check.isna().any()].tolist()) > 0:
+            row = self.__calculate_rolling_averages(features, fixture, limit + limit)
 
-    formation = {v: k for k, v in formation.items()}
-
-    df.replace(formation, inplace=True)
-
-    return df
-
-
-def drop_non_features(df: pd.DataFrame) -> pd.DataFrame:
-    columns = [
-        'date',
-        'season',
-        'homeTeamID',
-        'homeGoals',
-        'awayTeamID',
-        'awayGoals',
-    ]
-
-    df.drop(columns, axis=1)
-
-    return df
-
+        return row

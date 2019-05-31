@@ -16,6 +16,7 @@ grpcio-reflection = "==1.18.0"
 pandas = "*"
 click = "==0.7"
 redis = "*"
+scikit-learn = "*"
 
 [requires]
 python_version = "3.7.1"
