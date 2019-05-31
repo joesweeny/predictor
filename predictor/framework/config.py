@@ -31,5 +31,23 @@ SUPPORTED_COMPETITIONS = {
                 'name': "2018/2019"
             },
         ]
-    }
+    },
+    1: {
+        'id': 573,
+        'name': 'Allsvenskan',
+        'seasons': [
+            {
+                'id': 848,
+                'name': "2017",
+            },
+            {
+                'id': 11759,
+                'name': "2018",
+            },
+            {
+                'id': 15529,
+                'name': "2019"
+            },
+        ]
+    },
 }
