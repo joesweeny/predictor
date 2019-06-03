@@ -57,3 +57,46 @@ def test_create_over_goals_target_variable_columns_adds_additional_column_to_dat
     assert 1 == last_column[0]
     assert 0 == last_column[1]
     assert 1 == last_column[2]
+
+
+# revert_elos_to_mean
+
+
+# elo_calculator
+
+
+# apply_historic_elos
+
+
+# apply_current_elos
+
+
+# map_formations
+def test_map_formations_converts_string_formations_into_integer_representation():
+    row1 = {
+        'homeTeam': 'West Ham United',
+        'formation': '4-2-2-2'
+    }
+
+    row2 = {
+        'homeTeam': 'Newcastle United',
+        'formation': '4-5-1'
+    }
+
+    row3 = {
+        'homeTeam': 'Manchester United',
+        'formation': '3-4-2-1'
+    }
+
+    df = pd.DataFrame([row1, row2, row3])
+
+    mapped = helpers.map_formations(df=df)
+
+    assert 19 == mapped.iloc[0, :]['formation']
+    assert 5 == mapped.iloc[1, :]['formation']
+    assert 6 == mapped.iloc[2, :]['formation']
+
+# drop_non_features
+
+
+# set_unknown_features
