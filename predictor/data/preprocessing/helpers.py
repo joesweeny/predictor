@@ -3,17 +3,23 @@ import pandas as pd
 from typing import List
 
 
-def append_and_sort(dfs: List[pd.DataFrame]) -> pd.DataFrame:
+def append_and_sort_by_column(dfs: List[pd.DataFrame], col: str, asc: bool) -> pd.DataFrame:
+    """
+    Combine all Pandas data frames passed as first argument and sort by column provided
+    """
     combined = pd.concat(dfs)
+    combined.sort_values(by=[col], inplace=True, ascending=asc)
     combined = combined.reset_index(drop=True)
-    combined['date'] = pd.to_datetime(combined['date'])
-    combined.sort_values(by=['date'])
 
     return combined
 
 
-def create_target_variable_column(df: pd.DataFrame) -> pd.DataFrame:
-    df['over2.5Goals'] = np.where(df['homeGoals'] + df['awayGoals'] > 2, 1, 0)
+def create_over_goals_target_variable_column(df: pd.DataFrame, goals: int) -> pd.DataFrame:
+    """
+    Create a Over X Amount Goals target variable column based on second argument provided
+    """
+    col = 'over' + str(goals) + 'Goals'
+    df[col] = np.where(df['homeGoals'] + df['awayGoals'] > goals, 1, 0)
 
     return df
 
