@@ -59,19 +59,6 @@ def test_create_over_goals_target_variable_columns_adds_additional_column_to_dat
     assert 1 == last_column[2]
 
 
-# revert_elos_to_mean
-
-
-# elo_calculator
-
-
-# apply_historic_elos
-
-
-# apply_current_elos
-
-
-# map_formations
 def test_map_formations_converts_string_formations_into_integer_representation():
     row1 = {
         'homeTeam': 'West Ham United',
@@ -96,7 +83,54 @@ def test_map_formations_converts_string_formations_into_integer_representation()
     assert 5 == mapped.iloc[1, :]['formation']
     assert 6 == mapped.iloc[2, :]['formation']
 
-# drop_non_features
 
+def test_drop_non_features_removes_columns_from_data_frame():
+    row = {
+        'matchID': 23,
+        'date': pd.to_datetime(datetime.fromisoformat('2019-04-30 18:15:38')),
+        'round': 38,
+        'season': '2018/2019',
+        'homeTeamID': 45,
+        'homeTeam': 'Newcastle United',
+        'homeGoals': 0,
+        'homeShotsTotal': 5,
+        'homeShotsOnGoal': 3,
+        'awayTeamID': 1,
+        'awayTeam': 'West Ham United',
+        'awayGoals': 3,
+        'awayShotsTotal': 15,
+        'awayShotsOnGoal': 13,
+    }
+
+    df = pd.DataFrame([row, row])
+
+    updated = helpers.drop_non_features(df=df)
+
+    columns = [
+        'awayShotsOnGoal',
+        'awayShotsTotal',
+        'homeShotsOnGoal',
+        'homeShotsTotal',
+    ]
+
+    updated_row = [
+        13,
+        15,
+        3,
+        5
+    ]
+
+    assert columns == updated.columns.tolist()
+    assert updated_row == updated.iloc[0, :].tolist()
+    assert updated_row == updated.iloc[1, :].tolist()
+    assert (2, 4) == updated.shape
+
+# apply_historic_elos
+
+# apply_current_elos
 
 # set_unknown_features
+
+# revert_elos_to_mean
+
+# elo_calculator
