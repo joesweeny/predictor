@@ -14,7 +14,7 @@ def append_and_sort_by_column(dfs: List[pd.DataFrame], col: str, asc: bool) -> p
     return combined
 
 
-def create_over_goals_target_variable_column(df: pd.DataFrame, goals: int) -> pd.DataFrame:
+def create_over_goals_target_variable_column(df: pd.DataFrame, goals: float) -> pd.DataFrame:
     """
     Create a Over X Amount Goals target variable column based on second argument provided
     """
