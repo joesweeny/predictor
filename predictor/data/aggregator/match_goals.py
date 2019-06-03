@@ -77,7 +77,7 @@ class MatchGoals:
         home_team = fixture.home_team
         away_team = fixture.away_team
 
-        date = datetime.utcfromtimestamp(fixture.date_time)
+        date = pd.to_datetime(datetime.utcfromtimestamp(fixture.date_time), format='%Y-%m-%dT%H:%M:%S')
 
         home_previous_results = self.__get_previous_results(date, home_team.id, 5)
         away_previous_results = self.__get_previous_results(date, away_team.id, 5)
@@ -92,7 +92,7 @@ class MatchGoals:
         data = {
             'matchID': fixture.id,
             'round': fixture.round.name,
-            'date': date.strftime('%Y-%m-%dT%H:%M:%S'),
+            'date': date,
             'season': fixture.season.name,
             'averageGoalsForFixture': calculator.AverageGoalsForResults(
                 historical_results
@@ -151,7 +151,7 @@ class MatchGoals:
         home_team = match_data.home_team
         away_team = match_data.away_team
 
-        date = datetime.utcfromtimestamp(result.date_time)
+        date = pd.to_datetime(datetime.utcfromtimestamp(result.date_time), format='%Y-%m-%dT%H:%M:%S')
 
         home_previous_results = self.__get_previous_results(date, home_team.id, 5)
         away_previous_results = self.__get_previous_results(date, away_team.id, 5)
@@ -171,7 +171,7 @@ class MatchGoals:
         data = {
             'matchID': result.id,
             'round': result.round.name,
-            'date': date.strftime('%Y-%m-%dT%H:%M:%S'),
+            'date': date,
             'season': result.season.name,
             'averageGoalsForFixture': calculator.AverageGoalsForResults(
                 historical_results
