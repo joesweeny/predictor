@@ -24,19 +24,6 @@ def create_over_goals_target_variable_column(df: pd.DataFrame, goals: float) -> 
     return df
 
 
-def revert_elos_to_mean(current_elos, soft_reset_factor):
-    """
-    Used to soft reset ELOs when a new seasons data is provided
-    """
-    elos_mean = np.mean(list(current_elos.values()))
-
-    new_elos_dict = {
-        team: (team_elo - elos_mean) * soft_reset_factor + elos_mean for team, team_elo in current_elos.items()
-    }
-
-    return new_elos_dict
-
-
 def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_column):
     """
     Calculate rolling ELO ratings for teams based on results provided in dataframe
@@ -58,7 +45,7 @@ def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_colu
 
         # If it is a new season, soft-reset elos
         if current_season != last_season:
-            elo_current = revert_elos_to_mean(elo_current, soft_reset_factor)
+            elo_current = __revert_elos_to_mean(elo_current, soft_reset_factor)
 
         # Get the Game ID
         match_id = row[match_id_column]
@@ -120,6 +107,19 @@ def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_colu
         last_season = current_season
 
     return elos, elo_probs, elo_current
+
+
+def __revert_elos_to_mean(current_elos, soft_reset_factor):
+    """
+    Used to soft reset ELOs when a new seasons data is provided
+    """
+    elos_mean = np.mean(list(current_elos.values()))
+
+    new_elos_dict = {
+        team: (team_elo - elos_mean) * soft_reset_factor + elos_mean for team, team_elo in current_elos.items()
+    }
+
+    return new_elos_dict
 
 
 def apply_historic_elos(features: pd.DataFrame, elos: dict, elo_probs: dict) -> pd.DataFrame:
