@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def predict_match_goals(features: pd.DataFrame, fixture: pd.DataFrame):
-    y = features['over2.5Goals']
+    y = features.iloc[:, -1]
     x = features[features.columns[:-1]]
 
     clf = LogisticRegression(random_state=42)

@@ -28,11 +28,7 @@ class MatchGoalsPreProcessor:
 
         predict_df = helpers.drop_non_features(df=fixture_df)
 
-        train_features = train_features.astype(float)
-
-        predict_df = predict_df.astype(float)
-
-        return train_features, predict_df
+        return train_features.astype(float), predict_df.astype(float)
 
     def __get_feature_data_frames(self, competition_id: int) -> List[pd.DataFrame]:
         dfs = self.__repository.get_data_frames_for_competition(competition_id=competition_id)
