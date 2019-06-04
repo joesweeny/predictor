@@ -56,6 +56,7 @@ def process_supported_competitions_data():
     print('Data saved')
 
 
+# Remove this command once preprocessing and model work is complete
 @cli.command()
 @click.argument('fixture_id')
 def process_feature_data(fixture_id):
