@@ -16,17 +16,17 @@ class MatchGoalsPreProcessor:
 
         features = self.__get_feature_data_frames(fixture.competition.id)
 
-        features_df = self.__prepared_feature_data(features)
+        features_df = self.__prepare_feature_data(features)
 
         features_df, fixture_df = self.__assign_elos(features=features_df, fixture=fixture_df)
 
         fixture_df = self.__calculate_rolling_averages(features=features_df, fixture=fixture_df, limit=160)
 
-        features_df = helpers.create_target_variable_column(features_df)
+        features_df = helpers.create_over_goals_target_variable_column(df=features_df, goals=2.5)
 
-        train_features = helpers.drop_non_features(features_df)
+        train_features = helpers.drop_non_features(df=features_df)
 
-        predict_df = helpers.drop_non_features(fixture_df)
+        predict_df = helpers.drop_non_features(df=fixture_df)
 
         train_features = train_features.astype(float)
 
@@ -43,12 +43,12 @@ class MatchGoalsPreProcessor:
         return dfs
 
     @staticmethod
-    def __prepared_feature_data(features: List[pd.DataFrame]) -> pd.DataFrame:
+    def __prepare_feature_data(features: List[pd.DataFrame]) -> pd.DataFrame:
         """
         Join all feature data frames into one data frame, sort by date and convert string formation data into
         corresponding integer mapping. Finish by filling any missing data with their column mean value
         """
-        features_df = helpers.append_and_sort(features)
+        features_df = helpers.append_and_sort_by_column(dfs=features, col='date', asc=True)
 
         features_df = helpers.map_formations(features_df)
 
