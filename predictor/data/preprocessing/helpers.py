@@ -139,8 +139,8 @@ def apply_current_elos(features: pd.DataFrame, elos_current: dict) -> pd.DataFra
         awayElo=lambda df: df.awayTeam.map(elos_current))
     )
 
-    features['homeEloProb'] = 1 / (1 + 10 ** ((features['awayElo'] - features['homeElo']) / 400))
-    features['awayEloProb'] = 1 - features['homeEloProb']
+    features['homeEloProb'] = round(1 / (1 + 10 ** ((features['awayElo'] - features['homeElo']) / 400)), 2)
+    features['awayEloProb'] = round(1 - features['homeEloProb'], 2)
 
     return features
 

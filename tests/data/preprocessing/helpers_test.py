@@ -323,7 +323,27 @@ def test_apply_historic_elos_adds_new_elo_columns_to_data_frame(elos_df):
     assert [3, 1500.0, 1518.75, 0.47, 0.53] == elo_applied.iloc[2, :][columns].tolist()
     assert [4, 1500.0, 1481.25, 0.53, 0.47] == elo_applied.iloc[3, :][columns].tolist()
     assert [5, 1469.42, 1479.3, 0.49, 0.51] == elo_applied.iloc[4, :][columns].tolist()
-# apply_current_elos
+
+
+def test_apply_current_elos_adds_new_elo_columns_to_data_frame(elos_df):
+    elos, elos_probs, elos_current = helpers.elo_calculator(
+        df=elos_df,
+        k_factor=25,
+        historic_elos={team: 1500 for team in elos_df['homeTeam'].unique()},
+        soft_reset_factor=0.96,
+        match_id_column='matchID'
+    )
+
+    elo_applied = helpers.apply_current_elos(features=elos_df, elos_current=elos_current)
+
+    columns = [
+        'homeElo',
+        'awayElo',
+        'homeEloProb',
+        'awayEloProb'
+    ]
+
+    assert [1539.45, 1482.28, 0.58, 0.42] == elo_applied.iloc[0, :][columns].tolist()
 
 # set_unknown_features
 @pytest.fixture
