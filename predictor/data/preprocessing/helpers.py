@@ -123,6 +123,9 @@ def __revert_elos_to_mean(current_elos, soft_reset_factor):
 
 
 def apply_historic_elos(features: pd.DataFrame, elos: dict, elo_probs: dict) -> pd.DataFrame:
+    """
+    Apply values from dictionaries containing historic ELO statistics to dataframe
+    """
     features = (features.assign(
         homeElo=lambda df: df.matchID.map(elos).str[0],
         awayElo=lambda df: df.matchID.map(elos).str[1],
@@ -134,6 +137,9 @@ def apply_historic_elos(features: pd.DataFrame, elos: dict, elo_probs: dict) -> 
 
 
 def apply_current_elos(features: pd.DataFrame, elos_current: dict) -> pd.DataFrame:
+    """
+        Apply values from dictionary containing current ELO statistics to dataframe
+        """
     features = (features.assign(
         homeElo=lambda df: df.homeTeam.map(elos_current),
         awayElo=lambda df: df.awayTeam.map(elos_current))
@@ -146,6 +152,9 @@ def apply_current_elos(features: pd.DataFrame, elos_current: dict) -> pd.DataFra
 
 
 def map_formations(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Map string formation data into integer representation in provided dataframe
+    """
     formation = {
         1: '5-4-1',
         2: '5-3-2',
@@ -177,6 +186,9 @@ def map_formations(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def drop_non_features(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Drop columns from provided dataframe
+    """
     columns = [
         'matchID',
         'date',
@@ -195,7 +207,10 @@ def drop_non_features(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def set_unknown_features(df, span):
+def set_unknown_features(df: pd.DataFrame, span: int):
+    """
+    Calculate and apply exponential moving average for feature columns to provided dataframe
+    """
     home_columns = [
         'homeFormation',
         'homeShotsTotal',
