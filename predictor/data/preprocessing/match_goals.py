@@ -92,6 +92,6 @@ class MatchGoalsPreProcessor:
         check = check.drop(['homeGoals', 'awayGoals'], axis=1)
 
         if len(check.columns[check.isna().any()].tolist()) > 0:
-            row = self.__calculate_rolling_averages(features, fixture, limit + limit)
+            row = self.__calculate_rolling_averages(features, fixture, limit + 20)
 
         return row
