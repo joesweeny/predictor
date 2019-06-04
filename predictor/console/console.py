@@ -64,4 +64,3 @@ def process_feature_data(fixture_id):
     p = predictor.predict_for_fixture(fixture_id=int(fixture_id))
 
     print(p)
-

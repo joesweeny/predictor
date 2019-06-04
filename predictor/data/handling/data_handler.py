@@ -40,7 +40,11 @@ class DataHandler:
 
                 self._repository.save_data_frame(key=filename, df=df)
 
-    def store_match_goals_data_for_specific_competition(self, competition_id: int, date_before: datetime):
+    def store_match_goals_data_for_specific_competition(
+        self,
+        competition_id: int,
+        date_before: datetime
+    ):
         """
         For a given competition, if supported
             a) parse data into dataframe
