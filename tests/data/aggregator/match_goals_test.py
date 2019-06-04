@@ -312,7 +312,7 @@ def test_for_fixture_returns_dataframe_of_collated_fixture_data(
 
     assert row['matchID'] == 66
     assert row['round'] == '4'
-    assert row['date'] == '2019-04-23T18:15:38'
+    assert row['date'] == pd.Timestamp('2019-04-23T18:15:38')
     assert row['season'] == '2018/19'
     assert row['averageGoalsForFixture'] == 6.00
     assert row['homeTeamID'] == 7901
