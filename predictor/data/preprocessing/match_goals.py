@@ -71,7 +71,7 @@ class MatchGoalsPreProcessor:
 
         features_df = helpers.apply_historic_elos(features, elos, elo_probs)
 
-        fixture_df = helpers.apply_current_elos(fixture, elos_current, elo_probs)
+        fixture_df = helpers.apply_current_elos(fixture, elos_current)
 
         return features_df, fixture_df
 

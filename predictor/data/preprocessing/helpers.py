@@ -46,7 +46,7 @@ def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_colu
         if team not in historic_elos.keys():
             historic_elos[team] = 1500
 
-    elo_dict = historic_elos.copy()
+    elo_current = historic_elos.copy()
     elos, elo_probs = {}, {}
 
     last_season = 0
@@ -58,7 +58,7 @@ def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_colu
 
         # If it is a new season, soft-reset elos
         if current_season != last_season:
-            elo_dict = revert_elos_to_mean(elo_dict, soft_reset_factor)
+            elo_current = revert_elos_to_mean(elo_current, soft_reset_factor)
 
         # Get the Game ID
         match_id = row[match_id_column]
@@ -68,16 +68,16 @@ def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_colu
         away_team = row['awayTeam']
 
         # Get the team and opposition elo score
-        home_team_elo = elo_dict[home_team]
-        away_team_elo = elo_dict[away_team]
+        home_team_elo = elo_current[home_team]
+        away_team_elo = elo_current[away_team]
 
         # Calculated the probability of winning for the team and opposition
         prob_win_home = 1 / (1 + 10 ** ((away_team_elo - home_team_elo) / 400))
         prob_win_away = 1 - prob_win_home
 
         # Add the elos and probabilities our elos dictionary and elo_probs dictionary based on the Match ID
-        elos[match_id] = [home_team_elo, away_team_elo]
-        elo_probs[match_id] = [prob_win_home, prob_win_away]
+        elos[match_id] = [round(home_team_elo, 2), round(away_team_elo, 2)]
+        elo_probs[match_id] = [round(prob_win_home, 2), round(prob_win_away, 2)]
 
         margin = row['homeGoals'] - row['awayGoals']
 
@@ -114,12 +114,12 @@ def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_colu
             new_away_team_elo = away_team_elo + k_factor * (0.5 - prob_win_away) * 1
 
         # Update elos in elo dictionary
-        elo_dict[home_team] = new_home_team_elo
-        elo_dict[away_team] = new_away_team_elo
+        elo_current[home_team] = round(new_home_team_elo, 2)
+        elo_current[away_team] = round(new_away_team_elo, 2)
 
         last_season = current_season
 
-    return elos, elo_probs, elo_dict
+    return elos, elo_probs, elo_current
 
 
 def apply_historic_elos(features: pd.DataFrame, elos: dict, elo_probs: dict) -> pd.DataFrame:
@@ -133,7 +133,7 @@ def apply_historic_elos(features: pd.DataFrame, elos: dict, elo_probs: dict) -> 
     return features
 
 
-def apply_current_elos(features: pd.DataFrame, elos_current: dict, elo_probs: dict) -> pd.DataFrame:
+def apply_current_elos(features: pd.DataFrame, elos_current: dict) -> pd.DataFrame:
     features = (features.assign(
         homeElo=lambda df: df.homeTeam.map(elos_current),
         awayElo=lambda df: df.awayTeam.map(elos_current))
