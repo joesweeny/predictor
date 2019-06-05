@@ -12,9 +12,9 @@ from predictor.framework.exception import DataPreProcessingException
 class MatchGoalsPreProcessor:
     __key = "match-goals:competition:{}"
 
-    def __init__(self, aggregator: MatchGoals, repository: RedisRepository, configuration: config):
+    def __init__(self, aggregator: MatchGoals, cache: RedisRepository, configuration: config):
         self.__aggregator = aggregator
-        self.__repository = repository
+        self.__cache = cache
         self.__configuration = configuration
 
     def get_fixture_and_training_data_for_fixture(
@@ -27,7 +27,7 @@ class MatchGoalsPreProcessor:
         """
         fixture_df = self.__aggregator.for_fixture(fixture=fixture)
 
-        features_df = self.__repository.get_data_frame(key=self.__key.format(fixture.competition.id))
+        features_df = self.__cache.get_data_frame(key=self.__key.format(fixture.competition.id))
 
         if features_df is None:
             features_df = self.pre_process_feature_data_for_competition(competition_id=fixture.competition.id)
@@ -82,7 +82,7 @@ class MatchGoalsPreProcessor:
 
         prepared = self.__prepare_feature_data(historic=data_frames)
 
-        self.__repository.save_data_frame(df=prepared, key=self.__key.format(competition_id))
+        self.__cache.save_data_frame(df=prepared, key=self.__key.format(competition_id))
 
         return prepared
 
