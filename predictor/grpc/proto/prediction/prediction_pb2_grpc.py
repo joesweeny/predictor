@@ -26,9 +26,7 @@ class PredictionServiceServicer(object):
   pass
 
   def GetOverUnderGoalsForFixture(self, request, context):
-    """A simple RPC.
-
-    Returns a Over/Under goals prediction for a given fixture
+    """Returns a Over/Under goals prediction for a given fixture
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
