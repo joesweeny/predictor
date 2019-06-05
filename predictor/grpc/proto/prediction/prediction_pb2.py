@@ -19,23 +19,37 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='prediction',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n0predictor/grpc/proto/prediction/prediction.proto\x12\nprediction\"\x15\n\x07\x46ixture\x12\n\n\x02id\x18\x01 \x01(\x03\";\n\nPrediction\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x13\n\x0bprobability\x18\x03 \x01(\x02\x32S\n\x11PredictionService\x12>\n\rGetForFixture\x12\x13.prediction.Fixture\x1a\x16.prediction.Prediction\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n0predictor/grpc/proto/prediction/prediction.proto\x12\nprediction\"F\n\x10OverUnderRequest\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\x12\r\n\x05goals\x18\x02 \x01(\x02\x12\x0f\n\x07in_play\x18\x03 \x01(\x08\"\x92\x01\n\x16OverUnderGoalsResponse\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\x12\r\n\x05goals\x18\x02 \x01(\x02\x12*\n\x05under\x18\x03 \x01(\x0b\x32\x1b.prediction.OddsProbability\x12)\n\x04over\x18\x04 \x01(\x0b\x32\x1b.prediction.OddsProbability\"4\n\x0fOddsProbability\x12\x13\n\x0bprobability\x18\x03 \x01(\x02\x12\x0c\n\x04odds\x18\x04 \x01(\x02\x32v\n\x11PredictionService\x12\x61\n\x1bGetOverUnderGoalsForFixture\x12\x1c.prediction.OverUnderRequest\x1a\".prediction.OverUnderGoalsResponse\"\x00\x62\x06proto3')
 )
 
 
 
 
-_FIXTURE = _descriptor.Descriptor(
-  name='Fixture',
-  full_name='prediction.Fixture',
+_OVERUNDERREQUEST = _descriptor.Descriptor(
+  name='OverUnderRequest',
+  full_name='prediction.OverUnderRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='prediction.Fixture.id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
+      name='fixture_id', full_name='prediction.OverUnderRequest.fixture_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='goals', full_name='prediction.OverUnderRequest.goals', index=1,
+      number=2, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='in_play', full_name='prediction.OverUnderRequest.in_play', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -52,34 +66,79 @@ _FIXTURE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=64,
-  serialized_end=85,
+  serialized_end=134,
 )
 
 
-_PREDICTION = _descriptor.Descriptor(
-  name='Prediction',
-  full_name='prediction.Prediction',
+_OVERUNDERGOALSRESPONSE = _descriptor.Descriptor(
+  name='OverUnderGoalsResponse',
+  full_name='prediction.OverUnderGoalsResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='prediction.Prediction.id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
+      name='fixture_id', full_name='prediction.OverUnderGoalsResponse.fixture_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='type', full_name='prediction.Prediction.type', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      name='goals', full_name='prediction.OverUnderGoalsResponse.goals', index=1,
+      number=2, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='probability', full_name='prediction.Prediction.probability', index=2,
+      name='under', full_name='prediction.OverUnderGoalsResponse.under', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='over', full_name='prediction.OverUnderGoalsResponse.over', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=137,
+  serialized_end=283,
+)
+
+
+_ODDSPROBABILITY = _descriptor.Descriptor(
+  name='OddsProbability',
+  full_name='prediction.OddsProbability',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='probability', full_name='prediction.OddsProbability.probability', index=0,
       number=3, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='odds', full_name='prediction.OddsProbability.odds', index=1,
+      number=4, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -96,27 +155,37 @@ _PREDICTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=87,
-  serialized_end=146,
+  serialized_start=285,
+  serialized_end=337,
 )
 
-DESCRIPTOR.message_types_by_name['Fixture'] = _FIXTURE
-DESCRIPTOR.message_types_by_name['Prediction'] = _PREDICTION
+_OVERUNDERGOALSRESPONSE.fields_by_name['under'].message_type = _ODDSPROBABILITY
+_OVERUNDERGOALSRESPONSE.fields_by_name['over'].message_type = _ODDSPROBABILITY
+DESCRIPTOR.message_types_by_name['OverUnderRequest'] = _OVERUNDERREQUEST
+DESCRIPTOR.message_types_by_name['OverUnderGoalsResponse'] = _OVERUNDERGOALSRESPONSE
+DESCRIPTOR.message_types_by_name['OddsProbability'] = _ODDSPROBABILITY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Fixture = _reflection.GeneratedProtocolMessageType('Fixture', (_message.Message,), dict(
-  DESCRIPTOR = _FIXTURE,
+OverUnderRequest = _reflection.GeneratedProtocolMessageType('OverUnderRequest', (_message.Message,), dict(
+  DESCRIPTOR = _OVERUNDERREQUEST,
   __module__ = 'predictor.grpc.proto.prediction.prediction_pb2'
-  # @@protoc_insertion_point(class_scope:prediction.Fixture)
+  # @@protoc_insertion_point(class_scope:prediction.OverUnderRequest)
   ))
-_sym_db.RegisterMessage(Fixture)
+_sym_db.RegisterMessage(OverUnderRequest)
 
-Prediction = _reflection.GeneratedProtocolMessageType('Prediction', (_message.Message,), dict(
-  DESCRIPTOR = _PREDICTION,
+OverUnderGoalsResponse = _reflection.GeneratedProtocolMessageType('OverUnderGoalsResponse', (_message.Message,), dict(
+  DESCRIPTOR = _OVERUNDERGOALSRESPONSE,
   __module__ = 'predictor.grpc.proto.prediction.prediction_pb2'
-  # @@protoc_insertion_point(class_scope:prediction.Prediction)
+  # @@protoc_insertion_point(class_scope:prediction.OverUnderGoalsResponse)
   ))
-_sym_db.RegisterMessage(Prediction)
+_sym_db.RegisterMessage(OverUnderGoalsResponse)
+
+OddsProbability = _reflection.GeneratedProtocolMessageType('OddsProbability', (_message.Message,), dict(
+  DESCRIPTOR = _ODDSPROBABILITY,
+  __module__ = 'predictor.grpc.proto.prediction.prediction_pb2'
+  # @@protoc_insertion_point(class_scope:prediction.OddsProbability)
+  ))
+_sym_db.RegisterMessage(OddsProbability)
 
 
 
@@ -126,16 +195,16 @@ _PREDICTIONSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=148,
-  serialized_end=231,
+  serialized_start=339,
+  serialized_end=457,
   methods=[
   _descriptor.MethodDescriptor(
-    name='GetForFixture',
-    full_name='prediction.PredictionService.GetForFixture',
+    name='GetOverUnderGoalsForFixture',
+    full_name='prediction.PredictionService.GetOverUnderGoalsForFixture',
     index=0,
     containing_service=None,
-    input_type=_FIXTURE,
-    output_type=_PREDICTION,
+    input_type=_OVERUNDERREQUEST,
+    output_type=_OVERUNDERGOALSRESPONSE,
     serialized_options=None,
   ),
 ])

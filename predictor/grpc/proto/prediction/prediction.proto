@@ -3,18 +3,24 @@ syntax = "proto3";
 package prediction;
 
 service PredictionService {
-    // A simple RPC.
-    //
-    // Returns a prediction for a given fixture
-    rpc GetForFixture(Fixture) returns (Prediction) {}
+    // Returns a Over/Under goals prediction for a given fixture
+    rpc GetOverUnderGoalsForFixture(OverUnderRequest) returns (OverUnderGoalsResponse) {}
 }
 
-message Fixture {
-    int64 id = 1;
+message OverUnderRequest {
+    uint64 fixture_id = 1;
+    float goals = 2;
+    bool in_play = 3;
 }
 
-message Prediction {
-    int64 id = 1;
-    string type = 2;
+message OverUnderGoalsResponse {
+    uint64 fixture_id = 1;
+    float goals = 2;
+    OddsProbability under = 3;
+    OddsProbability over = 4;
+}
+
+message OddsProbability {
     float probability = 3;
+    float odds = 4;
 }
