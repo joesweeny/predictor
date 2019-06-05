@@ -61,6 +61,8 @@ class MatchGoalsPreProcessor:
         If competition provided is supported, aggregate and pre process feature data for
         supported seasons before persisting to cache database
         """
+        print(datetime.now(timezone.utc).replace(microsecond=0))
+
         data_frames = []
 
         competitions = self.__configuration.SUPPORTED_COMPETITIONS
