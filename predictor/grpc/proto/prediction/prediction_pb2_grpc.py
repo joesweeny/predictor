@@ -14,10 +14,10 @@ class PredictionServiceStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.GetForFixture = channel.unary_unary(
-        '/prediction.PredictionService/GetForFixture',
-        request_serializer=predictor_dot_grpc_dot_proto_dot_prediction_dot_prediction__pb2.Fixture.SerializeToString,
-        response_deserializer=predictor_dot_grpc_dot_proto_dot_prediction_dot_prediction__pb2.Prediction.FromString,
+    self.GetOverUnderGoalsForFixture = channel.unary_unary(
+        '/prediction.PredictionService/GetOverUnderGoalsForFixture',
+        request_serializer=predictor_dot_grpc_dot_proto_dot_prediction_dot_prediction__pb2.OverUnderRequest.SerializeToString,
+        response_deserializer=predictor_dot_grpc_dot_proto_dot_prediction_dot_prediction__pb2.OverUnderGoalsResponse.FromString,
         )
 
 
@@ -25,10 +25,10 @@ class PredictionServiceServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def GetForFixture(self, request, context):
+  def GetOverUnderGoalsForFixture(self, request, context):
     """A simple RPC.
 
-    Returns a prediction for a given fixture
+    Returns a Over/Under goals prediction for a given fixture
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -37,10 +37,10 @@ class PredictionServiceServicer(object):
 
 def add_PredictionServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'GetForFixture': grpc.unary_unary_rpc_method_handler(
-          servicer.GetForFixture,
-          request_deserializer=predictor_dot_grpc_dot_proto_dot_prediction_dot_prediction__pb2.Fixture.FromString,
-          response_serializer=predictor_dot_grpc_dot_proto_dot_prediction_dot_prediction__pb2.Prediction.SerializeToString,
+      'GetOverUnderGoalsForFixture': grpc.unary_unary_rpc_method_handler(
+          servicer.GetOverUnderGoalsForFixture,
+          request_deserializer=predictor_dot_grpc_dot_proto_dot_prediction_dot_prediction__pb2.OverUnderRequest.FromString,
+          response_serializer=predictor_dot_grpc_dot_proto_dot_prediction_dot_prediction__pb2.OverUnderGoalsResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
