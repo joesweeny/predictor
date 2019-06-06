@@ -1,6 +1,6 @@
 import redis
 import pandas as pd
-from typing import Optional, List
+from typing import Optional
 
 EXPIRATION_SECONDS = 86400
 
@@ -25,18 +25,3 @@ class RedisRepository:
             return
 
         return pd.read_msgpack(value)
-
-    def get_data_frames_for_competition(self, competition_id: int) -> List[pd.DataFrame]:
-        """
-        Retrieve multiple Pandas dataframes for a specific competition
-        """
-        pattern = '*competition:' + str(competition_id) + '*'
-
-        keys = self.redis_client.keys(pattern=pattern)
-
-        dfs = []
-
-        for key in keys:
-            dfs.append(self.get_data_frame(key))
-
-        return dfs

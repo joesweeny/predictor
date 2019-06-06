@@ -8,6 +8,7 @@ flake8 = "*"
 pytest = "*"
 mock = "*"
 python-dotenv = "*"
+freezegun = "*"
 
 [packages]
 grpcio = "==1.18.0"
