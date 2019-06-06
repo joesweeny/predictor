@@ -41,27 +41,17 @@ def season_data(season_id: str, date_before: str):
 
 
 @cli.command()
-def process_supported_competitions_data():
-    """
-    Parse and save data for supported competitions
-    """
-    handler = Container().data_handler()
-
-    now = datetime.now(timezone.utc).replace(microsecond=0)
-
-    handler.store_match_goals_data_for_supported_competitions(
-        date_before=now
-    )
-
-    print('Data saved')
-
-
-# Remove this command once preprocessing and model work is complete
-@cli.command()
 @click.argument('fixture_id')
-def process_feature_data(fixture_id):
-    predictor = Container().match_goals_predictor()
+def pre_process_match_goals_data_for_supported_competitions():
+    container = Container()
 
-    p = predictor.predict_for_fixture(fixture_id=int(fixture_id))
+    competitions = container.get_config().SUPPORTED_COMPETITIONS
 
-    print(p)
+    for i, competition in competitions:
+        df = container.match_goals_pre_processor().pre_process_feature_data_for_competition(competition['id'])
+
+        filename = './data-files/competition-{}.csv'.format(competition['id'])
+
+        df.to_csv(filename, encoding='utf-8', index=False)
+
+    print('Competition PreProcessing Complete')
