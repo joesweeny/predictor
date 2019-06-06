@@ -41,13 +41,12 @@ def season_data(season_id: str, date_before: str):
 
 
 @cli.command()
-@click.argument('fixture_id')
 def pre_process_match_goals_data_for_supported_competitions():
     container = Container()
 
     competitions = container.get_config().SUPPORTED_COMPETITIONS
 
-    for i, competition in competitions:
+    for i, competition in competitions.items():
         df = container.match_goals_pre_processor().pre_process_feature_data_for_competition(competition['id'])
 
         filename = './data-files/competition-{}.csv'.format(competition['id'])
