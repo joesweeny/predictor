@@ -1,5 +1,5 @@
 import click
-from datetime import datetime, timezone
+from datetime import datetime
 from predictor.framework.container import Container
 
 
