@@ -27,12 +27,12 @@ class MatchGoalsPreProcessor:
         """
         fixture_df = self.__aggregator.for_fixture(fixture=fixture)
 
-        features_df = self.__cache.get_data_frame(key=self.__key.format(fixture.competition.id))
+        historic_df = self.__cache.get_data_frame(key=self.__key.format(fixture.competition.id))
 
-        if features_df is None:
-            features_df = self.pre_process_feature_data_for_competition(competition_id=fixture.competition.id)
+        if historic_df is None:
+            historic_df = self.pre_process_feature_data_for_competition(competition_id=fixture.competition.id)
 
-        return self.pre_process_feature_data_for_fixture(current=fixture_df, historic=features_df, goals=goals)
+        return self.pre_process_feature_data_for_fixture(current=fixture_df, historic=historic_df, goals=goals)
 
     def pre_process_feature_data_for_fixture(
         self,
