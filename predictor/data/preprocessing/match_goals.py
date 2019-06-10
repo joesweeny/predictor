@@ -50,6 +50,8 @@ class MatchGoalsPreProcessor:
 
         fixture_df = self.__calculate_rolling_averages(historic=features_df, current=fixture_df, limit=160)
 
+        features_df.fillna(features_df.mean(), inplace=True)
+
         train_features = helpers.drop_non_features(df=features_df)
 
         predict_df = helpers.drop_non_features(df=fixture_df)
@@ -95,8 +97,6 @@ class MatchGoalsPreProcessor:
         features_df = helpers.append_and_sort_by_column(dfs=historic, col='date', asc=True)
 
         features_df = helpers.map_formations(features_df)
-
-        features_df.fillna(features_df.mean(), inplace=True)
 
         return features_df
 

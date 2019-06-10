@@ -18,6 +18,10 @@ SUPPORTED_COMPETITIONS = {
         'id': 8,
         'name': 'English Premier League',
         'seasons': [
+{
+                'id': 10,
+                'name': "2015/2016",
+            },
             {
                 'id': 13,
                 'name': "2016/2017",
@@ -32,22 +36,22 @@ SUPPORTED_COMPETITIONS = {
             },
         ]
     },
-    1: {
-        'id': 573,
-        'name': 'Allsvenskan',
-        'seasons': [
-            {
-                'id': 848,
-                'name': "2017",
-            },
-            {
-                'id': 11759,
-                'name': "2018",
-            },
-            {
-                'id': 15529,
-                'name': "2019"
-            },
-        ]
-    },
+    # 1: {
+    #     'id': 573,
+    #     'name': 'Allsvenskan',
+    #     'seasons': [
+    #         {
+    #             'id': 848,
+    #             'name': "2017",
+    #         },
+    #         {
+    #             'id': 11759,
+    #             'name': "2018",
+    #         },
+    #         {
+    #             'id': 15529,
+    #             'name': "2019"
+    #         },
+    #     ]
+    # },
 }
