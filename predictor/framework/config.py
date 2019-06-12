@@ -18,7 +18,11 @@ SUPPORTED_COMPETITIONS = {
         'id': 8,
         'name': 'English Premier League',
         'seasons': [
-{
+            {
+                'id': 12,
+                'name': "2014/2015",
+            },
+            {
                 'id': 10,
                 'name': "2015/2016",
             },

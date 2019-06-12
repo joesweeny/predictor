@@ -18,38 +18,17 @@ class MatchGoals:
         'round',
         'date',
         'season',
-        'averageGoalsForFixture',
-        # 'homeTeamID',
         'homeTeam',
-        'homeDaysSinceLastMatch',
-        'homeFormation',
-        # 'homeAvgScoredLast5',
-        # 'homeAvgConcededLast5',
-        # 'homeScoredLastMatch',
-        # 'homeConcededLastMatch',
+        'homeScoredLastMatch',
         'homeShotsTotal',
         'homeShotsOnGoal',
-        'homeShotsOffGoal',
         'homeShotsInsideBox',
-        'homeShotsOutsideBox',
-        'homeAttacksTotal',
-        'homeAttacksDangerous',
         'homeGoals',
-        # 'awayTeamID',
         'awayTeam',
-        'awayDaysSinceLastMatch',
-        'awayFormation',
-        # 'awayAvgScoredLast5',
-        # 'awayAvgConcededLast5',
-        # 'awayScoredLastMatch',
-        # 'awayConcededLastMatch',
+        'awayScoredLastMatch',
         'awayShotsTotal',
         'awayShotsOnGoal',
-        'awayShotsOffGoal',
         'awayShotsInsideBox',
-        'awayShotsOutsideBox',
-        'awayAttacksTotal',
-        'awayAttacksDangerous',
         'awayGoals',
     ]
 
@@ -163,80 +142,34 @@ class MatchGoals:
             limit=10
         )
 
-        stats = self.team_stats_client.get_team_stats_for_fixture(fixture_id=result.id)
-
-        home_stats = stats.home_team
-        away_stats = stats.away_team
+        try:
+            stats = self.team_stats_client.get_team_stats_for_fixture(fixture_id=result.id)
+            home_stats = stats.home_team
+            away_stats = stats.away_team
+        except Exception:
+            home_stats = TeamStats()
+            away_stats = TeamStats()
 
         data = {
             'matchID': result.id,
             'round': result.round.name,
             'date': date,
             'season': result.season.name,
-            'averageGoalsForFixture': calculator.AverageGoalsForResults(
-                historical_results
-            ),
-            # 'homeTeamID': home_team.id,
             'homeTeam': home_team.name,
-            'homeDaysSinceLastMatch': None if len(home_previous_results) < 1 else calculator.days_between_results(
-                date,
-                home_previous_results[0]
+            'homeScoredLastMatch': None if len(home_previous_results) < 1 else calculator.GoalsScoredInMatch(
+                home_previous_results[0],
+                home_team.id
             ),
-            'homeFormation': match_stats.home_formation.value,
-            # 'homeAvgScoredLast5': None if len(home_previous_results) < 1 else calculator.AverageGoalsScoredByTeam(
-            #     home_previous_results,
-            #     home_team.id
-            # ),
-            # 'homeAvgConcededLast5': None if len(home_previous_results) < 1 else calculator.AverageGoalsConcededByTeam(
-            #     home_previous_results,
-            #     home_team.id
-            # ),
-            # 'homeScoredLastMatch': None if len(home_previous_results) < 1 else calculator.GoalsScoredInMatch(
-            #     home_previous_results[0],
-            #     home_team.id
-            # ),
-            # 'homeConcededLastMatch': None if len(home_previous_results) < 1 else calculator.GoalsConcededInMatch(
-            #     home_previous_results[0],
-            #     home_team.id
-            # ),
             'homeShotsTotal': self.__get_value('shots_total', home_stats),
             'homeShotsOnGoal': self.__get_value('shots_on_goal', home_stats),
-            'homeShotsOffGoal': self.__get_value('shots_off_goal', home_stats),
-            'homeShotsInsideBox': self.__get_value('shots_inside_box', home_stats),
-            'homeShotsOutsideBox': self.__get_value('shots_outside_box', home_stats),
-            'homeAttacksTotal': self.__get_value('attacks_total', home_stats),
-            'homeAttacksDangerous': self.__get_value('attacks_dangerous', home_stats),
             'homeGoals': self.__get_value('home_score', match_stats),
-            # 'awayTeamID': away_team.id,
             'awayTeam': away_team.name,
-            'awayDaysSinceLastMatch': None if len(away_previous_results) < 1 else calculator.days_between_results(
-                date,
-                away_previous_results[0]
+            'awayScoredLastMatch': None if len(away_previous_results) < 1 else calculator.GoalsScoredInMatch(
+                away_previous_results[0],
+                away_team.id
             ),
-            'awayFormation': match_stats.away_formation.value,
-            # 'awayAvgScoredLast5': None if len(away_previous_results) < 1 else calculator.AverageGoalsScoredByTeam(
-            #     away_previous_results,
-            #     away_team.id
-            # ),
-            # 'awayAvgConcededLast5': None if len(away_previous_results) < 1 else calculator.AverageGoalsConcededByTeam(
-            #     away_previous_results,
-            #     away_team.id
-            # ),
-            # 'awayScoredLastMatch': None if len(away_previous_results) < 1 else calculator.GoalsScoredInMatch(
-            #     away_previous_results[0],
-            #     away_team.id
-            # ),
-            # 'awayConcededLastMatch': None if len(away_previous_results) < 1 else calculator.GoalsConcededInMatch(
-            #     away_previous_results[0],
-            #     away_team.id
-            # ),
             'awayShotsTotal': self.__get_value('shots_total', away_stats),
             'awayShotsOnGoal': self.__get_value('shots_on_goal', away_stats),
-            'awayShotsOffGoal': self.__get_value('shots_off_goal', away_stats),
-            'awayShotsInsideBox': self.__get_value('shots_inside_box', away_stats),
-            'awayShotsOutsideBox': self.__get_value('shots_outside_box', away_stats),
-            'awayAttacksTotal': self.__get_value('attacks_total', away_stats),
-            'awayAttacksDangerous': self.__get_value('attacks_dangerous', away_stats),
             'awayGoals': self.__get_value('away_score', match_stats),
         }
 

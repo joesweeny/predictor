@@ -65,9 +65,9 @@ def days_between_results(current_date: datetime, previous: Result) -> int:
     return abs(days)
 
 
-def AverageGoalsScoredByTeam(results: List[Result], team_id: int) -> float:
+def average_goals_scored_by_home_team(results: List[Result], team_id: int) -> float:
     """
-    Calculate the average goals scored by a Team for a given set of Results
+    Calculate the average goals scored by a Home Team for a given set of Results
     """
     goals = []
 
@@ -76,10 +76,125 @@ def AverageGoalsScoredByTeam(results: List[Result], team_id: int) -> float:
 
         if match_data.home_team.id == team_id:
             goals.append(match_data.stats.home_score.value)
-        else:
+
+    summed = sum(goals)
+    total = len(goals)
+
+    return 0 if summed is 0 else round(summed / total, 2)
+
+
+def average_goals_conceded_by_home_team(results: List[Result], team_id: int) -> float:
+    """
+    Calculate the average goals conceded by a Home Team for a given set of Results
+    """
+    goals = []
+
+    for res in results:
+        match_data = res.match_data
+
+        if match_data.home_team.id == team_id:
             goals.append(match_data.stats.away_score.value)
 
-    return round(sum(goals) / len(goals), 2)
+    summed = sum(goals)
+    total = len(goals)
+
+    return 0 if summed is 0 else round(summed / total, 2)
+
+
+def average_goals_scored_by_away_team(results: List[Result], team_id: int) -> float:
+    """
+    Calculate the average goals scored by an Away Team for a given set of Results
+    """
+    goals = []
+
+    for res in results:
+        match_data = res.match_data
+
+        if match_data.away_team.id == team_id:
+            goals.append(match_data.stats.away_score.value)
+
+    summed = sum(goals)
+    total = len(goals)
+
+    return 0 if summed is 0 else round(summed / total, 2)
+
+
+def average_goals_conceded_by_away_team(results: List[Result], team_id: int) -> float:
+    """
+    Calculate the average goals conceded by an Away Team for a given set of Results
+    """
+    goals = []
+
+    for res in results:
+        match_data = res.match_data
+
+        if match_data.away_team.id == team_id:
+            goals.append(match_data.stats.home_score.value)
+
+    summed = sum(goals)
+    total = len(goals)
+
+    return 0 if summed is 0 else round(summed / total, 2)
+
+
+def max_goals_scored_by_home_team(results: List[Result], team_id: int) -> float:
+    """
+    Calculate the maximum goals scored by a Home Team for a given set of Results
+    """
+    goals = []
+
+    for res in results:
+        match_data = res.match_data
+
+        if match_data.home_team.id == team_id:
+            goals.append(match_data.stats.home_score.value)
+
+    return max(goals)
+
+
+def max_goals_scored_by_away_team(results: List[Result], team_id: int) -> float:
+    """
+    Calculate the maximum goals scored by a Away Team for a given set of Results
+    """
+    goals = []
+
+    for res in results:
+        match_data = res.match_data
+
+        if match_data.away_team.id == team_id:
+            goals.append(match_data.stats.away_score.value)
+
+    return max(goals)
+
+
+def min_goals_scored_by_home_team(results: List[Result], team_id: int) -> float:
+    """
+    Calculate the minimum goals scored by a Home Team for a given set of Results
+    """
+    goals = []
+
+    for res in results:
+        match_data = res.match_data
+
+        if match_data.home_team.id == team_id:
+            goals.append(match_data.stats.home_score.value)
+
+    return min(goals)
+
+
+def min_goals_scored_by_away_team(results: List[Result], team_id: int) -> float:
+    """
+    Calculate the minimum goals scored by a Away Team for a given set of Results
+    """
+    goals = []
+
+    for res in results:
+        match_data = res.match_data
+
+        if match_data.away_team.id == team_id:
+            goals.append(match_data.stats.away_score.value)
+
+    return min(goals)
 
 
 def AverageGoalsConcededByTeam(results: List[Result], team_id: int) -> float:
@@ -114,3 +229,4 @@ def AverageGoalsForResults(results: List[Result]) -> Optional:
         return
 
     return round(sum(goals) / len(goals), 2)
+
