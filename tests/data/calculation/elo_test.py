@@ -51,3 +51,39 @@ def test_calculate_team_ratings_increases_home_rating_and_decreases_away_rating_
 
     assert home == 1669.03
     assert away == 1721.12
+
+
+def test_calculate_attack_and_defence_ratings_increases_attack_and_decreases_defence_ratings_when_goals_is_greater_than_zero():
+    [home, away] = elo.calculate_attack_and_defence_ratings(
+        k_factor=10,
+        attack=1550.0,
+        defence=1410.25,
+        goals=2
+    )
+
+    assert home == 1556.18
+    assert away == 1404.07
+
+
+def test_calculate_attack_and_defence_ratings_decreases_attack_and_increases_defence_ratings_when_goals_is_zero():
+    [home, away] = elo.calculate_attack_and_defence_ratings(
+        k_factor=10,
+        attack=1550.0,
+        defence=1410.25,
+        goals=0
+    )
+
+    assert home == 1543.09
+    assert away == 1417.16
+
+
+def test_calculate_attack_and_defence_ratings_accounts_for_unexpected_attack_goals_compared_to_strong_defence():
+    [home, away] = elo.calculate_attack_and_defence_ratings(
+        k_factor=10,
+        attack=1450.0,
+        defence=1610.25,
+        goals=3
+    )
+
+    assert home == 1471.47
+    assert away == 1588.78
