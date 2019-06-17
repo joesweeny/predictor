@@ -65,3 +65,19 @@ def process_feature_data(fixture_id):
     p = predictor.predict_for_fixture(fixture_id=int(fixture_id))
 
     print(p)
+
+
+@cli.command()
+def pre_process_match_goals_data_for_supported_competitions():
+    container = Container()
+
+    competitions = container.get_config().SUPPORTED_COMPETITIONS
+
+    for i, competition in competitions.items():
+        df = container.match_goals_pre_processor().pre_process_feature_data_for_competition(competition['id'])
+
+        filename = './data-files/competition-{}.csv'.format(competition['id'])
+
+        df.to_csv(filename, encoding='utf-8', index=False)
+
+    print('Competition PreProcessing Complete')

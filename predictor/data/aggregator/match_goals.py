@@ -20,8 +20,12 @@ class MatchGoals:
         'season',
         'homeTeam',
         'homeGoals',
+        'homeAvgScored',
+        'homeAvgConceded',
         'awayTeam',
         'awayGoals',
+        'awayAvgScored',
+        'awayAvgConceded',
     ]
 
     def for_season(self, season_id: int, date_before: datetime) -> pd.DataFrame:
@@ -124,6 +128,9 @@ class MatchGoals:
 
         date = pd.to_datetime(datetime.utcfromtimestamp(result.date_time), format='%Y-%m-%dT%H:%M:%S')
 
+        home_previous_results = self.__get_previous_results(date, home_team.id, 40)
+        away_previous_results = self.__get_previous_results(date, away_team.id, 40)
+
         data = {
             'matchID': result.id,
             'round': result.round.name,
@@ -131,8 +138,12 @@ class MatchGoals:
             'season': result.season.name,
             'homeTeam': home_team.name,
             'homeGoals': self.__get_value('home_score', match_stats),
+            'homeAvgScored': calculator.average_goals_scored_by_home_team(home_previous_results, home_team.id),
+            'homeAvgConceded': calculator.average_goals_conceded_by_home_team(home_previous_results, home_team.id),
             'awayTeam': away_team.name,
             'awayGoals': self.__get_value('away_score', match_stats),
+            'awayAvgScored': calculator.average_goals_scored_by_away_team(away_previous_results, away_team.id),
+            'awayAvgConceded': calculator.average_goals_conceded_by_away_team(away_previous_results, away_team.id),
         }
 
         return data
