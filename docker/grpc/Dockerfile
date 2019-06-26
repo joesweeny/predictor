@@ -9,4 +9,4 @@ RUN cd /opt && pipenv install --dev --system --deploy --ignore-pipfile
 
 EXPOSE 50051
 WORKDIR /opt
-CMD ["python3", "-m", "predictor.grpc"]
+CMD ["python3", "-m", "compiler.grpc"]

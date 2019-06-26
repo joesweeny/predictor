@@ -5,11 +5,11 @@ from freezegun import freeze_time
 from datetime import datetime, timezone
 from mock import Mock, call
 import pandas as pd
-from predictor.data.preprocessing.match_goals import MatchGoalsPreProcessor
-from predictor.data.aggregator.match_goals import MatchGoals
-from predictor.data.repository.redis import RedisRepository
-from predictor.framework import config
-from predictor.framework.exception import DataPreProcessingException
+from compiler.data.preprocessing.match_goals import MatchGoalsPreProcessor
+from compiler.data.aggregator.match_goals import MatchGoals
+from compiler.data.repository.redis import RedisRepository
+from compiler.framework import config
+from compiler.framework.exception import DataPreProcessingException
 
 
 @freeze_time('2019-06-05')

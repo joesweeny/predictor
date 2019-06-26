@@ -2,12 +2,11 @@ import pytest
 import pandas as pd
 from datetime import datetime
 from mock import MagicMock, Mock
-from predictor.data.aggregator.match_goals import MatchGoals
-from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
-from predictor.grpc.proto.result import result_pb2
-from predictor.grpc.result_client import ResultClient
-from predictor.grpc.team_stats_client import TeamStatsClient
-from predictor.grpc.proto.stats.team import stats_pb2
+from compiler.data.aggregator.match_goals import MatchGoals
+from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
+from compiler.grpc.proto.result import result_pb2
+from compiler.grpc.result_client import ResultClient
+from compiler.grpc.proto.stats.team import stats_pb2
 
 
 def test_for_season_data_frame_columns(match_goals):
@@ -26,38 +25,9 @@ def test_for_season_data_frame_columns(match_goals):
         'round',
         'date',
         'season',
-        'averageGoalsForFixture',
-        'homeTeamID',
         'homeTeam',
-        'homeDaysSinceLastMatch',
-        'homeFormation',
-        'homeAvgScoredLast5',
-        'homeAvgConcededLast5',
-        'homeScoredLastMatch',
-        'homeConcededLastMatch',
-        'homeShotsTotal',
-        'homeShotsOnGoal',
-        'homeShotsOffGoal',
-        'homeShotsInsideBox',
-        'homeShotsOutsideBox',
-        'homeAttacksTotal',
-        'homeAttacksDangerous',
         'homeGoals',
-        'awayTeamID',
         'awayTeam',
-        'awayDaysSinceLastMatch',
-        'awayFormation',
-        'awayAvgScoredLast5',
-        'awayAvgConcededLast5',
-        'awayScoredLastMatch',
-        'awayConcededLastMatch',
-        'awayShotsTotal',
-        'awayShotsOnGoal',
-        'awayShotsOffGoal',
-        'awayShotsInsideBox',
-        'awayShotsOutsideBox',
-        'awayAttacksTotal',
-        'awayAttacksDangerous',
         'awayGoals',
     ]
 
@@ -66,38 +36,9 @@ def test_for_season_data_frame_columns(match_goals):
     assert (df_columns == columns).all()
 
 
-def test_for_season_converts_result_object_into_data_frame_row(
-    match_goals,
-    result,
-    home_past_result,
-    away_past_result,
-    team_stats_response
-):
+def test_for_season_converts_result_object_into_data_frame_row(match_goals, result):
     value = match_goals.result_client.get_results_for_season.return_value
     value.__iter__.return_value = iter([result])
-
-    match_goals.result_client.get_results_for_team.side_effect = [
-        [
-            home_past_result,
-            home_past_result,
-            away_past_result,
-        ],
-        [
-            away_past_result,
-            away_past_result,
-            home_past_result,
-        ]
-    ]
-
-    match_goals.result_client.get_historical_results_for_fixture.side_effect = [
-        [
-            home_past_result,
-            home_past_result,
-            away_past_result,
-        ]
-    ]
-
-    match_goals.team_stats_client.get_team_stats_for_fixture.return_value = team_stats_response
 
     df = match_goals.for_season(5, datetime.fromisoformat('2019-04-23T18:15:38+00:00'))
 
@@ -106,45 +47,14 @@ def test_for_season_converts_result_object_into_data_frame_row(
         date_before='2019-04-23T18:15:38+00:00'
     )
 
-    match_goals.team_stats_client.get_team_stats_for_fixture.assert_called_with(fixture_id=66)
-
     expected = [
         66,
         '4',
         pd.Timestamp('2019-04-23 18:15:38'),
         '2018/19',
-        6.00,
-        7901,
         'West Ham United',
-        3,
-        '4-4-2',
-        4.33,
-        1.67,
-        5,
         2,
-        34,
-        12,
-        22,
-        15,
-        5,
-        None,
-        None,
-        2,
-        496,
         'Tottenham Hotspur',
-        5,
-        '5-3-1-1',
-        1.33,
-        3.67,
-        1,
-        3,
-        34,
-        12,
-        22,
-        15,
-        5,
-        None,
-        None,
         2,
     ]
 
@@ -153,46 +63,9 @@ def test_for_season_converts_result_object_into_data_frame_row(
     assert row == expected
 
 
-def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
-        match_goals,
-        result,
-        home_past_result,
-        away_past_result
-):
+def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(match_goals, result):
     value = match_goals.result_client.get_results_for_season.return_value
     value.__iter__.return_value = iter([result, result, result])
-
-    match_goals.result_client.get_results_for_team.side_effect = [
-        [home_past_result],
-        [away_past_result],
-        [home_past_result],
-        [away_past_result],
-        [home_past_result],
-        [away_past_result],
-        [home_past_result],
-        [away_past_result],
-        [home_past_result],
-        [away_past_result],
-        [home_past_result],
-    ]
-
-    match_goals.result_client.get_historical_results_for_fixture.side_effect = [
-        [
-            home_past_result,
-            home_past_result,
-            away_past_result,
-        ],
-        [
-            home_past_result,
-            home_past_result,
-            away_past_result,
-        ],
-        [
-            home_past_result,
-            home_past_result,
-            away_past_result,
-        ]
-    ]
 
     df = match_goals.for_season(5, datetime.fromisoformat('2019-04-23T18:15:38+00:00'))
 
@@ -201,36 +74,10 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(
         date_before='2019-04-23T18:15:38+00:00'
     )
 
-    assert df.shape == (3, 37)
+    assert df.shape == (3, 8)
 
 
-def test_for_fixture_data_frame_columns(
-    match_goals,
-    fixture,
-    home_past_result,
-    away_past_result
-):
-    match_goals.result_client.get_results_for_team.side_effect = [
-        [
-            home_past_result,
-            home_past_result,
-            away_past_result,
-        ],
-        [
-            away_past_result,
-            away_past_result,
-            home_past_result,
-        ]
-    ]
-
-    match_goals.result_client.get_historical_results_for_fixture.side_effect = [
-        [
-            home_past_result,
-            home_past_result,
-            away_past_result,
-        ]
-    ]
-
+def test_for_fixture_data_frame_columns(match_goals, fixture):
     df = match_goals.for_fixture(fixture=fixture)
 
     columns = [
@@ -238,74 +85,19 @@ def test_for_fixture_data_frame_columns(
         'round',
         'date',
         'season',
-        'averageGoalsForFixture',
-        'homeTeamID',
         'homeTeam',
-        'homeDaysSinceLastMatch',
-        'homeFormation',
-        'homeAvgScoredLast5',
-        'homeAvgConcededLast5',
-        'homeScoredLastMatch',
-        'homeConcededLastMatch',
-        'homeShotsTotal',
-        'homeShotsOnGoal',
-        'homeShotsOffGoal',
-        'homeShotsInsideBox',
-        'homeShotsOutsideBox',
-        'homeAttacksTotal',
-        'homeAttacksDangerous',
         'homeGoals',
-        'awayTeamID',
         'awayTeam',
-        'awayDaysSinceLastMatch',
-        'awayFormation',
-        'awayAvgScoredLast5',
-        'awayAvgConcededLast5',
-        'awayScoredLastMatch',
-        'awayConcededLastMatch',
-        'awayShotsTotal',
-        'awayShotsOnGoal',
-        'awayShotsOffGoal',
-        'awayShotsInsideBox',
-        'awayShotsOutsideBox',
-        'awayAttacksTotal',
-        'awayAttacksDangerous',
         'awayGoals',
     ]
 
     df_columns = df.columns
 
     assert (df_columns == columns).all()
-    assert df.shape == (1, 37)
+    assert df.shape == (1, 8)
 
 
-def test_for_fixture_returns_dataframe_of_collated_fixture_data(
-    match_goals,
-    fixture,
-    home_past_result,
-    away_past_result
-):
-    match_goals.result_client.get_results_for_team.side_effect = [
-        [
-            home_past_result,
-            home_past_result,
-            away_past_result,
-        ],
-        [
-            away_past_result,
-            away_past_result,
-            home_past_result,
-        ]
-    ]
-
-    match_goals.result_client.get_historical_results_for_fixture.side_effect = [
-        [
-            home_past_result,
-            home_past_result,
-            away_past_result,
-        ]
-    ]
-
+def test_for_fixture_returns_dataframe_of_collated_fixture_data(match_goals, fixture):
     df = match_goals.for_fixture(fixture=fixture)
 
     row = df.iloc[0, :]
@@ -314,28 +106,14 @@ def test_for_fixture_returns_dataframe_of_collated_fixture_data(
     assert row['round'] == '4'
     assert row['date'] == pd.Timestamp('2019-04-23T18:15:38')
     assert row['season'] == '2018/19'
-    assert row['averageGoalsForFixture'] == 6.00
-    assert row['homeTeamID'] == 7901
     assert row['homeTeam'] == 'West Ham United'
-    assert row['homeDaysSinceLastMatch'] == 3
-    assert row['homeAvgScoredLast5'] == 4.33
-    assert row['homeAvgConcededLast5'] == 1.67
-    assert row['homeScoredLastMatch'] == 5
-    assert row['homeConcededLastMatch'] == 2
-    assert row['awayTeamID'] == 496
     assert row['awayTeam'] == 'Tottenham Hotspur'
-    assert row['awayDaysSinceLastMatch'] == 5
-    assert row['awayAvgScoredLast5'] == 1.33
-    assert row['awayAvgConcededLast5'] == 3.67
-    assert row['awayScoredLastMatch'] == 1
-    assert row['awayConcededLastMatch'] == 3
 
 
 @pytest.fixture()
 def match_goals():
     result_client = MagicMock(spec=ResultClient)
-    team_stats_client = Mock(spec=TeamStatsClient)
-    return MatchGoals(result_client, team_stats_client)
+    return MatchGoals(result_client)
 
 
 @pytest.fixture()

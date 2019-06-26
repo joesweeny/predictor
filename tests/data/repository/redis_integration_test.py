@@ -1,8 +1,8 @@
 import pytest
 import redis
 import pandas as pd
-from predictor.framework import config
-from predictor.data.repository.redis import RedisRepository
+from compiler.framework import config
+from compiler.data.repository.redis import RedisRepository
 
 
 def test_save_data_frame_saves_to_redis_repository(redis_repository):

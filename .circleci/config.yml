@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/statistico-predictor
+    working_directory: ~/statistico-odds-compiler
     machine: true
 
     steps:
