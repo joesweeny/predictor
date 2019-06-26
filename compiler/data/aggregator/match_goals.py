@@ -2,8 +2,7 @@ import pandas as pd
 from datetime import datetime
 from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
 from compiler.grpc.result_client import ResultClient
-from compiler.grpc.proto.result.result_pb2 import Result
-from compiler.grpc.proto.stats.team.stats_pb2 import TeamStats
+from compiler.grpc.proto.result.result_pb2 import Result, MatchStats
 
 
 class MatchGoals:
@@ -81,7 +80,7 @@ class MatchGoals:
         return data
 
     @staticmethod
-    def __get_value(prop: str, stats: TeamStats):
+    def __get_value(prop: str, stats: MatchStats):
         if stats.HasField(prop):
             p = getattr(stats, prop)
             return p.value
