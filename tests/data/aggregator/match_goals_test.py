@@ -6,7 +6,6 @@ from compiler.data.aggregator.match_goals import MatchGoals
 from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
 from compiler.grpc.proto.result import result_pb2
 from compiler.grpc.result_client import ResultClient
-from compiler.grpc.team_stats_client import TeamStatsClient
 from compiler.grpc.proto.stats.team import stats_pb2
 
 
@@ -114,8 +113,7 @@ def test_for_fixture_returns_dataframe_of_collated_fixture_data(match_goals, fix
 @pytest.fixture()
 def match_goals():
     result_client = MagicMock(spec=ResultClient)
-    team_stats_client = Mock(spec=TeamStatsClient)
-    return MatchGoals(result_client, team_stats_client)
+    return MatchGoals(result_client)
 
 
 @pytest.fixture()

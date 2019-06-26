@@ -3,14 +3,12 @@ from datetime import datetime
 from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
 from compiler.grpc.result_client import ResultClient
 from compiler.grpc.proto.result.result_pb2 import Result
-from compiler.grpc.team_stats_client import TeamStatsClient
 from compiler.grpc.proto.stats.team.stats_pb2 import TeamStats
 
 
 class MatchGoals:
-    def __init__(self, result_client: ResultClient, team_stats_client: TeamStatsClient):
+    def __init__(self, result_client: ResultClient):
         self.result_client = result_client
-        self.team_stats_client = team_stats_client
 
     __columns = [
         'matchID',
