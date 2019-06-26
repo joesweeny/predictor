@@ -2,10 +2,10 @@ import pytest
 import pandas as pd
 from datetime import datetime
 from mock import MagicMock, Mock, call
-from predictor.framework import config
-from predictor.data.repository.redis import RedisRepository
-from predictor.data.aggregator.match_goals import MatchGoals
-from predictor.data.handling.data_handler import DataHandler
+from compiler.framework import config
+from compiler.data.repository.redis import RedisRepository
+from compiler.data.aggregator.match_goals import MatchGoals
+from compiler.data.handling.data_handler import DataHandler
 
 
 def test_store_match_goals_data_for_supported_competitions_parses_and_stores_dataframe(handler):

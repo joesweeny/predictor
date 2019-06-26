@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 from datetime import datetime
-from predictor.data.preprocessing import helpers
+from compiler.data.preprocessing import helpers
 
 
 def test_append_and_sort_by_column_combines_data_frames_and_sorts_by_column_provided():

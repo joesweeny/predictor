@@ -2,12 +2,12 @@ import pytest
 import pandas as pd
 from datetime import datetime
 from mock import MagicMock, Mock
-from predictor.data.aggregator.match_goals import MatchGoals
-from predictor.grpc.proto.fixture.fixture_pb2 import Fixture
-from predictor.grpc.proto.result import result_pb2
-from predictor.grpc.result_client import ResultClient
-from predictor.grpc.team_stats_client import TeamStatsClient
-from predictor.grpc.proto.stats.team import stats_pb2
+from compiler.data.aggregator.match_goals import MatchGoals
+from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
+from compiler.grpc.proto.result import result_pb2
+from compiler.grpc.result_client import ResultClient
+from compiler.grpc.team_stats_client import TeamStatsClient
+from compiler.grpc.proto.stats.team import stats_pb2
 
 
 def test_for_season_data_frame_columns(match_goals):

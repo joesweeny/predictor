@@ -1,4 +1,4 @@
-from predictor.data.calculation import elo
+from compiler.data.calculation import elo
 
 
 def test_calculate_team_ratings_returns_new_higher_home_rating_and_lower_away_ratings_for_home_win():

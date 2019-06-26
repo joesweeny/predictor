@@ -1,7 +1,7 @@
 import pytest
 from datetime import datetime
-from predictor.grpc.proto.result.result_pb2 import MatchStats, Result
-from predictor.data import calculator
+from compiler.grpc.proto.result.result_pb2 import MatchStats, Result
+from compiler.data import calculator
 
 
 def test_total_goals_returns_home_and_away_goals_combined():
