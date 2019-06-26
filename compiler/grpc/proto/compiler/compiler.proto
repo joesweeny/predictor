@@ -3,7 +3,7 @@ syntax = "proto3";
 package prediction;
 
 service CompilerService {
-    // Returns a Over/Under goals compiler for a given fixture
+    // Returns a Over/Under goals odds for a given fixture
     rpc GetOverUnderGoalsForFixture(OverUnderRequest) returns (OverUnderGoalsResponse) {}
 }
 
