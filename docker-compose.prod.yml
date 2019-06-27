@@ -2,7 +2,7 @@ version: '3.5'
 services:
 
     grpc:
-      image: joesweeny/statisticopredictor_grpc:$RELEASE
+      image: joesweeny/statisticooddscompiler_grpc:$RELEASE
       ports:
         - "50051:50051"
       environment:
@@ -14,7 +14,7 @@ services:
       tty: true
 
     console:
-      image: joesweeny/statisticopredictor_console:$RELEASE
+      image: joesweeny/statisticooddscompiler_console:$RELEASE
       environment:
         DATA_SERVER_HOST: $DATA_SERVER_HOST
         DATA_SERVER_PORT: $DATA_SERVER_PORT
