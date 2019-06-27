@@ -56,17 +56,6 @@ def process_supported_competitions_data():
     print('Data saved')
 
 
-# Remove this command once preprocessing and model work is complete
-@cli.command()
-@click.argument('fixture_id')
-def process_feature_data(fixture_id):
-    predictor = Container().match_goals_predictor()
-
-    p = predictor.predict_for_fixture(fixture_id=int(fixture_id))
-
-    print(p)
-
-
 @cli.command()
 def pre_process_match_goals_data_for_supported_competitions():
     container = Container()

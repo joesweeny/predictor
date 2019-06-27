@@ -60,31 +60,6 @@ def test_create_over_goals_target_variable_columns_adds_additional_column_to_dat
     assert 1 == last_column[2]
 
 
-def test_map_formations_converts_string_formations_into_integer_representation():
-    row1 = {
-        'homeTeam': 'West Ham United',
-        'formation': '4-2-2-2'
-    }
-
-    row2 = {
-        'homeTeam': 'Newcastle United',
-        'formation': '4-5-1'
-    }
-
-    row3 = {
-        'homeTeam': 'Manchester United',
-        'formation': '3-4-2-1'
-    }
-
-    df = pd.DataFrame([row1, row2, row3])
-
-    mapped = helpers.map_formations(df=df)
-
-    assert 19 == mapped.iloc[0, :]['formation']
-    assert 5 == mapped.iloc[1, :]['formation']
-    assert 6 == mapped.iloc[2, :]['formation']
-
-
 def test_drop_non_features_removes_columns_from_data_frame():
     row = {
         'matchID': 23,
@@ -346,93 +321,6 @@ def test_apply_current_elos_adds_new_elo_columns_to_data_frame(elos_df):
     assert [1539.45, 1482.28, 0.58, 0.42] == elo_applied.iloc[0, :][columns].tolist()
 
 
-def test_set_unknown_features_creates_adds_rolling_averages_for_feature_columns():
-    columns = [
-        'homeTeam',
-        'homeFormation',
-        'homeShotsTotal',
-        'homeShotsOnGoal',
-        'homeShotsOffGoal',
-        'homeShotsInsideBox',
-        'homeShotsOutsideBox',
-        'homeAttacksTotal',
-        'homeAttacksDangerous',
-        'awayTeam',
-        'awayFormation',
-        'awayShotsTotal',
-        'awayShotsOnGoal',
-        'awayShotsOffGoal',
-        'awayShotsInsideBox',
-        'awayShotsOutsideBox',
-        'awayAttacksTotal',
-        'awayAttacksDangerous',
-    ]
-
-    df = pd.DataFrame(
-        [
-            add_stats_row('West Ham United', 'Manchester United', 5, 3),
-            add_stats_row('Newcastle United', 'Manchester City', 10, 2),
-            add_stats_row('Tottenham Hotspur', 'Arsenal', 6, 2),
-            add_stats_row('Manchester United', 'Newcastle United', 15, 4),
-            add_stats_row('Manchester City', 'West Ham United', 5, 3),
-            add_stats_row('Chelsea', 'Watford', 5, 1),
-            add_stats_row('Watford', 'Newcastle United', 9, 3),
-            add_stats_row('Arsenal', 'Chelsea', 10, 9),
-            add_stats_row('West Ham United', 'Tottenham Hotspur', 12, 8),
-            add_stats_row('Manchester United', 'Manchester City', 5, 2),
-            add_stats_row('Newcastle United', 'Manchester United', 8, 7),
-            add_stats_row('West Ham United', 'Manchester United', 5, 3),
-            add_stats_row('Newcastle United', 'Manchester City', 10, 2),
-            add_stats_row('Tottenham Hotspur', 'Arsenal', 6, 2),
-            add_stats_row('Manchester United', 'Newcastle United', 15, 4),
-            add_stats_row('Manchester City', 'West Ham United', 5, 3),
-            add_stats_row('Chelsea', 'Watford', 5, 1),
-            add_stats_row('Watford', 'Newcastle United', 9, 3),
-            add_stats_row('Arsenal', 'Chelsea', 10, 9),
-            add_stats_row('West Ham United', 'Tottenham Hotspur', 12, 8),
-            add_stats_row('Manchester United', 'Manchester City', 5, 2),
-            add_stats_row('Newcastle United', 'Manchester United', 8, 7),
-            add_stats_row('West Ham United', 'Manchester United', 15, 3),
-            add_stats_row('Newcastle United', 'Manchester City', 10, 2),
-            add_stats_row('Tottenham Hotspur', 'Arsenal', 6, 2),
-            add_stats_row('Manchester United', 'Newcastle United', 15, 4),
-            add_stats_row('Manchester City', 'West Ham United', 5, 3),
-            add_stats_row('Chelsea', 'Watford', 5, 1),
-            add_stats_row('Watford', 'Newcastle United', 9, 3),
-            add_stats_row('Arsenal', 'Chelsea', 10, 9),
-            add_stats_row('West Ham United', 'Tottenham Hotspur', 12, 8),
-            add_stats_row('Manchester United', 'Manchester City', 5, 2),
-            add_stats_row('Newcastle United', 'Manchester United', 8, 7),
-        ],
-        columns=columns
-    )
-
-    calculated = helpers.set_unknown_features(df=df, span=5)
-
-    expected_row = [
-        'Newcastle United',
-        9.260663507109005,
-        18.52132701421801,
-        9.260663507109005,
-        7.696682464454975,
-        9.260663507109005,
-        3.8483412322274875,
-        33.308056872037916,
-        3.8483412322274875,
-        'Manchester United',
-        8.95734597156398,
-        13.436018957345969,
-        8.95734597156398,
-        9.947867298578197,
-        4.47867298578199,
-        9.947867298578197,
-        19.895734597156395,
-        4.47867298578199
-    ]
-
-    assert expected_row == calculated.iloc[-1, :].tolist()
-
-
 @pytest.fixture
 def elos_df():
     row1 = {
@@ -483,28 +371,3 @@ def elos_df():
     df = pd.DataFrame([row1, row2, row3, row4, row5])
 
     return df
-
-
-def add_stats_row(home_team: str, away_team: str, high: float, low: float) -> dict:
-    row = {
-        'homeTeam': home_team,
-        'homeFormation': high * 1,
-        'homeShotsTotal': high * 2,
-        'homeShotsOnGoal': high,
-        'homeShotsOffGoal': low * 2,
-        'homeShotsInsideBox': high,
-        'homeShotsOutsideBox': low,
-        'homeAttacksTotal': high * low,
-        'homeAttacksDangerous': low,
-        'awayTeam': away_team,
-        'awayFormation': low * 2,
-        'awayShotsTotal': low * 3,
-        'awayShotsOnGoal': low * 2,
-        'awayShotsOffGoal': high,
-        'awayShotsInsideBox': low,
-        'awayShotsOutsideBox': high,
-        'awayAttacksTotal': high * 2,
-        'awayAttacksDangerous': low,
-    }
-
-    return row

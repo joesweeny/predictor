@@ -151,40 +151,6 @@ def apply_current_elos(features: pd.DataFrame, elos_current: dict) -> pd.DataFra
     return features
 
 
-def map_formations(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Map string formation data into integer representation in provided dataframe
-    """
-    formation = {
-        1: '5-4-1',
-        2: '5-3-2',
-        3: '3-5-1-1',
-        4: '3-5-2',
-        5: '4-5-1',
-        6: '3-4-2-1',
-        7: '3-4-1-2',
-        8: '3-2-4-1',
-        9: '4-3-2-1',
-        10: '4-3-1-2',
-        11: '3-1-4-2',
-        12: '4-1-3-2',
-        13: '4-2-3-1',
-        14: '3-4-3',
-        15: '3-3-1-3',
-        16: '4-4-1-1',
-        17: '4-4-2',
-        18: '4-1-4-1',
-        19: '4-2-2-2',
-        20: '4-3-3'
-    }
-
-    formation = {v: k for k, v in formation.items()}
-
-    df.replace(formation, inplace=True)
-
-    return df
-
-
 def drop_non_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     Drop columns from provided dataframe
@@ -203,46 +169,5 @@ def drop_non_features(df: pd.DataFrame) -> pd.DataFrame:
     ]
 
     df = df.drop(columns, axis=1)
-
-    return df
-
-
-def set_unknown_features(df: pd.DataFrame, span: int):
-    """
-    Calculate and apply exponential moving average for feature columns to provided dataframe
-    """
-    home_columns = [
-        'homeFormation',
-        'homeShotsTotal',
-        'homeShotsOnGoal',
-        'homeShotsOffGoal',
-        'homeShotsInsideBox',
-        'homeShotsOutsideBox',
-        'homeAttacksTotal',
-        'homeAttacksDangerous',
-    ]
-
-    away_columns = [
-        'awayFormation',
-        'awayShotsTotal',
-        'awayShotsOnGoal',
-        'awayShotsOffGoal',
-        'awayShotsInsideBox',
-        'awayShotsOutsideBox',
-        'awayAttacksTotal',
-        'awayAttacksDangerous',
-    ]
-
-    for feature in home_columns:
-        df[feature] = (df.groupby('homeTeam')[feature]
-                       .transform(lambda row: row.ewm(span=span, min_periods=2)
-                                  .mean()
-                                  .shift(1)))
-
-    for feature in away_columns:
-        df[feature] = (df.groupby('awayTeam')[feature]
-                       .transform(lambda row: row.ewm(span=span, min_periods=2)
-                                  .mean()
-                                  .shift(1)))
 
     return df
