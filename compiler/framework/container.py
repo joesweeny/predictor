@@ -6,6 +6,7 @@ from compiler.grpc.result_client import ResultClient
 from compiler.grpc.team_stats_client import TeamStatsClient
 from compiler.data.aggregator.match_goals import MatchGoals
 from compiler.data.preprocessing.match_goals import MatchGoalsPreProcessor
+from compiler.data.handling.data_handler import DataHandler
 
 
 class Container:
@@ -38,7 +39,7 @@ class Container:
         return self.__configuration
 
     def match_goals_aggregator(self):
-        return MatchGoals(result_client=self.result_client)
+        return MatchGoals(result_client=self.result_client, team_stats_client=self.team_stats_client)
 
     def match_goals_pre_processor(self):
         processor = MatchGoalsPreProcessor(
@@ -48,3 +49,12 @@ class Container:
         )
 
         return processor
+
+    def data_handler(self):
+        handler = DataHandler(
+            configuration=config,
+            repository=self.redis_repository,
+            aggregator=self.match_goals_aggregator()
+        )
+
+        return handler
