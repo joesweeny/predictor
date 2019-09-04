@@ -1,27 +1,5 @@
 import numpy as np
 import pandas as pd
-from typing import List
-
-
-def append_and_sort_by_column(dfs: List[pd.DataFrame], col: str, asc: bool) -> pd.DataFrame:
-    """
-    Combine all Pandas data frames passed as first argument and sort by column provided
-    """
-    combined = pd.concat(dfs)
-    combined.sort_values(by=[col], inplace=True, ascending=asc)
-    combined = combined.reset_index(drop=True)
-
-    return combined
-
-
-def create_over_goals_target_variable_column(df: pd.DataFrame, goals: float) -> pd.DataFrame:
-    """
-    Create a Over X Amount Goals target variable column based on second argument provided
-    """
-    col = 'over' + str(goals) + 'Goals'
-    df[col] = np.where(df['homeGoals'] + df['awayGoals'] > goals, 1, 0)
-
-    return df
 
 
 def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_column):
@@ -149,25 +127,3 @@ def apply_current_elos(features: pd.DataFrame, elos_current: dict) -> pd.DataFra
     features['awayEloProb'] = round(1 - features['homeEloProb'], 2)
 
     return features
-
-
-def drop_non_features(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Drop columns from provided dataframe
-    """
-    columns = [
-        'matchID',
-        'date',
-        'round',
-        'season',
-        'homeTeamID',
-        'homeTeam',
-        'homeGoals',
-        'awayTeamID',
-        'awayTeam',
-        'awayGoals',
-    ]
-
-    df = df.drop(columns, axis=1)
-
-    return df

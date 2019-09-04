@@ -6,6 +6,7 @@ from compiler.data.aggregator.match_goals import MatchGoals
 from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
 from compiler.grpc.proto.result import result_pb2
 from compiler.grpc.result_client import ResultClient
+from compiler.grpc.team_stats_client import TeamStatsClient
 from compiler.grpc.proto.stats.team import stats_pb2
 
 
@@ -27,8 +28,14 @@ def test_for_season_data_frame_columns(match_goals):
         'season',
         'homeTeam',
         'homeGoals',
+        'homeShotsTotal',
+        'homeShotsOnGoal',
+        'homeSaves',
         'awayTeam',
         'awayGoals',
+        'awayShotsTotal',
+        'awayShotsOnGoal',
+        'awaySaves'
     ]
 
     df_columns = df.columns
@@ -36,9 +43,11 @@ def test_for_season_data_frame_columns(match_goals):
     assert (df_columns == columns).all()
 
 
-def test_for_season_converts_result_object_into_data_frame_row(match_goals, result):
+def test_for_season_converts_result_object_into_data_frame_row(match_goals, result, team_stats_response):
     value = match_goals.result_client.get_results_for_season.return_value
     value.__iter__.return_value = iter([result])
+
+    match_goals.team_stats_client.get_team_stats_for_fixture.return_value = team_stats_response
 
     df = match_goals.for_season(5, datetime.fromisoformat('2019-04-23T18:15:38+00:00'))
 
@@ -54,8 +63,14 @@ def test_for_season_converts_result_object_into_data_frame_row(match_goals, resu
         '2018/19',
         'West Ham United',
         2,
+        34,
+        12,
+        15,
         'Tottenham Hotspur',
         2,
+        34,
+        12,
+        2
     ]
 
     row = df.iloc[0, :].values.tolist()
@@ -74,7 +89,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(match_g
         date_before='2019-04-23T18:15:38+00:00'
     )
 
-    assert df.shape == (3, 8)
+    assert df.shape == (3, 14)
 
 
 def test_for_fixture_data_frame_columns(match_goals, fixture):
@@ -87,14 +102,20 @@ def test_for_fixture_data_frame_columns(match_goals, fixture):
         'season',
         'homeTeam',
         'homeGoals',
+        'homeShotsTotal',
+        'homeShotsOnGoal',
+        'homeSaves',
         'awayTeam',
         'awayGoals',
+        'awayShotsTotal',
+        'awayShotsOnGoal',
+        'awaySaves'
     ]
 
     df_columns = df.columns
 
     assert (df_columns == columns).all()
-    assert df.shape == (1, 8)
+    assert df.shape == (1, 14)
 
 
 def test_for_fixture_returns_dataframe_of_collated_fixture_data(match_goals, fixture):
@@ -113,7 +134,8 @@ def test_for_fixture_returns_dataframe_of_collated_fixture_data(match_goals, fix
 @pytest.fixture()
 def match_goals():
     result_client = MagicMock(spec=ResultClient)
-    return MatchGoals(result_client)
+    team_stats_client = Mock(spec=TeamStatsClient)
+    return MatchGoals(result_client=result_client, team_stats_client=team_stats_client)
 
 
 @pytest.fixture()
@@ -177,15 +199,11 @@ def team_stats_response():
 
     response.home_team.shots_total.value = 34
     response.home_team.shots_on_goal.value = 12
-    response.home_team.shots_off_goal.value = 22
-    response.home_team.shots_inside_box.value = 15
-    response.home_team.shots_outside_box.value = 5
+    response.home_team.saves.value = 15
 
     response.away_team.shots_total.value = 34
     response.away_team.shots_on_goal.value = 12
-    response.away_team.shots_off_goal.value = 22
-    response.away_team.shots_inside_box.value = 15
-    response.away_team.shots_outside_box.value = 5
+    response.away_team.saves.value = 2
 
     return response
 
