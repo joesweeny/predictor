@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from typing import List
 
 
 def elo_calculator(df, k_factor, historic_elos, soft_reset_factor, match_id_column):
