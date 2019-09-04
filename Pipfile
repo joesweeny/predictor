@@ -18,6 +18,7 @@ pandas = "*"
 click = "==0.7"
 redis = "*"
 scikit-learn = "*"
+statsmodels = "~=0.10.1"
 
 [requires]
 python_version = "3.7.3"
