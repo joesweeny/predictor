@@ -11,15 +11,15 @@ HOME_LIST = [
     'homeShotTargetRatio',
     'awayShotSaveRatio',
     'homeAvgScored',
-    'awayAvgConceded',
+    'awayAvgConceded'
 ]
 
 AWAY_LIST = [
     'awayGoals',
-    'homeShotTargetRatio',
-    'awayShotSaveRatio',
+    'awayShotTargetRatio',
+    'homeShotSaveRatio',
     'awayAvgScored',
-    'homeAvgConceded',
+    'homeAvgConceded'
 ]
 
 HOME_DICT = {
@@ -27,7 +27,7 @@ HOME_DICT = {
     'homeShotTargetRatio': 'shotRatio',
     'awayShotSaveRatio': 'saveRatio',
     'homeAvgScored': 'avgScored',
-    'awayAvgConceded': 'avgConceded',
+    'awayAvgConceded': 'avgConceded'
 }
 
 AWAY_DICT = {
@@ -35,7 +35,7 @@ AWAY_DICT = {
     'awayShotTargetRatio': 'shotRatio',
     'homeShotSaveRatio': 'saveRatio',
     'awayAvgScored': 'avgScored',
-    'homeAvgConceded': 'avgConceded',
+    'homeAvgConceded': 'avgConceded'
 }
 
 MAX_GOALS = 5
@@ -49,7 +49,7 @@ def train_glm_model(features: pd.DataFrame) -> smf.glm:
     :return: smf.glm
     """
     home_data = features[HOME_LIST].assign(home=1).rename(columns=HOME_DICT)
-    away_data = features[AWAY_LIST].assign(home=1).rename(columns=AWAY_DICT)
+    away_data = features[AWAY_LIST].assign(home=0).rename(columns=AWAY_DICT)
 
     data = pd.concat([home_data, away_data])
 
@@ -60,7 +60,7 @@ def train_glm_model(features: pd.DataFrame) -> smf.glm:
     return model
 
 
-def get_over_under_odds(model: smf.glm, fixture: pd.Series) -> OverUnderGoals:
+def get_over_under_odds(model: smf.glm, fixture: Dict) -> OverUnderGoals:
     """
     Use trained GLM model to make prediction and return calculated decimal odds
     :param model:
@@ -90,10 +90,10 @@ def __get_prediction_matrix(home_avg: List, away_avg: List):
 def __calculate_odds(matrix: np.ndarray) -> (float, float):
     under = np.sum(matrix[:2, :2]) + matrix.item((0, 2)) + matrix.item((2, 0))
 
-    return (1 / under), (1 / (1 - under))
+    return round((1 / under), 2), round((1 / (1 - under)), 2)
 
 
-def __create_home_fixture_data(fixture: pd.Series) -> Dict:
+def __create_home_fixture_data(fixture: Dict) -> Dict:
     data = {
         'home': 1,
         'shotRatio': fixture['homeShotTargetRatio'],
@@ -105,7 +105,7 @@ def __create_home_fixture_data(fixture: pd.Series) -> Dict:
     return data
 
 
-def __create_away_fixture_data(fixture: pd.Series) -> Dict:
+def __create_away_fixture_data(fixture: Dict) -> Dict:
     data = {
         'home': 0,
         'shotRatio': fixture['awayShotTargetRatio'],
