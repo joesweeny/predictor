@@ -2,8 +2,9 @@ from compiler.model.odds import OverUnderGoals
 from scipy.stats import poisson
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
+import numpy as np
 import pandas as pd
-from typing import Dict
+from typing import Dict, List
 
 HOME_LIST = [
     'homeGoals',
@@ -40,7 +41,13 @@ AWAY_DICT = {
 MAX_GOALS = 5
 
 
-def get_trained_model(features: pd.DataFrame) -> smf.glm:
+def train_glm_model(features: pd.DataFrame) -> smf.glm:
+    """
+    Train and return a StatsModels GLM model using the dataframe provided as the
+    only argument
+    :param features:
+    :return: smf.glm
+    """
     home_data = features[HOME_LIST].assign(home=1).rename(columns=HOME_DICT)
     away_data = features[AWAY_LIST].assign(home=1).rename(columns=AWAY_DICT)
 
@@ -53,21 +60,37 @@ def get_trained_model(features: pd.DataFrame) -> smf.glm:
     return model
 
 
-def get_odds(model: smf.glm, fixture: pd.Series) -> OverUnderGoals:
+def get_over_under_odds(model: smf.glm, fixture: pd.Series) -> OverUnderGoals:
+    """
+    Use trained GLM model to make prediction and return calculated decimal odds
+    :param model:
+    :param fixture:
+    :return: OverUnderGoals
+    """
     home_data = pd.DataFrame(data=__create_home_fixture_data(fixture=fixture), index=[1])
     away_data = pd.DataFrame(data=__create_away_fixture_data(fixture=fixture), index=[1])
 
     home_goals_avg = model.predict(home_data).values[0]
     away_goals_avg = model.predict(away_data).values[0]
 
-    home_pred = [poisson.pmf(i, home_goals_avg) for i in range(0, MAX_GOALS + 1)]
-    away_pred = [poisson.pmf(i, away_goals_avg) for i in range(0, MAX_GOALS + 1)]
+    matrix = __get_prediction_matrix(home_avg=home_goals_avg, away_avg=away_goals_avg)
 
-    matrix = (np.outer(np.array(home_pred), np.array(away_pred)))
+    under, over = __calculate_odds(matrix=matrix)
 
+    return OverUnderGoals(under=under, over=over)
+
+
+def __get_prediction_matrix(home_avg: List, away_avg: List):
+    home_pred = [poisson.pmf(i, home_avg) for i in range(0, MAX_GOALS + 1)]
+    away_pred = [poisson.pmf(i, away_avg) for i in range(0, MAX_GOALS + 1)]
+
+    return np.outer(np.array(home_pred), np.array(away_pred))
+
+
+def __calculate_odds(matrix: np.ndarray) -> (float, float):
     under = np.sum(matrix[:2, :2]) + matrix.item((0, 2)) + matrix.item((2, 0))
 
-    return OverUnderGoals(under=1 / under, over=1 / (1 - under))
+    return (1 / under), (1 / (1 - under))
 
 
 def __create_home_fixture_data(fixture: pd.Series) -> Dict:
