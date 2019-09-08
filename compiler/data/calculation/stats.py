@@ -3,10 +3,10 @@ import pandas as pd
 
 def calculate_feature_ratio(
     df: pd.DataFrame,
-    team: str,
     row: pd.Series,
+    home_away: str,
     feature: str,
-    rating: float,
+    rating: str,
     factor: int,
     row_count: int
 ) -> float:
@@ -14,28 +14,28 @@ def calculate_feature_ratio(
     Calculate the ratio of a given column based from parsed columns based on
     rating parameter provided i.e. calculate shot to goal ratio for a team based
     on similar rated teams to the opposition
-    :param df:
-    :param team:
-    :param row:
-    :param feature:
-    :param rating:
-    :param factor:
-    :param row_count:
-    :return:
+    :param df: Pandas data frame of data
+    :param row: Feature row
+    :param home_away: homeTeam or awayTeam string
+    :param feature: Feature name to calculate
+    :param rating: Strength rating column to use
+    :param factor: Range of opposition strength to allow for
+    :param row_count: How many rows used to calculate ratio
+    :return: Calculated ratio of feature
     """
     elo = row[rating]
 
-    home_rows = df[df[team] == row[team]]
+    rows = df[df[home_away] == row[home_away]]
 
-    parsed = __parse_rows(home_rows, column, elo, factor)
+    parsed = __parse_rows(rows, rating, elo, factor)
 
     if parsed.shape[0] == 0:
-        parsed = home_rows
+        parsed = rows
 
-    parsed = parsed.iloc[row_count:]
+    total = parsed.iloc[-row_count:]
 
-    return round(parsed[feature].mean(), 2)
+    return round(total[feature].mean(), 2)
 
 
-def __parse_rows(rows, column, elo, factor):
-    return rows.loc[(rows[column] <= (elo + factor))]
+def __parse_rows(rows, rating, elo, factor):
+    return rows.loc[(rows[rating] <= (elo + factor))]
