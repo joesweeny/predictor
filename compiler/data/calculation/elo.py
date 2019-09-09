@@ -52,9 +52,6 @@ def calculate_attack_and_defence_ratings(k_factor: int, attack: float, defence: 
     prob_no_goal = 1 / (10 ** ((defence - attack) / 400) + 1)
     prob_goal_scored = 1 - prob_no_goal
 
-    print(prob_goal_scored)
-    print(prob_no_goal)
-
     if goals == 0:
         attack -= k_factor * prob_no_goal
         defence += k_factor * prob_no_goal
