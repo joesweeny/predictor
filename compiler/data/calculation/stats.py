@@ -11,14 +11,15 @@ def calculate_feature_ratio(
     row_count: int
 ) -> float:
     """
-    Calculate the ratio of a given column based from parsed columns based on
+    Calculate the ratio of a given feature column using parsed columns based on
     rating parameter provided i.e. calculate shot to goal ratio for a team based
-    on similar rated teams to the opposition
+    on similar rated opposition teams
+
     :param df: Pandas data frame of data
     :param row: Feature row
     :param home_away: homeTeam or awayTeam string
     :param feature: Feature name to calculate
-    :param rating: Strength rating column to use
+    :param rating: Strength rating column to use i.e. homeAttackStrength
     :param factor: Range of opposition strength to allow for
     :param row_count: How many rows used to calculate ratio
     :return: Calculated ratio of feature
