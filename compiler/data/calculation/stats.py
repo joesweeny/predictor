@@ -11,7 +11,7 @@ def calculate_feature_ratio(
     row_count: int
 ) -> float:
     """
-    Calculate the ratio of a given feature column using parsed columns based on
+    Calculate the ratio of a given feature column, parsing columns based on
     rating parameter provided i.e. calculate shot to goal ratio for a team based
     on similar rated opposition teams
 
