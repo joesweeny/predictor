@@ -3,7 +3,55 @@ import pandas as pd
 from compiler.data.calculation import elo
 
 
-def elo_applier(df, historic_elos, soft_reset_factor) -> pd.DataFrame:
+def apply_current_elo_ratings_for_fixture(fixture: pd.DataFrame, data: pd.DataFrame, points: int) -> pd.DataFrame:
+    """
+    Calculate and apply home and defence ratings for a Fixture
+    """
+    row = fixture.iloc[0, :]
+
+    home_rows = data[data['homeTeam'] == row['homeTeam']]
+    away_rows = data[data['awayTeam'] == row['awayTeam']]
+
+    home = home_rows.iloc[-1, :]
+    away = away_rows.iloc[-1, :]
+
+    home_attack, _ = elo.calculate_attack_and_defence_ratings(
+        points,
+        home['homeAttackStrength'],
+        home['awayDefenceStrength'],
+        home['homeGoals']
+    )
+
+    _, home_defence = elo.calculate_attack_and_defence_ratings(
+        points,
+        home['awayAttackStrength'],
+        home['homeDefenceStrength'],
+        home['awayGoals']
+    )
+
+    away_attack, _ = elo.calculate_attack_and_defence_ratings(
+        points,
+        away['awayAttackStrength'],
+        away['homeDefenceStrength'],
+        away['awayGoals']
+    )
+
+    _, away_defence = elo.calculate_attack_and_defence_ratings(
+        points,
+        away['homeAttackStrength'],
+        away['awayDefenceStrength'],
+        away['homeGoals']
+    )
+
+    fixture['homeAttackStrength'] = home_attack
+    fixture['homeDefenceStrength'] = home_defence
+    fixture['awayDefenceStrength'] = away_defence
+    fixture['awayDefenceStrength'] = away_defence
+
+    return fixture
+
+
+def apply_historic_elo_ratings(df, historic_elos, soft_reset_factor, goal_points: int) -> pd.DataFrame:
     """
     Calculate rolling ELO ratings for teams based on results provided in data frame
     """
@@ -66,14 +114,14 @@ def elo_applier(df, historic_elos, soft_reset_factor) -> pd.DataFrame:
         )
 
         new_home_attack, new_away_defence = elo.calculate_attack_and_defence_ratings(
-            20,
+            goal_points,
             home_attack_elo,
             away_defence_elo,
             row['homeGoals']
         )
 
         new_away_attack, new_home_defence = elo.calculate_attack_and_defence_ratings(
-            20,
+            goal_points,
             away_attack_elo,
             home_defence_elo,
             row['awayGoals']
