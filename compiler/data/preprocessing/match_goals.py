@@ -7,8 +7,11 @@ from typing import List
 from compiler.data.calculation import elo, stats
 
 
+STRENGTH_RATING_FACTOR = 50
+MATCH_LIMIT = 3
+
+
 def pre_process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
-    # Add team strength columns
     updated = helpers.apply_historic_elo_ratings(
         df=results,
         historic_elos={team: 1500 for team in results['homeTeam'].unique()},
@@ -16,20 +19,60 @@ def pre_process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
         goal_points=20
     )
 
-    # Add ratio columns
     for index, row in updated.iterrows():
-        updated.loc[index, 'homeShotTargetRatio'] = __apply_feature_ratio(row, 'homeShotsTotal', 'homeShotsOnGoal')
-        updated.loc[index, 'homeShotSaveRatio'] = __apply_feature_ratio(row, 'awayShotsOnGoal', 'homeSaves')
-        updated.loc[index, 'awayShotTargetRatio'] = __apply_feature_ratio(row, 'awayShotsOnGoal', 'awayShotsTotal')
-        updated.loc[index, 'awayShotSaveRatio'] = __apply_feature_ratio(row, 'homeShotsOnGoal', 'awaySaves')
+        __apply_shot_save_ratios_to_row(row, updated)
+        __apply_goal_averages_to_row(row, updated)
 
     updated = updated.fillna(seasons.mean())
     updated = updated.round(2)
 
-    # Add average scored columns
-
-    # return data frame
     return updated
+
+
+def __apply_shot_save_ratios_to_row(row: pd.Series, df: pd.DataFrame):
+    df.loc[index, 'homeShotTargetRatio'] = __apply_feature_ratio(row, 'homeShotsTotal', 'homeShotsOnGoal')
+    df.loc[index, 'homeShotSaveRatio'] = __apply_feature_ratio(row, 'awayShotsOnGoal', 'homeSaves')
+    df.loc[index, 'awayShotTargetRatio'] = __apply_feature_ratio(row, 'awayShotsOnGoal', 'awayShotsTotal')
+    df.loc[index, 'awayShotSaveRatio'] = __apply_feature_ratio(row, 'homeShotsOnGoal', 'awaySaves')
+
+
+def __apply_goal_averages_to_row(row: pd.Series, df: pd.DataFrame):
+    df.loc[index, 'homeAvgScored'] = stats.calculate_feature_ratio(
+        df,
+        row,
+        'homeTeam',
+        'homeGoals',
+        'awayDefenceStrength',
+        STRENGTH_RATING_FACTOR,
+        MATCH_LIMIT
+    )
+    df.loc[index, 'homeAvgConceded'] = stats.calculate_feature_ratio(
+        df,
+        row,
+        'homeTeam',
+        'awayGoals',
+        'awayAttackStrength',
+        STRENGTH_RATING_FACTOR,
+        MATCH_LIMIT
+    )
+    df.loc[index, 'awayAvgScored'] = stats.calculate_feature_ratio(
+        df,
+        row,
+        'awayTeam',
+        'awayGoals',
+        'homeDefenceStrength',
+        STRENGTH_RATING_FACTOR,
+        MATCH_LIMIT
+    )
+    df.loc[index, 'awayAvgConceded'] = stats.calculate_feature_ratio(
+        df,
+        row,
+        'awayTeam',
+        'homeGoals',
+        'homeAttackStrength',
+        STRENGTH_RATING_FACTOR,
+        MATCH_LIMIT
+    )
 
 
 def __apply_feature_ratio(row: pd.Series, col_1: str, col_2: str) -> float:
