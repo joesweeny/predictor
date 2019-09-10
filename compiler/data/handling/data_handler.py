@@ -1,7 +1,9 @@
 from datetime import datetime
 from compiler.data.repository.redis import RedisRepository
 from compiler.data.aggregator.match_goals import MatchGoals
+from compiler.data.preprocessing.match_goals import pre_process_historic_data_set
 from compiler.framework import config
+import pandas as pd
 
 
 class DataHandler:
@@ -27,15 +29,28 @@ class DataHandler:
             competition_id = competition['id']
             seasons = competition['seasons']
 
+            data_frame = pd.DataFrame()
+
             for season in seasons:
                 df = self._aggregator.for_season(
                     season_id=season['id'],
                     date_before=date_before
                 )
 
-                filename = "competition:" \
-                           + str(competition_id) \
-                           + ':season:' \
-                           + str(season['id'])
+                data_frame = data_frame.append(other=df, ignore_index=True)
 
-                self._repository.save_data_frame(key=filename, df=df)
+            pre_processed = pre_process_historic_data_set(results=data_frame)
+
+            filename = "competition:" + str(competition_id) + ':match_goals.csv'
+
+            self._repository.save_data_frame(key=filename, df=pre_processed)
+
+    def get_stored_match_goals_data_for_competition(self, competition_id: int):
+        filename = "competition:" + str(competition_id) + ':match_goals.csv'
+
+        data = self._repository.get_data_frame(key=filename)
+
+        if data is None:
+            raise FileNotFoundError("Match Goal data for competition" + str(competition_id) + "does not exist")
+
+        return data
