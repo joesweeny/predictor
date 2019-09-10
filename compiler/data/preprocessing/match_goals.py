@@ -31,9 +31,11 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
         points=GOAL_POINTS
     )
 
+    row = fixture.iloc[0, :]
+
     updated.loc[0, 'homeShotTargetRatio'] = stats.calculate_feature_ratio(
         df=results,
-        row=fixture.iloc[0, :],
+        row=row,
         home_away='homeTeam',
         feature='homeShotTargetRatio',
         rating='awayDefenceStrength',
@@ -43,7 +45,7 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
 
     updated.loc[0, 'homeShotSaveRatio'] = stats.calculate_feature_ratio(
         df=results,
-        row=fixture.iloc[0, :],
+        row=row,
         home_away='homeTeam',
         feature='homeShotSaveRatio',
         rating='awayAttackStrength',
@@ -53,7 +55,7 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
 
     updated.loc[0, 'awayShotTargetRatio'] = stats.calculate_feature_ratio(
         df=results,
-        row=fixture.iloc[0, :],
+        row=row,
         home_away='awayTeam',
         feature='awayShotTargetRatio',
         rating='homeDefenceStrength',
@@ -63,7 +65,7 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
 
     updated.loc[0, 'awayShotSaveRatio'] = stats.calculate_feature_ratio(
         df=results,
-        row=fixture.iloc[0, :],
+        row=row,
         home_away='awayTeam',
         feature='awayShotSaveRatio',
         rating='homeAttackStrength',
@@ -73,7 +75,7 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
 
     updated.loc[0, 'homeAvgScored'] = stats.calculate_feature_ratio(
         df=results,
-        row=fixture.iloc[0, :],
+        row=row,
         home_away='homeTeam',
         feature='homeGoals',
         rating='awayDefenceStrength',
@@ -83,7 +85,7 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
 
     updated.loc[0, 'homeAvgConceded'] = stats.calculate_feature_ratio(
         df=results,
-        row=fixture.iloc[0, :],
+        row=row,
         home_away='homeTeam',
         feature='awayGoals',
         rating='awayAttackStrength',
@@ -93,7 +95,7 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
 
     updated.loc[0, 'awayAvgScored'] = stats.calculate_feature_ratio(
         df=results,
-        row=fixture.iloc[0, :],
+        row=row,
         home_away='awayTeam',
         feature='awayGoals',
         rating='homeDefenceStrength',
@@ -103,7 +105,7 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
 
     updated.loc[0, 'awayAvgConceded'] = stats.calculate_feature_ratio(
         df=results,
-        row=fixture.iloc[0, :],
+        row=row,
         home_away='awayTeam',
         feature='homeGoals',
         rating='homeAttackStrength',
