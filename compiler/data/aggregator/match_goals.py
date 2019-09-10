@@ -1,13 +1,20 @@
 import pandas as pd
 from datetime import datetime
 from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
+from compiler.grpc.fixture_client import FixtureClient
 from compiler.grpc.result_client import ResultClient
 from compiler.grpc.team_stats_client import TeamStatsClient
 from compiler.grpc.proto.result.result_pb2 import Result, MatchStats
 
 
 class MatchGoals:
-    def __init__(self, result_client: ResultClient, team_stats_client: TeamStatsClient):
+    def __init__(
+        self,
+        fixture_client: FixtureClient,
+        result_client: ResultClient,
+        team_stats_client: TeamStatsClient
+    ):
+        self.fixture_client = fixture_client
         self.result_client = result_client
         self.team_stats_client = team_stats_client
 
@@ -41,7 +48,12 @@ class MatchGoals:
 
         return df
 
-    def for_fixture(self, fixture: Fixture) -> pd.DataFrame:
+    def for_fixture(self, fixture_id: int) -> pd.DataFrame:
+        try:
+            fixture = self.fixture_client.get_fixture_by_id(fixture_id=fixture_id)
+        except Exception:
+            raise Exception("Unable to fetch data for Fixture with ID" + str(fixture_id))
+
         df = pd.DataFrame(columns=self.__columns)
 
         df = df.append(self.__fixture_to_row(fixture), ignore_index=True)
