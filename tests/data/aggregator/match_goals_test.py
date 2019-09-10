@@ -5,6 +5,7 @@ from mock import MagicMock, Mock
 from compiler.data.aggregator.match_goals import MatchGoals
 from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
 from compiler.grpc.proto.result import result_pb2
+from compiler.grpc.fixture_client import FixtureClient
 from compiler.grpc.result_client import ResultClient
 from compiler.grpc.team_stats_client import TeamStatsClient
 from compiler.grpc.proto.stats.team import stats_pb2
@@ -93,7 +94,11 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(match_g
 
 
 def test_for_fixture_data_frame_columns(match_goals, fixture):
-    df = match_goals.for_fixture(fixture=fixture)
+    match_goals.fixture_client.get_fixture_by_id.return_value = fixture
+
+    df = match_goals.for_fixture(fixture_id=66)
+
+    match_goals.fixture_client.get_fixture_by_id.assert_called_with(fixture_id=66)
 
     columns = [
         'matchID',
@@ -119,7 +124,11 @@ def test_for_fixture_data_frame_columns(match_goals, fixture):
 
 
 def test_for_fixture_returns_dataframe_of_collated_fixture_data(match_goals, fixture):
-    df = match_goals.for_fixture(fixture=fixture)
+    match_goals.fixture_client.get_fixture_by_id.return_value = fixture
+
+    df = match_goals.for_fixture(fixture_id=66)
+
+    match_goals.fixture_client.get_fixture_by_id.assert_called_with(fixture_id=66)
 
     row = df.iloc[0, :]
 
@@ -131,11 +140,26 @@ def test_for_fixture_returns_dataframe_of_collated_fixture_data(match_goals, fix
     assert row['awayTeam'] == 'Tottenham Hotspur'
 
 
+def test_for_fixture_raises_exception_if_unable_to_retrieve_fixture(match_goals):
+    match_goals.fixture_client.get_fixture_by_id.side_effect = Exception()
+
+    with pytest.raises(Exception):
+        match_goals.for_fixture(fixture_id=66)
+
+
 @pytest.fixture()
 def match_goals():
+    fixture_client = MagicMock(spec=FixtureClient)
     result_client = MagicMock(spec=ResultClient)
     team_stats_client = Mock(spec=TeamStatsClient)
-    return MatchGoals(result_client=result_client, team_stats_client=team_stats_client)
+
+    aggregator = MatchGoals(
+        fixture_client=fixture_client,
+        result_client=result_client,
+        team_stats_client=team_stats_client
+    )
+
+    return aggregator
 
 
 @pytest.fixture()
