@@ -5,6 +5,7 @@ from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
 import pandas as pd
 from typing import List
 from compiler.data.calculation import elo, stats
+from compiler.data.preprocessing import helpers
 
 
 STRENGTH_RATING_FACTOR = 50
@@ -20,23 +21,22 @@ def pre_process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
     )
 
     for index, row in updated.iterrows():
-        __apply_shot_save_ratios_to_row(row, updated)
-        __apply_goal_averages_to_row(row, updated)
+        __apply_shot_save_ratios_to_row(row=row, df=updated, index=index)
+        __apply_goal_averages_to_row(row=row, df=updated, index=index)
 
-    updated = updated.fillna(seasons.mean())
-    updated = updated.round(2)
+    cleaned = updated.fillna(updated.mean()).round(2)
 
-    return updated
+    return cleaned
 
 
-def __apply_shot_save_ratios_to_row(row: pd.Series, df: pd.DataFrame):
+def __apply_shot_save_ratios_to_row(row: pd.Series, df: pd.DataFrame, index: int):
     df.loc[index, 'homeShotTargetRatio'] = __apply_feature_ratio(row, 'homeShotsTotal', 'homeShotsOnGoal')
     df.loc[index, 'homeShotSaveRatio'] = __apply_feature_ratio(row, 'awayShotsOnGoal', 'homeSaves')
-    df.loc[index, 'awayShotTargetRatio'] = __apply_feature_ratio(row, 'awayShotsOnGoal', 'awayShotsTotal')
+    df.loc[index, 'awayShotTargetRatio'] = __apply_feature_ratio(row, 'awayShotsTotal', 'awayShotsOnGoal')
     df.loc[index, 'awayShotSaveRatio'] = __apply_feature_ratio(row, 'homeShotsOnGoal', 'awaySaves')
 
 
-def __apply_goal_averages_to_row(row: pd.Series, df: pd.DataFrame):
+def __apply_goal_averages_to_row(row: pd.Series, df: pd.DataFrame, index: int):
     df.loc[index, 'homeAvgScored'] = stats.calculate_feature_ratio(
         df,
         row,
