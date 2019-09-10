@@ -1,5 +1,5 @@
 import pandas as pd
-from compiler.data.calculation import elo, stats
+from compiler.data.calculation import stats
 from compiler.data.preprocessing import helpers
 
 
