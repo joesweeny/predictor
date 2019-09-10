@@ -1,9 +1,4 @@
-from compiler.data.aggregator.match_goals import MatchGoals
-from compiler.data.repository.redis import RedisRepository
-from compiler.framework import config
-from compiler.grpc.proto.fixture.fixture_pb2 import Fixture
 import pandas as pd
-from typing import List
 from compiler.data.calculation import elo, stats
 from compiler.data.preprocessing import helpers
 
