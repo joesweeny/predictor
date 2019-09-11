@@ -1,7 +1,7 @@
 from datetime import datetime
 from compiler.data.repository.redis import RedisRepository
 from compiler.data.aggregator.match_goals import MatchGoals
-from compiler.data.preprocessing.match_goals import pre_process_historic_data_set
+from compiler.data.preprocessing.match_goals import pre_process_historic_data_set, pre_process_fixture_data
 from compiler.framework import config
 import pandas as pd
 
@@ -54,3 +54,21 @@ class DataHandler:
             raise FileNotFoundError("Match Goal data for competition" + str(competition_id) + "does not exist")
 
         return data
+
+    def get_match_goals_data_for_fixture(self, fixture_id: int) -> pd.DataFrame:
+        filename = "fixture:" + str(fixture_id) + ':match_goals.csv'
+
+        data = self._repository.get_data_frame(key=filename)
+
+        if data is not None:
+            return data
+
+        fixture, fixture_data = self._aggregator.for_fixture(fixture_id=fixture_id)
+
+        data = self.get_stored_match_goals_data_for_competition(competition_id=fixture.competition_id)
+
+        pre_processed = pre_process_fixture_data(fixture=fixture_data, results=data)
+
+        self._repository.save_data_frame(key=filename, df=pre_processed)
+
+        return pre_processed

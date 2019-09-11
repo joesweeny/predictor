@@ -48,7 +48,7 @@ class MatchGoals:
 
         return df
 
-    def for_fixture(self, fixture_id: int) -> pd.DataFrame:
+    def for_fixture(self, fixture_id: int) -> (Fixture, pd.DataFrame):
         try:
             fixture = self.fixture_client.get_fixture_by_id(fixture_id=fixture_id)
         except Exception:
@@ -58,7 +58,7 @@ class MatchGoals:
 
         df = df.append(self.__fixture_to_row(fixture), ignore_index=True)
 
-        return df
+        return fixture, df
 
     @staticmethod
     def __fixture_to_row(fixture: Fixture) -> dict:
