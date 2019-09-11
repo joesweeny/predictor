@@ -96,7 +96,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(match_g
 def test_for_fixture_data_frame_columns(match_goals, fixture):
     match_goals.fixture_client.get_fixture_by_id.return_value = fixture
 
-    df = match_goals.for_fixture(fixture_id=66)
+    fixture, df = match_goals.for_fixture(fixture_id=66)
 
     match_goals.fixture_client.get_fixture_by_id.assert_called_with(fixture_id=66)
 
@@ -123,10 +123,10 @@ def test_for_fixture_data_frame_columns(match_goals, fixture):
     assert df.shape == (1, 14)
 
 
-def test_for_fixture_returns_dataframe_of_collated_fixture_data(match_goals, fixture):
+def test_for_fixture_returns_data_frame_of_collated_fixture_data(match_goals, fixture):
     match_goals.fixture_client.get_fixture_by_id.return_value = fixture
 
-    df = match_goals.for_fixture(fixture_id=66)
+    fixture, df = match_goals.for_fixture(fixture_id=66)
 
     match_goals.fixture_client.get_fixture_by_id.assert_called_with(fixture_id=66)
 
@@ -145,6 +145,27 @@ def test_for_fixture_raises_exception_if_unable_to_retrieve_fixture(match_goals)
 
     with pytest.raises(Exception):
         match_goals.for_fixture(fixture_id=66)
+
+
+def test_for_fixture_returns_fixture_and_data_frame(match_goals, fixture):
+    match_goals.fixture_client.get_fixture_by_id.return_value = fixture
+
+    fixture, df = match_goals.for_fixture(fixture_id=66)
+
+    match_goals.fixture_client.get_fixture_by_id.assert_called_with(fixture_id=66)
+
+    assert fixture.id == 66
+    assert fixture.competition.id == 55
+    assert fixture.competition.is_cup.value == False
+    assert fixture.season.name == '2018/19'
+    assert fixture.round.name == '4'
+    assert fixture.season.id == 39910
+    assert fixture.season.is_current.value == True
+    assert fixture.date_time == 1556043338
+    assert fixture.home_team.id == 7901
+    assert fixture.home_team.name == 'West Ham United'
+    assert fixture.away_team.id == 496
+    assert fixture.away_team.name == 'Tottenham Hotspur'
 
 
 @pytest.fixture()
