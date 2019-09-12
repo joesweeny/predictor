@@ -45,7 +45,7 @@ def apply_current_elo_ratings_for_fixture(fixture: pd.DataFrame, data: pd.DataFr
 
     fixture['homeAttackStrength'] = home_attack
     fixture['homeDefenceStrength'] = home_defence
-    fixture['awayDefenceStrength'] = away_defence
+    fixture['awayAttackStrength'] = away_attack
     fixture['awayDefenceStrength'] = away_defence
 
     return fixture

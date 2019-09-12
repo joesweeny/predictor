@@ -8,12 +8,15 @@ services:
     volumes:
       - .:/opt
     tty: true
-    ports:
-      - "50051:50051"
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_DATABASE=15
+      - DATA_SERVER_HOST=138.68.132.183
+      - DATA_SERVER_PORT=50051
+    ports:
+      - "50051:50051"
+
 
   console:
     build:

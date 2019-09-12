@@ -2,14 +2,14 @@ import os
 
 CONNECTIONS = {
     'redis': {
-        'host': os.getenv('REDIS_HOST'),
-        'port': os.getenv('REDIS_PORT'),
-        'database': os.getenv('REDIS_DATABASE')
+        'host': os.getenv('REDIS_HOST', 'redis'),
+        'port': os.getenv('REDIS_PORT', 6379),
+        'database': os.getenv('REDIS_DATABASE', 15)
     },
 
     'data-server': {
-        'host': os.getenv('DATA_SERVER_HOST'),
-        'port': os.getenv('DATA_SERVER_PORT')
+        'host': os.getenv('DATA_SERVER_HOST', '138.68.132.183'),
+        'port': os.getenv('DATA_SERVER_PORT', '50051')
     }
 }
 

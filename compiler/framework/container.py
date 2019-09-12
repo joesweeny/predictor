@@ -5,8 +5,8 @@ from compiler.grpc.fixture_client import FixtureClient
 from compiler.grpc.result_client import ResultClient
 from compiler.grpc.team_stats_client import TeamStatsClient
 from compiler.data.aggregator.match_goals import MatchGoals
-from compiler.data.preprocessing.match_goals import MatchGoalsPreProcessor
 from compiler.data.handling.data_handler import DataHandler
+from compiler.grpc.service.odds_compiler import OddsCompilerServiceServicer
 
 
 class Container:
@@ -39,16 +39,11 @@ class Container:
         return self.__configuration
 
     def match_goals_aggregator(self):
-        return MatchGoals(result_client=self.result_client, team_stats_client=self.team_stats_client)
-
-    def match_goals_pre_processor(self):
-        processor = MatchGoalsPreProcessor(
-            aggregator=self.match_goals_aggregator(),
-            cache=self.redis_repository,
-            configuration=config
+        return MatchGoals(
+            fixture_client=self.fixture_client,
+            result_client=self.result_client,
+            team_stats_client=self.team_stats_client
         )
-
-        return processor
 
     def data_handler(self):
         handler = DataHandler(
@@ -58,3 +53,11 @@ class Container:
         )
 
         return handler
+
+    def odds_compiler_service(self):
+        service = OddsCompilerServiceServicer(
+            fixture_client=self.fixture_client,
+            handler=self.data_handler()
+        )
+
+        return service

@@ -15,6 +15,8 @@ def pre_process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
         goal_points=GOAL_POINTS
     )
 
+    updated = updated.fillna(updated.mean())
+
     for index, row in updated.iterrows():
         __apply_shot_save_ratios_to_row(row=row, df=updated, index=index)
         __apply_goal_averages_to_row(row=row, df=updated, index=index)
