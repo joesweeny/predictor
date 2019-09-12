@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from compiler.data.repository.redis import RedisRepository
 from compiler.data.aggregator.match_goals import MatchGoals
 from compiler.data.preprocessing.match_goals import pre_process_historic_data_set, pre_process_fixture_data
