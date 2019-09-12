@@ -1,26 +1,19 @@
 syntax = "proto3";
 
-package prediction;
+package compiler;
 
-service CompilerService {
+service OddsCompilerService {
     // Returns a Over/Under goals odds for a given fixture
     rpc GetOverUnderGoalsForFixture(OverUnderRequest) returns (OverUnderGoalsResponse) {}
 }
 
 message OverUnderRequest {
     uint64 fixture_id = 1;
-    float goals = 2;
-    bool in_play = 3;
 }
 
 message OverUnderGoalsResponse {
     uint64 fixture_id = 1;
-    float goals = 2;
-    Odds under = 3;
-    Odds over = 4;
+    float under = 2;
+    float over = 3;
 }
 
-message Odds {
-    float decimal = 1;
-    string fractional = 2;
-}

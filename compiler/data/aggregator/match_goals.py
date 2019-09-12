@@ -52,7 +52,7 @@ class MatchGoals:
         try:
             fixture = self.fixture_client.get_fixture_by_id(fixture_id=fixture_id)
         except Exception:
-            raise Exception("Unable to fetch data for Fixture with ID" + str(fixture_id))
+            raise Exception("Unable to fetch data for Fixture with ID " + str(fixture_id))
 
         df = pd.DataFrame(columns=self.__columns)
 

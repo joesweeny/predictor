@@ -4,7 +4,7 @@ import grpc
 from compiler.grpc.proto.compiler import compiler_pb2 as compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2
 
 
-class CompilerServiceStub(object):
+class OddsCompilerServiceStub(object):
   # missing associated documentation comment in .proto file
   pass
 
@@ -15,25 +15,25 @@ class CompilerServiceStub(object):
       channel: A grpc.Channel.
     """
     self.GetOverUnderGoalsForFixture = channel.unary_unary(
-        '/prediction.CompilerService/GetOverUnderGoalsForFixture',
+        '/compiler.OddsCompilerService/GetOverUnderGoalsForFixture',
         request_serializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.OverUnderRequest.SerializeToString,
         response_deserializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.OverUnderGoalsResponse.FromString,
         )
 
 
-class CompilerServiceServicer(object):
+class OddsCompilerServiceServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
   def GetOverUnderGoalsForFixture(self, request, context):
-    """Returns a Over/Under goals compiler for a given fixture
+    """Returns a Over/Under goals odds for a given fixture
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
 
-def add_CompilerServiceServicer_to_server(servicer, server):
+def add_OddsCompilerServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'GetOverUnderGoalsForFixture': grpc.unary_unary_rpc_method_handler(
           servicer.GetOverUnderGoalsForFixture,
@@ -42,5 +42,5 @@ def add_CompilerServiceServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'prediction.CompilerService', rpc_method_handlers)
+      'compiler.OddsCompilerService', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

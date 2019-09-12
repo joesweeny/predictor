@@ -16,10 +16,10 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='compiler/grpc/proto/compiler/compiler.proto',
-  package='prediction',
+  package='compiler',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n+compiler/grpc/proto/compiler/compiler.proto\x12\nprediction\"F\n\x10OverUnderRequest\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\x12\r\n\x05goals\x18\x02 \x01(\x02\x12\x0f\n\x07in_play\x18\x03 \x01(\x08\"|\n\x16OverUnderGoalsResponse\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\x12\r\n\x05goals\x18\x02 \x01(\x02\x12\x1f\n\x05under\x18\x03 \x01(\x0b\x32\x10.prediction.Odds\x12\x1e\n\x04over\x18\x04 \x01(\x0b\x32\x10.prediction.Odds\"+\n\x04Odds\x12\x0f\n\x07\x64\x65\x63imal\x18\x01 \x01(\x02\x12\x12\n\nfractional\x18\x02 \x01(\t2t\n\x0f\x43ompilerService\x12\x61\n\x1bGetOverUnderGoalsForFixture\x12\x1c.prediction.OverUnderRequest\x1a\".prediction.OverUnderGoalsResponse\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n+compiler/grpc/proto/compiler/compiler.proto\x12\x08\x63ompiler\"&\n\x10OverUnderRequest\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\"I\n\x16OverUnderGoalsResponse\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\x12\r\n\x05under\x18\x02 \x01(\x02\x12\x0c\n\x04over\x18\x03 \x01(\x02\x32t\n\x13OddsCompilerService\x12]\n\x1bGetOverUnderGoalsForFixture\x12\x1a.compiler.OverUnderRequest\x1a .compiler.OverUnderGoalsResponse\"\x00\x62\x06proto3')
 )
 
 
@@ -27,29 +27,15 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _OVERUNDERREQUEST = _descriptor.Descriptor(
   name='OverUnderRequest',
-  full_name='prediction.OverUnderRequest',
+  full_name='compiler.OverUnderRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='fixture_id', full_name='prediction.OverUnderRequest.fixture_id', index=0,
+      name='fixture_id', full_name='compiler.OverUnderRequest.fixture_id', index=0,
       number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='goals', full_name='prediction.OverUnderRequest.goals', index=1,
-      number=2, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='in_play', full_name='prediction.OverUnderRequest.in_play', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -65,84 +51,39 @@ _OVERUNDERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=59,
-  serialized_end=129,
+  serialized_start=57,
+  serialized_end=95,
 )
 
 
 _OVERUNDERGOALSRESPONSE = _descriptor.Descriptor(
   name='OverUnderGoalsResponse',
-  full_name='prediction.OverUnderGoalsResponse',
+  full_name='compiler.OverUnderGoalsResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='fixture_id', full_name='prediction.OverUnderGoalsResponse.fixture_id', index=0,
+      name='fixture_id', full_name='compiler.OverUnderGoalsResponse.fixture_id', index=0,
       number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='goals', full_name='prediction.OverUnderGoalsResponse.goals', index=1,
+      name='under', full_name='compiler.OverUnderGoalsResponse.under', index=1,
       number=2, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='under', full_name='prediction.OverUnderGoalsResponse.under', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='over', full_name='prediction.OverUnderGoalsResponse.over', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=131,
-  serialized_end=255,
-)
-
-
-_ODDS = _descriptor.Descriptor(
-  name='Odds',
-  full_name='prediction.Odds',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='decimal', full_name='prediction.Odds.decimal', index=0,
-      number=1, type=2, cpp_type=6, label=1,
+      name='over', full_name='compiler.OverUnderGoalsResponse.over', index=2,
+      number=3, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='fractional', full_name='prediction.Odds.fractional', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -155,52 +96,42 @@ _ODDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=257,
-  serialized_end=300,
+  serialized_start=97,
+  serialized_end=170,
 )
 
-_OVERUNDERGOALSRESPONSE.fields_by_name['under'].message_type = _ODDS
-_OVERUNDERGOALSRESPONSE.fields_by_name['over'].message_type = _ODDS
 DESCRIPTOR.message_types_by_name['OverUnderRequest'] = _OVERUNDERREQUEST
 DESCRIPTOR.message_types_by_name['OverUnderGoalsResponse'] = _OVERUNDERGOALSRESPONSE
-DESCRIPTOR.message_types_by_name['Odds'] = _ODDS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 OverUnderRequest = _reflection.GeneratedProtocolMessageType('OverUnderRequest', (_message.Message,), dict(
   DESCRIPTOR = _OVERUNDERREQUEST,
   __module__ = 'compiler.grpc.proto.compiler.compiler_pb2'
-  # @@protoc_insertion_point(class_scope:prediction.OverUnderRequest)
+  # @@protoc_insertion_point(class_scope:compiler.OverUnderRequest)
   ))
 _sym_db.RegisterMessage(OverUnderRequest)
 
 OverUnderGoalsResponse = _reflection.GeneratedProtocolMessageType('OverUnderGoalsResponse', (_message.Message,), dict(
   DESCRIPTOR = _OVERUNDERGOALSRESPONSE,
   __module__ = 'compiler.grpc.proto.compiler.compiler_pb2'
-  # @@protoc_insertion_point(class_scope:prediction.OverUnderGoalsResponse)
+  # @@protoc_insertion_point(class_scope:compiler.OverUnderGoalsResponse)
   ))
 _sym_db.RegisterMessage(OverUnderGoalsResponse)
 
-Odds = _reflection.GeneratedProtocolMessageType('Odds', (_message.Message,), dict(
-  DESCRIPTOR = _ODDS,
-  __module__ = 'compiler.grpc.proto.compiler.compiler_pb2'
-  # @@protoc_insertion_point(class_scope:prediction.Odds)
-  ))
-_sym_db.RegisterMessage(Odds)
 
 
-
-_COMPILERSERVICE = _descriptor.ServiceDescriptor(
-  name='CompilerService',
-  full_name='prediction.CompilerService',
+_ODDSCOMPILERSERVICE = _descriptor.ServiceDescriptor(
+  name='OddsCompilerService',
+  full_name='compiler.OddsCompilerService',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=302,
-  serialized_end=418,
+  serialized_start=172,
+  serialized_end=288,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetOverUnderGoalsForFixture',
-    full_name='prediction.CompilerService.GetOverUnderGoalsForFixture',
+    full_name='compiler.OddsCompilerService.GetOverUnderGoalsForFixture',
     index=0,
     containing_service=None,
     input_type=_OVERUNDERREQUEST,
@@ -208,8 +139,8 @@ _COMPILERSERVICE = _descriptor.ServiceDescriptor(
     serialized_options=None,
   ),
 ])
-_sym_db.RegisterServiceDescriptor(_COMPILERSERVICE)
+_sym_db.RegisterServiceDescriptor(_ODDSCOMPILERSERVICE)
 
-DESCRIPTOR.services_by_name['CompilerService'] = _COMPILERSERVICE
+DESCRIPTOR.services_by_name['OddsCompilerService'] = _ODDSCOMPILERSERVICE
 
 # @@protoc_insertion_point(module_scope)
