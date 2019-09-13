@@ -23,4 +23,3 @@ def pre_process_match_goals_data_for_supported_competitions():
     )
 
     print('Match Goals data pre processing complete')
-
