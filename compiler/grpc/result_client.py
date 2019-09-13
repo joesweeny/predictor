@@ -1,7 +1,6 @@
 import grpc
 from compiler.grpc.proto.result import result_pb2
 from compiler.grpc.proto.result import result_pb2_grpc
-from google.protobuf import wrappers_pb2
 
 
 class ResultClient:
