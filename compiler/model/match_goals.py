@@ -8,6 +8,8 @@ from typing import Dict, List
 
 HOME_LIST = [
     'homeGoals',
+    'homeAdvantage',
+    'homeAttackStrength',
     'homeShotTargetRatio',
     'awayShotSaveRatio',
     'homeAvgScored',
@@ -16,6 +18,7 @@ HOME_LIST = [
 
 AWAY_LIST = [
     'awayGoals',
+    'awayAttackStrength',
     'awayShotTargetRatio',
     'homeShotSaveRatio',
     'awayAvgScored',
@@ -24,6 +27,8 @@ AWAY_LIST = [
 
 HOME_DICT = {
     'homeGoals': 'goals',
+    'homeAdvantage': 'home',
+    'homeAttackStrength': 'attackStrength',
     'homeShotTargetRatio': 'shotRatio',
     'awayShotSaveRatio': 'saveRatio',
     'homeAvgScored': 'avgScored',
@@ -32,6 +37,7 @@ HOME_DICT = {
 
 AWAY_DICT = {
     'awayGoals': 'goals',
+    'awayAttackStrength': 'attackStrength',
     'awayShotTargetRatio': 'shotRatio',
     'homeShotSaveRatio': 'saveRatio',
     'awayAvgScored': 'avgScored',
@@ -48,12 +54,12 @@ def train_glm_model(features: pd.DataFrame) -> smf.glm:
     :param features:
     :return: smf.glm
     """
-    home_data = features[HOME_LIST].assign(home=1).rename(columns=HOME_DICT)
+    home_data = features[HOME_LIST].rename(columns=HOME_DICT)
     away_data = features[AWAY_LIST].assign(home=0).rename(columns=AWAY_DICT)
 
-    data = pd.concat([home_data, away_data])
+    data = pd.concat([home_data, away_data], sort=False, ignore_index=False)
 
-    formula = "goals ~ home + shotRatio + saveRatio + avgScored + avgConceded"
+    formula = "goals ~ home + attackStrength + shotRatio + saveRatio + avgScored + avgConceded"
 
     model = smf.glm(formula=formula, data=data, family=sm.families.Poisson()).fit()
 
@@ -95,7 +101,8 @@ def __calculate_odds(matrix: np.ndarray) -> (float, float):
 
 def __create_home_fixture_data(fixture: Dict) -> Dict:
     data = {
-        'home': 1,
+        'home': fixture['homeAdvantage'],
+        'attackStrength': fixture['homeAttackStrength'],
         'shotRatio': fixture['homeShotTargetRatio'],
         'saveRatio': fixture['awayShotSaveRatio'],
         'avgScored': fixture['homeAvgScored'],
@@ -108,6 +115,7 @@ def __create_home_fixture_data(fixture: Dict) -> Dict:
 def __create_away_fixture_data(fixture: Dict) -> Dict:
     data = {
         'home': 0,
+        'attackStrength': fixture['awayAttackStrength'],
         'shotRatio': fixture['awayShotTargetRatio'],
         'saveRatio': fixture['homeShotSaveRatio'],
         'avgScored': fixture['awayAvgScored'],

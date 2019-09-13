@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from compiler.data.calculation.stats import calculate_feature_ratio
+from compiler.data.calculation.stats import calculate_feature_ratio, calculate_home_advantage
 
 
 def test_calculate_feature_ratio_returns_a_calculated_ratio_float_for_feature():
@@ -51,3 +51,10 @@ def test_calculate_feature_ratio_returns_a_calculated_ratio_float_for_feature():
     assert away_shot_ratio == 0.43
     assert home_save_ratio == 0.61
     assert away_save_ratio == 0.85
+
+
+def test_calculate_home_advantage_returns_a_float():
+    df = pd.read_csv("/opt/tests/test-data/test-data.csv")
+    row = pd.read_csv("/opt/tests/test-data/test-fixture.csv")
+
+    assert calculate_home_advantage(row=row.iloc[0, :], df=df, index=1179) == 3.0
