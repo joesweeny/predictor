@@ -12,20 +12,7 @@ import "compiler/grpc/proto/team/team.proto";
 import "compiler/grpc/proto/venue/venue.proto";
 
 service ResultService {
-    rpc GetHistoricalResultsForFixture(HistoricalResultRequest) returns (stream Result) {}
     rpc GetResultsForSeason(SeasonRequest) returns (stream Result) {}
-    rpc GetResultsForTeam(TeamRequest) returns (stream Result) {}
-}
-
-message TeamRequest {
-    // The Team ID that the Result set relates to
-    int64 team_id = 1;
-    // The number of results to return. If limit is not set the whole Result set for the Team
-    // will be returned
-    google.protobuf.Int32Value limit = 2;
-    // A filter to return Results before a specific date
-    // RFC3339 formatted string i.e "2006-01-02T15:04:05Z07:00"
-    string date_before = 3;
 }
 
 message SeasonRequest {
@@ -34,18 +21,6 @@ message SeasonRequest {
     // A filter to return Results before a specific date
     // RFC3339 formatted string i.e "2006-01-02T15:04:05Z07:00"
     string date_before = 2;
-}
-
-message HistoricalResultRequest {
-    // The Home Team ID that the Result set relates to
-    uint64 home_team_id = 1;
-    // The Away Team ID that the Result set relates to
-    uint64 away_team_id = 2;
-    // The number of results to return
-    uint32 limit = 3;
-    // A filter to return Results before a specific date
-    // RFC3339 formatted string i.e "2006-01-02T15:04:05Z07:00"
-    string date_before = 4;
 }
 
 message Result {
