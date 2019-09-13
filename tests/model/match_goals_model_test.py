@@ -21,5 +21,5 @@ def test_get_over_under_odds_returns_over_under_odds_object():
 
     odds = get_over_under_odds(model=model, fixture=fixture.to_dict('records')[0])
 
-    assert odds.get_under_decimal_odds() == 2.9
-    assert odds.get_over_decimal_odds() == 1.53
+    assert odds.get_under_decimal_odds() == 3.7
+    assert odds.get_over_decimal_odds() == 1.37
