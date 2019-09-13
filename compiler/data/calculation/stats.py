@@ -53,7 +53,10 @@ def calculate_home_advantage(row: pd.Series, df: pd.DataFrame, index: int) -> fl
 
     team_rows = rows[rows['homeTeam'] == row['homeTeam']]
 
-    return team_rows['homeGoals'].sum() / team_rows['homeTeam'].count()
+    if team_rows['homeTeam'].count() == 0:
+        return row['homeGoals']
+
+    return round(team_rows['homeGoals'].sum() / team_rows['homeTeam'].count(), 2)
 
 
 def __parse_rows(rows, rating, elo, factor):

@@ -18,9 +18,9 @@ def pre_process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
     updated = updated.fillna(updated.mean())
 
     for index, row in updated.iterrows():
-        __apply_home_advantage(row=row, df=updated, index=index)
         __apply_shot_save_ratios_to_row(row=row, df=updated, index=index)
         __apply_goal_averages_to_row(row=row, df=updated, index=index)
+        __apply_home_advantage(row=row, df=updated, index=index)
 
     cleaned = updated.fillna(updated.mean()).round(2)
 
