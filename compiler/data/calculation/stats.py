@@ -38,5 +38,22 @@ def calculate_feature_ratio(
     return round(total[feature].mean(), 2)
 
 
+def calculate_home_advantage(row: pd.Series, df: pd.DataFrame, index: int) -> float:
+    """
+    Calculate a Home Teams home scoring ability and strength
+    :param row:
+    :param df:
+    :param index:
+    :return:
+    """
+    rows = df[df['season'] == row['season']]
+
+    rows_before = rows.iloc[0:index-1]
+
+    team_rows = rows_before[rows_before['homeTeam'] == row['homeTeam']]
+
+    return team_rows['homeGoals'].sum() / team_rows['homeTeam'].count()
+
+
 def __parse_rows(rows, rating, elo, factor):
     return rows.loc[(rows[rating] <= (elo + factor))]
