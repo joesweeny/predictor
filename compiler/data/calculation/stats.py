@@ -48,9 +48,10 @@ def calculate_home_advantage(row: pd.Series, df: pd.DataFrame, index: int) -> fl
     """
     rows = df[df['season'] == row['season']]
 
-    rows_before = rows.iloc[0:index-1]
+    if index > 0:
+        rows = rows.iloc[0:index-1]
 
-    team_rows = rows_before[rows_before['homeTeam'] == row['homeTeam']]
+    team_rows = rows[rows['homeTeam'] == row['homeTeam']]
 
     return team_rows['homeGoals'].sum() / team_rows['homeTeam'].count()
 

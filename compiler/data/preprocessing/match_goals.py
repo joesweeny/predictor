@@ -18,6 +18,7 @@ def pre_process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
     updated = updated.fillna(updated.mean())
 
     for index, row in updated.iterrows():
+        __apply_home_advantage(row=row, df=updated, index=index)
         __apply_shot_save_ratios_to_row(row=row, df=updated, index=index)
         __apply_goal_averages_to_row(row=row, df=updated, index=index)
 
@@ -115,6 +116,12 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
         row_count=MATCH_LIMIT
     )
 
+    updated.loc[0, 'homeAdvantage'] = stats.calculate_home_advantage(
+        row=row,
+        df=results,
+        index=0
+    )
+
     return updated
 
 
@@ -166,3 +173,7 @@ def __apply_goal_averages_to_row(row: pd.Series, df: pd.DataFrame, index: int):
 
 def __apply_feature_ratio(row: pd.Series, col_1: str, col_2: str) -> float:
     return 0 if row[col_1] == 0 else row[col_2] / row[col_1]
+
+
+def __apply_home_advantage(row: pd.Series, df: pd.DataFrame, index: int):
+    df.loc[index, 'homeAdvantage'] = stats.calculate_home_advantage(row=row, df=df, index=index)

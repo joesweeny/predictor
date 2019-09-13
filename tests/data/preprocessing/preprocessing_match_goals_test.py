@@ -11,6 +11,7 @@ def test_pre_process_historic_data_set_returns_a_pre_processed_data_frame():
 
     row = pre_processed.iloc[-1, :]
 
+    assert row['homeAdvantage'] == 2.0
     assert row['homeShotTargetRatio'] == 0.43
     assert row['homeShotSaveRatio'] == 1
     assert row['awayShotTargetRatio'] == 0.18
@@ -31,6 +32,7 @@ def test_pre_process_fixture_data_returns_pre_processed_fixture_data_frame():
 
     row = pre_processed.iloc[-1, :]
 
+    assert row['homeAdvantage'] == 3.0
     assert row['homeShotTargetRatio'] == 0.43
     assert row['homeShotSaveRatio'] == 0.61
     assert row['awayShotTargetRatio'] == 0.43
