@@ -14,4 +14,6 @@ docker-compose -f ./docker-compose.prod.yml pull grpc && \
 
 docker-compose -f ./docker-compose.prod.yml pull console && \
 
+docker-compose -f ./docker-compose.prod.yml pull cron && \
+
 docker-compose -f ./docker-compose.prod.yml up -d'
