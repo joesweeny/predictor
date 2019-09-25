@@ -10,9 +10,6 @@ RUN cd /opt && pipenv install --dev --system --deploy --ignore-pipfile
 COPY /docker/cron/crontab /etc/cron.d/cjob
 
 RUN chmod 0644 /etc/cron.d/cjob
-RUN chmod +x -R /opt
-
-ENV PYTHONPATH=/usr/lib/python3.5
 
 WORKDIR /opt
 
