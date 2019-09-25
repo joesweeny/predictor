@@ -14,6 +14,8 @@ def pre_process_match_goals_data_for_supported_competitions():
     """
     Parse and save data for supported competitions
     """
+    print('Starting Match Goals data pre processing')
+
     handler = Container().data_handler()
 
     now = datetime.now(timezone.utc).replace(microsecond=0)

@@ -34,3 +34,10 @@ services:
 
   redis:
     image: 'redis'
+
+  cron:
+    build:
+      dockerfile: ./docker/cron/Dockerfile
+      context: .
+    tty: true
+
