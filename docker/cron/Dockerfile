@@ -4,8 +4,8 @@ RUN apt-get -y update && apt-get install -y cron && pip install --upgrade pip
 
 COPY ./ /opt/
 
-#RUN pip3 install pipenv
-#RUN cd /opt && pipenv install --dev --system --deploy --ignore-pipfile
+RUN pip3 install pipenv
+RUN cd /opt && pipenv install --dev --system --deploy --ignore-pipfile
 
 COPY /docker/cron/crontab /etc/cron.d/cjob
 
