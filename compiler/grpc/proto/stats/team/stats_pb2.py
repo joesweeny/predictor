@@ -12,68 +12,38 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from compiler.grpc.proto.requests import requests_pb2 as compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='compiler/grpc/proto/stats/team/stats.proto',
-  package='team_stats',
+  package='proto',
   syntax='proto3',
-  serialized_options=_b('Z?github.com/statistico/statistico-data/internal/proto/stats/team'),
-  serialized_pb=_b('\n*compiler/grpc/proto/stats/team/stats.proto\x12\nteam_stats\x1a\x1egoogle/protobuf/wrappers.proto\"$\n\x0e\x46ixtureRequest\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\"c\n\rStatsResponse\x12(\n\thome_team\x18\x01 \x01(\x0b\x32\x15.team_stats.TeamStats\x12(\n\taway_team\x18\x02 \x01(\x0b\x32\x15.team_stats.TeamStats\"\xc1\t\n\tTeamStats\x12\x0f\n\x07team_id\x18\x01 \x01(\x04\x12\x31\n\x0bshots_total\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rshots_on_goal\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x34\n\x0eshots_off_goal\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rshots_blocked\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x36\n\x10shots_inside_box\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11shots_outside_box\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cpasses_total\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x35\n\x0fpasses_accuracy\x18\t \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11passes_percentage\x18\n \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rattacks_total\x18\x0b \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11\x61ttacks_dangerous\x18\x0c \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12+\n\x05\x66ouls\x18\r \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12-\n\x07\x63orners\x18\x0e \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12.\n\x08offsides\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\npossession\x18\x10 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cyellow_cards\x18\x11 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12/\n\tred_cards\x18\x12 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12+\n\x05saves\x18\x13 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rsubstitutions\x18\x14 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\ngoal_kicks\x18\x15 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rgoal_attempts\x18\x16 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\nfree_kicks\x18\x17 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12/\n\tthrow_ins\x18\x18 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value2e\n\x10TeamStatsService\x12Q\n\x16GetTeamStatsForFixture\x12\x1a.team_stats.FixtureRequest\x1a\x19.team_stats.StatsResponse\"\x00\x42\x41Z?github.com/statistico/statistico-data/internal/proto/stats/teamb\x06proto3')
-  ,
-  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
-
-
-
-
-_FIXTUREREQUEST = _descriptor.Descriptor(
-  name='FixtureRequest',
-  full_name='team_stats.FixtureRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='fixture_id', full_name='team_stats.FixtureRequest.fixture_id', index=0,
-      number=1, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
   serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=90,
-  serialized_end=126,
-)
+  serialized_pb=_b('\n*compiler/grpc/proto/stats/team/stats.proto\x12\x05proto\x1a+compiler/grpc/proto/requests/requests.proto\x1a\x1egoogle/protobuf/wrappers.proto\"Y\n\rStatsResponse\x12#\n\thome_team\x18\x01 \x01(\x0b\x32\x10.proto.TeamStats\x12#\n\taway_team\x18\x02 \x01(\x0b\x32\x10.proto.TeamStats\"\xc1\t\n\tTeamStats\x12\x0f\n\x07team_id\x18\x01 \x01(\x04\x12\x31\n\x0bshots_total\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rshots_on_goal\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x34\n\x0eshots_off_goal\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rshots_blocked\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x36\n\x10shots_inside_box\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11shots_outside_box\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cpasses_total\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x35\n\x0fpasses_accuracy\x18\t \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11passes_percentage\x18\n \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rattacks_total\x18\x0b \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11\x61ttacks_dangerous\x18\x0c \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12+\n\x05\x66ouls\x18\r \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12-\n\x07\x63orners\x18\x0e \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12.\n\x08offsides\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\npossession\x18\x10 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cyellow_cards\x18\x11 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12/\n\tred_cards\x18\x12 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12+\n\x05saves\x18\x13 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rsubstitutions\x18\x14 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\ngoal_kicks\x18\x15 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rgoal_attempts\x18\x16 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\nfree_kicks\x18\x17 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12/\n\tthrow_ins\x18\x18 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value2[\n\x10TeamStatsService\x12G\n\x16GetTeamStatsForFixture\x12\x15.proto.FixtureRequest\x1a\x14.proto.StatsResponse\"\x00\x62\x06proto3')
+  ,
+  dependencies=[compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
+
+
 
 
 _STATSRESPONSE = _descriptor.Descriptor(
   name='StatsResponse',
-  full_name='team_stats.StatsResponse',
+  full_name='proto.StatsResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='home_team', full_name='team_stats.StatsResponse.home_team', index=0,
+      name='home_team', full_name='proto.StatsResponse.home_team', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='away_team', full_name='team_stats.StatsResponse.away_team', index=1,
+      name='away_team', full_name='proto.StatsResponse.away_team', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -91,181 +61,181 @@ _STATSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=128,
-  serialized_end=227,
+  serialized_start=130,
+  serialized_end=219,
 )
 
 
 _TEAMSTATS = _descriptor.Descriptor(
   name='TeamStats',
-  full_name='team_stats.TeamStats',
+  full_name='proto.TeamStats',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='team_id', full_name='team_stats.TeamStats.team_id', index=0,
+      name='team_id', full_name='proto.TeamStats.team_id', index=0,
       number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='shots_total', full_name='team_stats.TeamStats.shots_total', index=1,
+      name='shots_total', full_name='proto.TeamStats.shots_total', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='shots_on_goal', full_name='team_stats.TeamStats.shots_on_goal', index=2,
+      name='shots_on_goal', full_name='proto.TeamStats.shots_on_goal', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='shots_off_goal', full_name='team_stats.TeamStats.shots_off_goal', index=3,
+      name='shots_off_goal', full_name='proto.TeamStats.shots_off_goal', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='shots_blocked', full_name='team_stats.TeamStats.shots_blocked', index=4,
+      name='shots_blocked', full_name='proto.TeamStats.shots_blocked', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='shots_inside_box', full_name='team_stats.TeamStats.shots_inside_box', index=5,
+      name='shots_inside_box', full_name='proto.TeamStats.shots_inside_box', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='shots_outside_box', full_name='team_stats.TeamStats.shots_outside_box', index=6,
+      name='shots_outside_box', full_name='proto.TeamStats.shots_outside_box', index=6,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='passes_total', full_name='team_stats.TeamStats.passes_total', index=7,
+      name='passes_total', full_name='proto.TeamStats.passes_total', index=7,
       number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='passes_accuracy', full_name='team_stats.TeamStats.passes_accuracy', index=8,
+      name='passes_accuracy', full_name='proto.TeamStats.passes_accuracy', index=8,
       number=9, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='passes_percentage', full_name='team_stats.TeamStats.passes_percentage', index=9,
+      name='passes_percentage', full_name='proto.TeamStats.passes_percentage', index=9,
       number=10, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='attacks_total', full_name='team_stats.TeamStats.attacks_total', index=10,
+      name='attacks_total', full_name='proto.TeamStats.attacks_total', index=10,
       number=11, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='attacks_dangerous', full_name='team_stats.TeamStats.attacks_dangerous', index=11,
+      name='attacks_dangerous', full_name='proto.TeamStats.attacks_dangerous', index=11,
       number=12, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fouls', full_name='team_stats.TeamStats.fouls', index=12,
+      name='fouls', full_name='proto.TeamStats.fouls', index=12,
       number=13, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='corners', full_name='team_stats.TeamStats.corners', index=13,
+      name='corners', full_name='proto.TeamStats.corners', index=13,
       number=14, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='offsides', full_name='team_stats.TeamStats.offsides', index=14,
+      name='offsides', full_name='proto.TeamStats.offsides', index=14,
       number=15, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='possession', full_name='team_stats.TeamStats.possession', index=15,
+      name='possession', full_name='proto.TeamStats.possession', index=15,
       number=16, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='yellow_cards', full_name='team_stats.TeamStats.yellow_cards', index=16,
+      name='yellow_cards', full_name='proto.TeamStats.yellow_cards', index=16,
       number=17, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='red_cards', full_name='team_stats.TeamStats.red_cards', index=17,
+      name='red_cards', full_name='proto.TeamStats.red_cards', index=17,
       number=18, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='saves', full_name='team_stats.TeamStats.saves', index=18,
+      name='saves', full_name='proto.TeamStats.saves', index=18,
       number=19, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='substitutions', full_name='team_stats.TeamStats.substitutions', index=19,
+      name='substitutions', full_name='proto.TeamStats.substitutions', index=19,
       number=20, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='goal_kicks', full_name='team_stats.TeamStats.goal_kicks', index=20,
+      name='goal_kicks', full_name='proto.TeamStats.goal_kicks', index=20,
       number=21, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='goal_attempts', full_name='team_stats.TeamStats.goal_attempts', index=21,
+      name='goal_attempts', full_name='proto.TeamStats.goal_attempts', index=21,
       number=22, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='free_kicks', full_name='team_stats.TeamStats.free_kicks', index=22,
+      name='free_kicks', full_name='proto.TeamStats.free_kicks', index=22,
       number=23, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='throw_ins', full_name='team_stats.TeamStats.throw_ins', index=23,
+      name='throw_ins', full_name='proto.TeamStats.throw_ins', index=23,
       number=24, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -283,8 +253,8 @@ _TEAMSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=230,
-  serialized_end=1447,
+  serialized_start=222,
+  serialized_end=1439,
 )
 
 _STATSRESPONSE.fields_by_name['home_team'].message_type = _TEAMSTATS
@@ -312,50 +282,41 @@ _TEAMSTATS.fields_by_name['goal_kicks'].message_type = google_dot_protobuf_dot_w
 _TEAMSTATS.fields_by_name['goal_attempts'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
 _TEAMSTATS.fields_by_name['free_kicks'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
 _TEAMSTATS.fields_by_name['throw_ins'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
-DESCRIPTOR.message_types_by_name['FixtureRequest'] = _FIXTUREREQUEST
 DESCRIPTOR.message_types_by_name['StatsResponse'] = _STATSRESPONSE
 DESCRIPTOR.message_types_by_name['TeamStats'] = _TEAMSTATS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-FixtureRequest = _reflection.GeneratedProtocolMessageType('FixtureRequest', (_message.Message,), dict(
-  DESCRIPTOR = _FIXTUREREQUEST,
-  __module__ = 'compiler.grpc.proto.stats.team.stats_pb2'
-  # @@protoc_insertion_point(class_scope:team_stats.FixtureRequest)
-  ))
-_sym_db.RegisterMessage(FixtureRequest)
-
 StatsResponse = _reflection.GeneratedProtocolMessageType('StatsResponse', (_message.Message,), dict(
   DESCRIPTOR = _STATSRESPONSE,
   __module__ = 'compiler.grpc.proto.stats.team.stats_pb2'
-  # @@protoc_insertion_point(class_scope:team_stats.StatsResponse)
+  # @@protoc_insertion_point(class_scope:proto.StatsResponse)
   ))
 _sym_db.RegisterMessage(StatsResponse)
 
 TeamStats = _reflection.GeneratedProtocolMessageType('TeamStats', (_message.Message,), dict(
   DESCRIPTOR = _TEAMSTATS,
   __module__ = 'compiler.grpc.proto.stats.team.stats_pb2'
-  # @@protoc_insertion_point(class_scope:team_stats.TeamStats)
+  # @@protoc_insertion_point(class_scope:proto.TeamStats)
   ))
 _sym_db.RegisterMessage(TeamStats)
 
 
-DESCRIPTOR._options = None
 
 _TEAMSTATSSERVICE = _descriptor.ServiceDescriptor(
   name='TeamStatsService',
-  full_name='team_stats.TeamStatsService',
+  full_name='proto.TeamStatsService',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1449,
-  serialized_end=1550,
+  serialized_start=1441,
+  serialized_end=1532,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetTeamStatsForFixture',
-    full_name='team_stats.TeamStatsService.GetTeamStatsForFixture',
+    full_name='proto.TeamStatsService.GetTeamStatsForFixture',
     index=0,
     containing_service=None,
-    input_type=_FIXTUREREQUEST,
+    input_type=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2._FIXTUREREQUEST,
     output_type=_STATSRESPONSE,
     serialized_options=None,
   ),

@@ -2,6 +2,7 @@
 import grpc
 
 from compiler.grpc.proto.fixture import fixture_pb2 as compiler_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2
+from compiler.grpc.proto.requests import requests_pb2 as compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2
 
 
 class FixtureServiceStub(object):
@@ -14,14 +15,14 @@ class FixtureServiceStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.ListFixtures = channel.unary_stream(
-        '/fixture.FixtureService/ListFixtures',
-        request_serializer=compiler_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.DateRangeRequest.SerializeToString,
+    self.ListSeasonFixtures = channel.unary_stream(
+        '/proto.FixtureService/ListSeasonFixtures',
+        request_serializer=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.SeasonFixtureRequest.SerializeToString,
         response_deserializer=compiler_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.Fixture.FromString,
         )
     self.FixtureByID = channel.unary_unary(
-        '/fixture.FixtureService/FixtureByID',
-        request_serializer=compiler_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.FixtureRequest.SerializeToString,
+        '/proto.FixtureService/FixtureByID',
+        request_serializer=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.FixtureRequest.SerializeToString,
         response_deserializer=compiler_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.Fixture.FromString,
         )
 
@@ -30,7 +31,7 @@ class FixtureServiceServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def ListFixtures(self, request, context):
+  def ListSeasonFixtures(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -47,17 +48,17 @@ class FixtureServiceServicer(object):
 
 def add_FixtureServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'ListFixtures': grpc.unary_stream_rpc_method_handler(
-          servicer.ListFixtures,
-          request_deserializer=compiler_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.DateRangeRequest.FromString,
+      'ListSeasonFixtures': grpc.unary_stream_rpc_method_handler(
+          servicer.ListSeasonFixtures,
+          request_deserializer=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.SeasonFixtureRequest.FromString,
           response_serializer=compiler_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.Fixture.SerializeToString,
       ),
       'FixtureByID': grpc.unary_unary_rpc_method_handler(
           servicer.FixtureByID,
-          request_deserializer=compiler_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.FixtureRequest.FromString,
+          request_deserializer=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.FixtureRequest.FromString,
           response_serializer=compiler_dot_grpc_dot_proto_dot_fixture_dot_fixture__pb2.Fixture.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'fixture.FixtureService', rpc_method_handlers)
+      'proto.FixtureService', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

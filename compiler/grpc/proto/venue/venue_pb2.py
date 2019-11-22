@@ -17,10 +17,10 @@ from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='compiler/grpc/proto/venue/venue.proto',
-  package='venue',
+  package='proto',
   syntax='proto3',
-  serialized_options=_b('Z:github.com/statistico/statistico-data/internal/proto/venue'),
-  serialized_pb=_b('\n%compiler/grpc/proto/venue/venue.proto\x12\x05venue\x1a\x1egoogle/protobuf/wrappers.proto\"\\\n\x05Venue\x12\'\n\x02id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x04name\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueB<Z:github.com/statistico/statistico-data/internal/proto/venueb\x06proto3')
+  serialized_options=None,
+  serialized_pb=_b('\n%compiler/grpc/proto/venue/venue.proto\x12\x05proto\x1a\x1egoogle/protobuf/wrappers.proto\"\\\n\x05Venue\x12\'\n\x02id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x04name\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -29,20 +29,20 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _VENUE = _descriptor.Descriptor(
   name='Venue',
-  full_name='venue.Venue',
+  full_name='proto.Venue',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='venue.Venue.id', index=0,
+      name='id', full_name='proto.Venue.id', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='name', full_name='venue.Venue.name', index=1,
+      name='name', full_name='proto.Venue.name', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -72,10 +72,9 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Venue = _reflection.GeneratedProtocolMessageType('Venue', (_message.Message,), dict(
   DESCRIPTOR = _VENUE,
   __module__ = 'compiler.grpc.proto.venue.venue_pb2'
-  # @@protoc_insertion_point(class_scope:venue.Venue)
+  # @@protoc_insertion_point(class_scope:proto.Venue)
   ))
 _sym_db.RegisterMessage(Venue)
 
 
-DESCRIPTOR._options = None
 # @@protoc_insertion_point(module_scope)
