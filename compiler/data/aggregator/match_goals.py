@@ -65,7 +65,7 @@ class MatchGoals:
         home_team = fixture.home_team
         away_team = fixture.away_team
 
-        date = pd.to_datetime(datetime.utcfromtimestamp(fixture.date_time), format='%Y-%m-%dT%H:%M:%S')
+        date = pd.to_datetime(datetime.utcfromtimestamp(fixture.date_time.utc), format='%Y-%m-%dT%H:%M:%S')
 
         data = {
             'matchID': fixture.id,
@@ -89,7 +89,7 @@ class MatchGoals:
         home_stats = stats.home_team
         away_stats = stats.away_team
 
-        date = pd.to_datetime(datetime.utcfromtimestamp(result.date_time), format='%Y-%m-%dT%H:%M:%S')
+        date = pd.to_datetime(datetime.utcfromtimestamp(result.date_time.utc), format='%Y-%m-%dT%H:%M:%S')
 
         data = {
             'matchID': result.id,

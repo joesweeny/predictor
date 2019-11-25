@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
-from compiler.grpc.proto.competition import competition_pb2 as compiler_dot_grpc_dot_proto_dot_competition_dot_competition__pb2
+from compiler.grpc.proto.common import common_pb2 as compiler_dot_grpc_dot_proto_dot_common_dot_common__pb2
 from compiler.grpc.proto.round import round_pb2 as compiler_dot_grpc_dot_proto_dot_round_dot_round__pb2
 from compiler.grpc.proto.season import season_pb2 as compiler_dot_grpc_dot_proto_dot_season_dot_season__pb2
 from compiler.grpc.proto.team import team_pb2 as compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2
@@ -25,9 +25,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='proto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\'compiler/grpc/proto/result/result.proto\x12\x05proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x31\x63ompiler/grpc/proto/competition/competition.proto\x1a%compiler/grpc/proto/round/round.proto\x1a\'compiler/grpc/proto/season/season.proto\x1a#compiler/grpc/proto/team/team.proto\x1a%compiler/grpc/proto/venue/venue.proto\"7\n\rSeasonRequest\x12\x11\n\tseason_id\x18\x01 \x01(\x03\x12\x13\n\x0b\x64\x61te_before\x18\x02 \x01(\t\"\x80\x02\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x03\x12\'\n\x0b\x63ompetition\x18\x02 \x01(\x0b\x32\x12.proto.Competition\x12\x1d\n\x06season\x18\x03 \x01(\x0b\x32\r.proto.Season\x12\x1b\n\x05round\x18\x04 \x01(\x0b\x32\x0c.proto.Round\x12\x1b\n\x05venue\x18\x05 \x01(\x0b\x32\x0c.proto.Venue\x12/\n\nreferee_id\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\tdate_time\x18\x07 \x01(\x03\x12$\n\nmatch_data\x18\x08 \x01(\x0b\x32\x10.proto.MatchData\"m\n\tMatchData\x12\x1e\n\thome_team\x18\x01 \x01(\x0b\x32\x0b.proto.Team\x12\x1e\n\taway_team\x18\x02 \x01(\x0b\x32\x0b.proto.Team\x12 \n\x05stats\x18\x03 \x01(\x0b\x32\x11.proto.MatchStats\"\xfd\x06\n\nMatchStats\x12+\n\x05pitch\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0ehome_formation\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0e\x61way_formation\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12/\n\nhome_score\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\naway_score\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0ehome_pen_score\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0e\x61way_pen_score\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x35\n\x0fhalf_time_score\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x35\n\x0f\x66ull_time_score\x18\t \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x36\n\x10\x65xtra_time_score\x18\n \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x39\n\x14home_league_position\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x39\n\x14\x61way_league_position\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07minutes\x18\r \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07seconds\x18\x0e \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nadded_time\x18\x0f \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nextra_time\x18\x10 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x30\n\x0binjury_time\x18\x11 \x01(\x0b\x32\x1b.google.protobuf.Int32Value2O\n\rResultService\x12>\n\x13GetResultsForSeason\x12\x14.proto.SeasonRequest\x1a\r.proto.Result\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\'compiler/grpc/proto/result/result.proto\x12\x05proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\'compiler/grpc/proto/common/common.proto\x1a%compiler/grpc/proto/round/round.proto\x1a\'compiler/grpc/proto/season/season.proto\x1a#compiler/grpc/proto/team/team.proto\x1a%compiler/grpc/proto/venue/venue.proto\"7\n\rSeasonRequest\x12\x11\n\tseason_id\x18\x01 \x01(\x03\x12\x13\n\x0b\x64\x61te_before\x18\x02 \x01(\t\"\xe4\x01\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x1d\n\x06season\x18\x03 \x01(\x0b\x32\r.proto.Season\x12\x1b\n\x05round\x18\x04 \x01(\x0b\x32\x0c.proto.Round\x12\x1b\n\x05venue\x18\x05 \x01(\x0b\x32\x0c.proto.Venue\x12/\n\nreferee_id\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x1e\n\tdate_time\x18\x07 \x01(\x0b\x32\x0b.proto.Date\x12$\n\nmatch_data\x18\x08 \x01(\x0b\x32\x10.proto.MatchData\"m\n\tMatchData\x12\x1e\n\thome_team\x18\x01 \x01(\x0b\x32\x0b.proto.Team\x12\x1e\n\taway_team\x18\x02 \x01(\x0b\x32\x0b.proto.Team\x12 \n\x05stats\x18\x03 \x01(\x0b\x32\x11.proto.MatchStats\"\xfd\x06\n\nMatchStats\x12+\n\x05pitch\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0ehome_formation\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x34\n\x0e\x61way_formation\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12/\n\nhome_score\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\naway_score\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0ehome_pen_score\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x33\n\x0e\x61way_pen_score\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x35\n\x0fhalf_time_score\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x35\n\x0f\x66ull_time_score\x18\t \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x36\n\x10\x65xtra_time_score\x18\n \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x39\n\x14home_league_position\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x39\n\x14\x61way_league_position\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07minutes\x18\r \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12,\n\x07seconds\x18\x0e \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nadded_time\x18\x0f \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12/\n\nextra_time\x18\x10 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\x12\x30\n\x0binjury_time\x18\x11 \x01(\x0b\x32\x1b.google.protobuf.Int32Value2O\n\rResultService\x12>\n\x13GetResultsForSeason\x12\x14.proto.SeasonRequest\x1a\r.proto.Result\"\x00\x30\x01\x62\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_competition_dot_competition__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_round_dot_round__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_season_dot_season__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_venue_dot_venue__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_common_dot_common__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_round_dot_round__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_season_dot_season__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_venue_dot_venue__pb2.DESCRIPTOR,])
 
 
 
@@ -65,8 +65,8 @@ _SEASONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=289,
-  serialized_end=344,
+  serialized_start=279,
+  serialized_end=334,
 )
 
 
@@ -85,49 +85,42 @@ _RESULT = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='competition', full_name='proto.Result.competition', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='season', full_name='proto.Result.season', index=2,
+      name='season', full_name='proto.Result.season', index=1,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='round', full_name='proto.Result.round', index=3,
+      name='round', full_name='proto.Result.round', index=2,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='venue', full_name='proto.Result.venue', index=4,
+      name='venue', full_name='proto.Result.venue', index=3,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='referee_id', full_name='proto.Result.referee_id', index=5,
+      name='referee_id', full_name='proto.Result.referee_id', index=4,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='date_time', full_name='proto.Result.date_time', index=6,
-      number=7, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='date_time', full_name='proto.Result.date_time', index=5,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='match_data', full_name='proto.Result.match_data', index=7,
+      name='match_data', full_name='proto.Result.match_data', index=6,
       number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -145,8 +138,8 @@ _RESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=347,
-  serialized_end=603,
+  serialized_start=337,
+  serialized_end=565,
 )
 
 
@@ -190,8 +183,8 @@ _MATCHDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=605,
-  serialized_end=714,
+  serialized_start=567,
+  serialized_end=676,
 )
 
 
@@ -333,15 +326,15 @@ _MATCHSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=717,
-  serialized_end=1610,
+  serialized_start=679,
+  serialized_end=1572,
 )
 
-_RESULT.fields_by_name['competition'].message_type = compiler_dot_grpc_dot_proto_dot_competition_dot_competition__pb2._COMPETITION
 _RESULT.fields_by_name['season'].message_type = compiler_dot_grpc_dot_proto_dot_season_dot_season__pb2._SEASON
 _RESULT.fields_by_name['round'].message_type = compiler_dot_grpc_dot_proto_dot_round_dot_round__pb2._ROUND
 _RESULT.fields_by_name['venue'].message_type = compiler_dot_grpc_dot_proto_dot_venue_dot_venue__pb2._VENUE
 _RESULT.fields_by_name['referee_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_RESULT.fields_by_name['date_time'].message_type = compiler_dot_grpc_dot_proto_dot_common_dot_common__pb2._DATE
 _RESULT.fields_by_name['match_data'].message_type = _MATCHDATA
 _MATCHDATA.fields_by_name['home_team'].message_type = compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2._TEAM
 _MATCHDATA.fields_by_name['away_team'].message_type = compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2._TEAM
@@ -405,8 +398,8 @@ _RESULTSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1612,
-  serialized_end=1691,
+  serialized_start=1574,
+  serialized_end=1653,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetResultsForSeason',
