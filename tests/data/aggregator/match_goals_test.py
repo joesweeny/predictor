@@ -258,9 +258,6 @@ def fixture():
     fixture = Fixture()
     fixture.id = 66
 
-    fixture.competition.id = 55
-    fixture.competition.is_cup.value = False
-
     fixture.season.name = '2018/19'
 
     fixture.round.name = '4'
