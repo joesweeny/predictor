@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package compiler;
+package proto;
 
 service OddsCompilerService {
     // Returns a Over/Under goals odds for a given fixture

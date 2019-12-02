@@ -1,41 +1,27 @@
 syntax = "proto3";
 
-option go_package = "github.com/statistico/statistico-data/internal/proto/fixture";
+package proto;
 
-package fixture;
-
-import "google/protobuf/wrappers.proto";
+import "compiler/grpc/proto/common/common.proto";
 import "compiler/grpc/proto/competition/competition.proto";
+import "compiler/grpc/proto/requests/requests.proto";
 import "compiler/grpc/proto/round/round.proto";
 import "compiler/grpc/proto/season/season.proto";
 import "compiler/grpc/proto/team/team.proto";
 import "compiler/grpc/proto/venue/venue.proto";
 
 service FixtureService {
-    rpc ListFixtures(DateRangeRequest) returns (stream Fixture) {}
+    rpc ListSeasonFixtures(SeasonFixtureRequest) returns (stream Fixture) {}
     rpc FixtureByID(FixtureRequest) returns (Fixture) {}
-}
-
-message DateRangeRequest {
-    // RFC3339 formatted string i.e. "2006-01-02T15:04:05Z07:00"
-    string date_from = 1;
-    // RFC3339 formatted string i.e "2006-01-02T15:04:05Z07:00"
-    string date_to = 2;
-}
-
-message FixtureRequest {
-    // The ID of the Fixture to be retrieved
-    int64 fixture_id = 1;
 }
 
 message Fixture {
     int64 id = 1;
-    competition.Competition competition = 2;
-    season.Season season = 3;
-    round.Round round = 4;
-    team.Team home_team = 5;
-    team.Team away_team = 6;
-    venue.Venue venue = 7;
-    google.protobuf.Int64Value referee_id = 8;
-    int64 date_time = 9;
+    Competition competition = 2;
+    Season season = 3;
+    Team home_team = 4;
+    Team away_team = 5;
+    Round round = 6;
+    Venue venue = 7;
+    Date date_time = 8;
 }

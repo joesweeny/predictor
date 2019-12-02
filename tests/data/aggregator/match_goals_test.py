@@ -155,13 +155,11 @@ def test_for_fixture_returns_fixture_and_data_frame(match_goals, fixture):
     match_goals.fixture_client.get_fixture_by_id.assert_called_with(fixture_id=66)
 
     assert fixture.id == 66
-    assert fixture.competition.id == 55
-    assert fixture.competition.is_cup.value == False
     assert fixture.season.name == '2018/19'
     assert fixture.round.name == '4'
     assert fixture.season.id == 39910
     assert fixture.season.is_current.value == True
-    assert fixture.date_time == 1556043338
+    assert fixture.date_time.utc == 1556043338
     assert fixture.home_team.id == 7901
     assert fixture.home_team.name == 'West Ham United'
     assert fixture.away_team.id == 496
@@ -188,9 +186,6 @@ def result():
     result = result_pb2.Result()
     result.id = 66
 
-    result.competition.id = 55
-    result.competition.is_cup.value = False
-
     result.season.name = '2018/19'
 
     result.round.name = '4'
@@ -198,7 +193,7 @@ def result():
     result.season.id = 39910
     result.season.is_current.value = True
 
-    result.date_time = 1556043338
+    result.date_time.utc = 1556043338
 
     result.match_data.home_team.id = 7901
     result.match_data.home_team.name = 'West Ham United'
@@ -215,7 +210,7 @@ def result():
 @pytest.fixture()
 def home_past_result():
     result = result_pb2.Result()
-    result.date_time = 1555761600
+    result.date_time.utc = 1555761600
     result.match_data.home_team.id = 7901
     result.match_data.home_team.name = 'West Ham United'
     result.match_data.away_team.id = 496
@@ -228,7 +223,7 @@ def home_past_result():
 @pytest.fixture()
 def away_past_result():
     result = result_pb2.Result()
-    result.date_time = 1555549200
+    result.date_time.utc = 1555549200
     result.match_data.home_team.id = 496
     result.match_data.home_team.name = 'Manchester City'
     result.match_data.away_team.id = 7901
@@ -258,9 +253,6 @@ def fixture():
     fixture = Fixture()
     fixture.id = 66
 
-    fixture.competition.id = 55
-    fixture.competition.is_cup.value = False
-
     fixture.season.name = '2018/19'
 
     fixture.round.name = '4'
@@ -268,7 +260,7 @@ def fixture():
     fixture.season.id = 39910
     fixture.season.is_current.value = True
 
-    fixture.date_time = 1556043338
+    fixture.date_time.utc = 1556043338
 
     fixture.home_team.id = 7901
     fixture.home_team.name = 'West Ham United'

@@ -16,10 +16,10 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='compiler/grpc/proto/round/round.proto',
-  package='round',
+  package='proto',
   syntax='proto3',
-  serialized_options=_b('Z:github.com/statistico/statistico-data/internal/proto/round'),
-  serialized_pb=_b('\n%compiler/grpc/proto/round/round.proto\x12\x05round\"Z\n\x05Round\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x11\n\tseason_id\x18\x03 \x01(\x03\x12\x12\n\nstart_date\x18\x04 \x01(\t\x12\x10\n\x08\x65nd_date\x18\x05 \x01(\tB<Z:github.com/statistico/statistico-data/internal/proto/roundb\x06proto3')
+  serialized_options=None,
+  serialized_pb=_b('\n%compiler/grpc/proto/round/round.proto\x12\x05proto\"Z\n\x05Round\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x11\n\tseason_id\x18\x03 \x01(\x03\x12\x12\n\nstart_date\x18\x04 \x01(\t\x12\x10\n\x08\x65nd_date\x18\x05 \x01(\tb\x06proto3')
 )
 
 
@@ -27,41 +27,41 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _ROUND = _descriptor.Descriptor(
   name='Round',
-  full_name='round.Round',
+  full_name='proto.Round',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='round.Round.id', index=0,
+      name='id', full_name='proto.Round.id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='name', full_name='round.Round.name', index=1,
+      name='name', full_name='proto.Round.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='season_id', full_name='round.Round.season_id', index=2,
+      name='season_id', full_name='proto.Round.season_id', index=2,
       number=3, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='start_date', full_name='round.Round.start_date', index=3,
+      name='start_date', full_name='proto.Round.start_date', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='end_date', full_name='round.Round.end_date', index=4,
+      name='end_date', full_name='proto.Round.end_date', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -89,10 +89,9 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Round = _reflection.GeneratedProtocolMessageType('Round', (_message.Message,), dict(
   DESCRIPTOR = _ROUND,
   __module__ = 'compiler.grpc.proto.round.round_pb2'
-  # @@protoc_insertion_point(class_scope:round.Round)
+  # @@protoc_insertion_point(class_scope:proto.Round)
   ))
 _sym_db.RegisterMessage(Round)
 
 
-DESCRIPTOR._options = None
 # @@protoc_insertion_point(module_scope)

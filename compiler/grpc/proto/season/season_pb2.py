@@ -17,10 +17,10 @@ from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='compiler/grpc/proto/season/season.proto',
-  package='season',
+  package='proto',
   syntax='proto3',
-  serialized_options=_b('Z;github.com/statistico/statistico-data/internal/proto/season'),
-  serialized_pb=_b('\n\'compiler/grpc/proto/season/season.proto\x12\x06season\x1a\x1egoogle/protobuf/wrappers.proto\"R\n\x06Season\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12.\n\nis_current\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValueB=Z;github.com/statistico/statistico-data/internal/proto/seasonb\x06proto3')
+  serialized_options=None,
+  serialized_pb=_b('\n\'compiler/grpc/proto/season/season.proto\x12\x05proto\x1a\x1egoogle/protobuf/wrappers.proto\"R\n\x06Season\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12.\n\nis_current\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValueb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -29,27 +29,27 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _SEASON = _descriptor.Descriptor(
   name='Season',
-  full_name='season.Season',
+  full_name='proto.Season',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='season.Season.id', index=0,
+      name='id', full_name='proto.Season.id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='name', full_name='season.Season.name', index=1,
+      name='name', full_name='proto.Season.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='is_current', full_name='season.Season.is_current', index=2,
+      name='is_current', full_name='proto.Season.is_current', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -67,8 +67,8 @@ _SEASON = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=83,
-  serialized_end=165,
+  serialized_start=82,
+  serialized_end=164,
 )
 
 _SEASON.fields_by_name['is_current'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
@@ -78,10 +78,9 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Season = _reflection.GeneratedProtocolMessageType('Season', (_message.Message,), dict(
   DESCRIPTOR = _SEASON,
   __module__ = 'compiler.grpc.proto.season.season_pb2'
-  # @@protoc_insertion_point(class_scope:season.Season)
+  # @@protoc_insertion_point(class_scope:proto.Season)
   ))
 _sym_db.RegisterMessage(Season)
 
 
-DESCRIPTOR._options = None
 # @@protoc_insertion_point(module_scope)

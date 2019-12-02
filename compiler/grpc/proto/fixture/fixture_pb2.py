@@ -12,8 +12,9 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
+from compiler.grpc.proto.common import common_pb2 as compiler_dot_grpc_dot_proto_dot_common_dot_common__pb2
 from compiler.grpc.proto.competition import competition_pb2 as compiler_dot_grpc_dot_proto_dot_competition_dot_competition__pb2
+from compiler.grpc.proto.requests import requests_pb2 as compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2
 from compiler.grpc.proto.round import round_pb2 as compiler_dot_grpc_dot_proto_dot_round_dot_round__pb2
 from compiler.grpc.proto.season import season_pb2 as compiler_dot_grpc_dot_proto_dot_season_dot_season__pb2
 from compiler.grpc.proto.team import team_pb2 as compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2
@@ -22,152 +23,76 @@ from compiler.grpc.proto.venue import venue_pb2 as compiler_dot_grpc_dot_proto_d
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='compiler/grpc/proto/fixture/fixture.proto',
-  package='fixture',
+  package='proto',
   syntax='proto3',
-  serialized_options=_b('Z<github.com/statistico/statistico-data/internal/proto/fixture'),
-  serialized_pb=_b('\n)compiler/grpc/proto/fixture/fixture.proto\x12\x07\x66ixture\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x31\x63ompiler/grpc/proto/competition/competition.proto\x1a%compiler/grpc/proto/round/round.proto\x1a\'compiler/grpc/proto/season/season.proto\x1a#compiler/grpc/proto/team/team.proto\x1a%compiler/grpc/proto/venue/venue.proto\"6\n\x10\x44\x61teRangeRequest\x12\x11\n\tdate_from\x18\x01 \x01(\t\x12\x0f\n\x07\x64\x61te_to\x18\x02 \x01(\t\"$\n\x0e\x46ixtureRequest\x12\x12\n\nfixture_id\x18\x01 \x01(\x03\"\xa0\x02\n\x07\x46ixture\x12\n\n\x02id\x18\x01 \x01(\x03\x12-\n\x0b\x63ompetition\x18\x02 \x01(\x0b\x32\x18.competition.Competition\x12\x1e\n\x06season\x18\x03 \x01(\x0b\x32\x0e.season.Season\x12\x1b\n\x05round\x18\x04 \x01(\x0b\x32\x0c.round.Round\x12\x1d\n\thome_team\x18\x05 \x01(\x0b\x32\n.team.Team\x12\x1d\n\taway_team\x18\x06 \x01(\x0b\x32\n.team.Team\x12\x1b\n\x05venue\x18\x07 \x01(\x0b\x32\x0c.venue.Venue\x12/\n\nreferee_id\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\tdate_time\x18\t \x01(\x03\x32\x8d\x01\n\x0e\x46ixtureService\x12?\n\x0cListFixtures\x12\x19.fixture.DateRangeRequest\x1a\x10.fixture.Fixture\"\x00\x30\x01\x12:\n\x0b\x46ixtureByID\x12\x17.fixture.FixtureRequest\x1a\x10.fixture.Fixture\"\x00\x42>Z<github.com/statistico/statistico-data/internal/proto/fixtureb\x06proto3')
+  serialized_options=None,
+  serialized_pb=_b('\n)compiler/grpc/proto/fixture/fixture.proto\x12\x05proto\x1a\'compiler/grpc/proto/common/common.proto\x1a\x31\x63ompiler/grpc/proto/competition/competition.proto\x1a+compiler/grpc/proto/requests/requests.proto\x1a%compiler/grpc/proto/round/round.proto\x1a\'compiler/grpc/proto/season/season.proto\x1a#compiler/grpc/proto/team/team.proto\x1a%compiler/grpc/proto/venue/venue.proto\"\xf7\x01\n\x07\x46ixture\x12\n\n\x02id\x18\x01 \x01(\x03\x12\'\n\x0b\x63ompetition\x18\x02 \x01(\x0b\x32\x12.proto.Competition\x12\x1d\n\x06season\x18\x03 \x01(\x0b\x32\r.proto.Season\x12\x1e\n\thome_team\x18\x04 \x01(\x0b\x32\x0b.proto.Team\x12\x1e\n\taway_team\x18\x05 \x01(\x0b\x32\x0b.proto.Team\x12\x1b\n\x05round\x18\x06 \x01(\x0b\x32\x0c.proto.Round\x12\x1b\n\x05venue\x18\x07 \x01(\x0b\x32\x0c.proto.Venue\x12\x1e\n\tdate_time\x18\x08 \x01(\x0b\x32\x0b.proto.Date2\x8f\x01\n\x0e\x46ixtureService\x12\x45\n\x12ListSeasonFixtures\x12\x1b.proto.SeasonFixtureRequest\x1a\x0e.proto.Fixture\"\x00\x30\x01\x12\x36\n\x0b\x46ixtureByID\x12\x15.proto.FixtureRequest\x1a\x0e.proto.Fixture\"\x00\x62\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_competition_dot_competition__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_round_dot_round__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_season_dot_season__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_venue_dot_venue__pb2.DESCRIPTOR,])
+  dependencies=[compiler_dot_grpc_dot_proto_dot_common_dot_common__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_competition_dot_competition__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_round_dot_round__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_season_dot_season__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2.DESCRIPTOR,compiler_dot_grpc_dot_proto_dot_venue_dot_venue__pb2.DESCRIPTOR,])
 
 
-
-
-_DATERANGEREQUEST = _descriptor.Descriptor(
-  name='DateRangeRequest',
-  full_name='fixture.DateRangeRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='date_from', full_name='fixture.DateRangeRequest.date_from', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='date_to', full_name='fixture.DateRangeRequest.date_to', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=293,
-  serialized_end=347,
-)
-
-
-_FIXTUREREQUEST = _descriptor.Descriptor(
-  name='FixtureRequest',
-  full_name='fixture.FixtureRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='fixture_id', full_name='fixture.FixtureRequest.fixture_id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=349,
-  serialized_end=385,
-)
 
 
 _FIXTURE = _descriptor.Descriptor(
   name='Fixture',
-  full_name='fixture.Fixture',
+  full_name='proto.Fixture',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='fixture.Fixture.id', index=0,
+      name='id', full_name='proto.Fixture.id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='competition', full_name='fixture.Fixture.competition', index=1,
+      name='competition', full_name='proto.Fixture.competition', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='season', full_name='fixture.Fixture.season', index=2,
+      name='season', full_name='proto.Fixture.season', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='round', full_name='fixture.Fixture.round', index=3,
+      name='home_team', full_name='proto.Fixture.home_team', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='home_team', full_name='fixture.Fixture.home_team', index=4,
+      name='away_team', full_name='proto.Fixture.away_team', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='away_team', full_name='fixture.Fixture.away_team', index=5,
+      name='round', full_name='proto.Fixture.round', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='venue', full_name='fixture.Fixture.venue', index=6,
+      name='venue', full_name='proto.Fixture.venue', index=6,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='referee_id', full_name='fixture.Fixture.referee_id', index=7,
+      name='date_time', full_name='proto.Fixture.date_time', index=7,
       number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='date_time', full_name='fixture.Fixture.date_time', index=8,
-      number=9, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -183,70 +108,53 @@ _FIXTURE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=388,
-  serialized_end=676,
+  serialized_start=346,
+  serialized_end=593,
 )
 
 _FIXTURE.fields_by_name['competition'].message_type = compiler_dot_grpc_dot_proto_dot_competition_dot_competition__pb2._COMPETITION
 _FIXTURE.fields_by_name['season'].message_type = compiler_dot_grpc_dot_proto_dot_season_dot_season__pb2._SEASON
-_FIXTURE.fields_by_name['round'].message_type = compiler_dot_grpc_dot_proto_dot_round_dot_round__pb2._ROUND
 _FIXTURE.fields_by_name['home_team'].message_type = compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2._TEAM
 _FIXTURE.fields_by_name['away_team'].message_type = compiler_dot_grpc_dot_proto_dot_team_dot_team__pb2._TEAM
+_FIXTURE.fields_by_name['round'].message_type = compiler_dot_grpc_dot_proto_dot_round_dot_round__pb2._ROUND
 _FIXTURE.fields_by_name['venue'].message_type = compiler_dot_grpc_dot_proto_dot_venue_dot_venue__pb2._VENUE
-_FIXTURE.fields_by_name['referee_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-DESCRIPTOR.message_types_by_name['DateRangeRequest'] = _DATERANGEREQUEST
-DESCRIPTOR.message_types_by_name['FixtureRequest'] = _FIXTUREREQUEST
+_FIXTURE.fields_by_name['date_time'].message_type = compiler_dot_grpc_dot_proto_dot_common_dot_common__pb2._DATE
 DESCRIPTOR.message_types_by_name['Fixture'] = _FIXTURE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
-
-DateRangeRequest = _reflection.GeneratedProtocolMessageType('DateRangeRequest', (_message.Message,), dict(
-  DESCRIPTOR = _DATERANGEREQUEST,
-  __module__ = 'compiler.grpc.proto.fixture.fixture_pb2'
-  # @@protoc_insertion_point(class_scope:fixture.DateRangeRequest)
-  ))
-_sym_db.RegisterMessage(DateRangeRequest)
-
-FixtureRequest = _reflection.GeneratedProtocolMessageType('FixtureRequest', (_message.Message,), dict(
-  DESCRIPTOR = _FIXTUREREQUEST,
-  __module__ = 'compiler.grpc.proto.fixture.fixture_pb2'
-  # @@protoc_insertion_point(class_scope:fixture.FixtureRequest)
-  ))
-_sym_db.RegisterMessage(FixtureRequest)
 
 Fixture = _reflection.GeneratedProtocolMessageType('Fixture', (_message.Message,), dict(
   DESCRIPTOR = _FIXTURE,
   __module__ = 'compiler.grpc.proto.fixture.fixture_pb2'
-  # @@protoc_insertion_point(class_scope:fixture.Fixture)
+  # @@protoc_insertion_point(class_scope:proto.Fixture)
   ))
 _sym_db.RegisterMessage(Fixture)
 
 
-DESCRIPTOR._options = None
 
 _FIXTURESERVICE = _descriptor.ServiceDescriptor(
   name='FixtureService',
-  full_name='fixture.FixtureService',
+  full_name='proto.FixtureService',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=679,
-  serialized_end=820,
+  serialized_start=596,
+  serialized_end=739,
   methods=[
   _descriptor.MethodDescriptor(
-    name='ListFixtures',
-    full_name='fixture.FixtureService.ListFixtures',
+    name='ListSeasonFixtures',
+    full_name='proto.FixtureService.ListSeasonFixtures',
     index=0,
     containing_service=None,
-    input_type=_DATERANGEREQUEST,
+    input_type=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2._SEASONFIXTUREREQUEST,
     output_type=_FIXTURE,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='FixtureByID',
-    full_name='fixture.FixtureService.FixtureByID',
+    full_name='proto.FixtureService.FixtureByID',
     index=1,
     containing_service=None,
-    input_type=_FIXTUREREQUEST,
+    input_type=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2._FIXTUREREQUEST,
     output_type=_FIXTURE,
     serialized_options=None,
   ),

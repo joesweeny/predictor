@@ -15,7 +15,7 @@ class ResultServiceStub(object):
       channel: A grpc.Channel.
     """
     self.GetResultsForSeason = channel.unary_stream(
-        '/result.ResultService/GetResultsForSeason',
+        '/proto.ResultService/GetResultsForSeason',
         request_serializer=compiler_dot_grpc_dot_proto_dot_result_dot_result__pb2.SeasonRequest.SerializeToString,
         response_deserializer=compiler_dot_grpc_dot_proto_dot_result_dot_result__pb2.Result.FromString,
         )
@@ -42,5 +42,5 @@ def add_ResultServiceServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'result.ResultService', rpc_method_handlers)
+      'proto.ResultService', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
