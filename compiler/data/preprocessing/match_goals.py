@@ -18,7 +18,6 @@ def pre_process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
     updated = updated.fillna(updated.mean())
 
     for index, row in updated.iterrows():
-        __apply_shot_save_ratios_to_row(row=row, df=updated, index=index)
         __apply_goal_averages_to_row(row=row, df=updated, index=index)
         __apply_home_advantage(row=row, df=updated, index=index)
 
@@ -35,46 +34,6 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
     )
 
     row = fixture.iloc[0, :]
-
-    updated.loc[0, 'homeShotTargetRatio'] = stats.calculate_feature_ratio(
-        df=results,
-        row=row,
-        home_away='homeTeam',
-        feature='homeShotTargetRatio',
-        rating='awayDefenceStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'homeShotSaveRatio'] = stats.calculate_feature_ratio(
-        df=results,
-        row=row,
-        home_away='homeTeam',
-        feature='homeShotSaveRatio',
-        rating='awayAttackStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'awayShotTargetRatio'] = stats.calculate_feature_ratio(
-        df=results,
-        row=row,
-        home_away='awayTeam',
-        feature='awayShotTargetRatio',
-        rating='homeDefenceStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'awayShotSaveRatio'] = stats.calculate_feature_ratio(
-        df=results,
-        row=row,
-        home_away='awayTeam',
-        feature='awayShotSaveRatio',
-        rating='homeAttackStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
 
     updated.loc[0, 'homeAvgScored'] = stats.calculate_feature_ratio(
         df=results,
@@ -116,6 +75,46 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
         row_count=MATCH_LIMIT
     )
 
+    updated.loc[0, 'homeXGFor'] = stats.calculate_feature_ratio(
+        df=results,
+        row=row,
+        home_away='homeTeam',
+        feature='homeXG',
+        rating='awayDefenceStrength',
+        factor=STRENGTH_RATING_FACTOR,
+        row_count=MATCH_LIMIT
+    )
+
+    updated.loc[0, 'homeXGAgainst'] = stats.calculate_feature_ratio(
+        df=results,
+        row=row,
+        home_away='homeTeam',
+        feature='awayXG',
+        rating='awayAttackStrength',
+        factor=STRENGTH_RATING_FACTOR,
+        row_count=MATCH_LIMIT
+    )
+
+    updated.loc[0, 'awayXGFor'] = stats.calculate_feature_ratio(
+        df=results,
+        row=row,
+        home_away='awayTeam',
+        feature='awayXG',
+        rating='homeDefenceStrength',
+        factor=STRENGTH_RATING_FACTOR,
+        row_count=MATCH_LIMIT
+    )
+
+    updated.loc[0, 'awayXGAgainst'] = stats.calculate_feature_ratio(
+        df=results,
+        row=row,
+        home_away='awayTeam',
+        feature='homeXG',
+        rating='homeAttackStrength',
+        factor=STRENGTH_RATING_FACTOR,
+        row_count=MATCH_LIMIT
+    )
+
     updated.loc[0, 'homeAdvantage'] = stats.calculate_home_advantage(
         row=row,
         df=results,
@@ -123,13 +122,6 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
     )
 
     return updated
-
-
-def __apply_shot_save_ratios_to_row(row: pd.Series, df: pd.DataFrame, index: int):
-    df.loc[index, 'homeShotTargetRatio'] = __apply_feature_ratio(row, 'homeShotsTotal', 'homeShotsOnGoal')
-    df.loc[index, 'homeShotSaveRatio'] = __apply_feature_ratio(row, 'awayShotsOnGoal', 'homeSaves')
-    df.loc[index, 'awayShotTargetRatio'] = __apply_feature_ratio(row, 'awayShotsTotal', 'awayShotsOnGoal')
-    df.loc[index, 'awayShotSaveRatio'] = __apply_feature_ratio(row, 'homeShotsOnGoal', 'awaySaves')
 
 
 def __apply_goal_averages_to_row(row: pd.Series, df: pd.DataFrame, index: int):
@@ -165,6 +157,51 @@ def __apply_goal_averages_to_row(row: pd.Series, df: pd.DataFrame, index: int):
         row,
         'awayTeam',
         'homeGoals',
+        'homeAttackStrength',
+        STRENGTH_RATING_FACTOR,
+        MATCH_LIMIT
+    )
+    df.loc[index, 'homeAvgScored'] = stats.calculate_feature_ratio(
+        df,
+        row,
+        'homeTeam',
+        'homeGoals',
+        'awayDefenceStrength',
+        STRENGTH_RATING_FACTOR,
+        MATCH_LIMIT
+    )
+    df.loc[index, 'homeXGFor'] = stats.calculate_feature_ratio(
+        df,
+        row,
+        'homeTeam',
+        'homeXG',
+        'awayDefenceStrength',
+        STRENGTH_RATING_FACTOR,
+        MATCH_LIMIT
+    )
+    df.loc[index, 'homeXGAgainst'] = stats.calculate_feature_ratio(
+        df,
+        row,
+        'homeTeam',
+        'awayXG',
+        'awayAttackStrength',
+        STRENGTH_RATING_FACTOR,
+        MATCH_LIMIT
+    )
+    df.loc[index, 'awayXGFor'] = stats.calculate_feature_ratio(
+        df,
+        row,
+        'awayTeam',
+        'awayXG',
+        'homeDefenceStrength',
+        STRENGTH_RATING_FACTOR,
+        MATCH_LIMIT
+    )
+    df.loc[index, 'awayXGAgainst'] = stats.calculate_feature_ratio(
+        df,
+        row,
+        'awayTeam',
+        'homeXG',
         'homeAttackStrength',
         STRENGTH_RATING_FACTOR,
         MATCH_LIMIT

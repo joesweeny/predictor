@@ -10,8 +10,8 @@ HOME_LIST = [
     'homeGoals',
     'homeAdvantage',
     'homeAttackStrength',
-    'homeShotTargetRatio',
-    'awayShotSaveRatio',
+    'homeXGFor',
+    'awayXGAgainst',
     'homeAvgScored',
     'awayAvgConceded'
 ]
@@ -19,8 +19,8 @@ HOME_LIST = [
 AWAY_LIST = [
     'awayGoals',
     'awayAttackStrength',
-    'awayShotTargetRatio',
-    'homeShotSaveRatio',
+    'awayXGFor',
+    'homeXGAgainst',
     'awayAvgScored',
     'homeAvgConceded'
 ]
@@ -29,19 +29,19 @@ HOME_DICT = {
     'homeGoals': 'goals',
     'homeAdvantage': 'home',
     'homeAttackStrength': 'attackStrength',
-    'homeShotTargetRatio': 'shotRatio',
-    'awayShotSaveRatio': 'saveRatio',
     'homeAvgScored': 'avgScored',
-    'awayAvgConceded': 'avgConceded'
+    'awayAvgConceded': 'avgConceded',
+    'homeXGFor': 'xGFor',
+    'awayXGAgainst': 'xGAgainst'
 }
 
 AWAY_DICT = {
     'awayGoals': 'goals',
     'awayAttackStrength': 'attackStrength',
-    'awayShotTargetRatio': 'shotRatio',
-    'homeShotSaveRatio': 'saveRatio',
     'awayAvgScored': 'avgScored',
-    'homeAvgConceded': 'avgConceded'
+    'homeAvgConceded': 'avgConceded',
+    'awayXGFor': 'xGFor',
+    'homeXGAgainst': 'xGAgainst'
 }
 
 MAX_GOALS = 5
@@ -59,7 +59,7 @@ def train_glm_model(features: pd.DataFrame) -> smf.glm:
 
     data = pd.concat([home_data, away_data], sort=False, ignore_index=False)
 
-    formula = "goals ~ home + attackStrength + shotRatio + saveRatio + avgScored + avgConceded"
+    formula = "goals ~ home + attackStrength + avgScored + avgConceded + xGFor + xGAgainst"
 
     model = smf.glm(formula=formula, data=data, family=sm.families.Poisson()).fit()
 
@@ -103,10 +103,10 @@ def __create_home_fixture_data(fixture: Dict) -> Dict:
     data = {
         'home': fixture['homeAdvantage'],
         'attackStrength': fixture['homeAttackStrength'],
-        'shotRatio': fixture['homeShotTargetRatio'],
-        'saveRatio': fixture['awayShotSaveRatio'],
         'avgScored': fixture['homeAvgScored'],
         'avgConceded': fixture['awayAvgConceded'],
+        'xGFor': fixture['homeXGFor'],
+        'xGAgainst': fixture['awayXGAgainst']
     }
 
     return data
@@ -116,10 +116,10 @@ def __create_away_fixture_data(fixture: Dict) -> Dict:
     data = {
         'home': 0,
         'attackStrength': fixture['awayAttackStrength'],
-        'shotRatio': fixture['awayShotTargetRatio'],
-        'saveRatio': fixture['homeShotSaveRatio'],
         'avgScored': fixture['awayAvgScored'],
         'avgConceded': fixture['homeAvgConceded'],
+        'xGFor': fixture['awayXGFor'],
+        'xGAgainst': fixture['homeXGAgainst']
     }
 
     return data
