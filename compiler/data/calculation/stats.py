@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def calculate_feature_ratio(
+def calculate_feature_average(
     df: pd.DataFrame,
     row: pd.Series,
     home_away: str,

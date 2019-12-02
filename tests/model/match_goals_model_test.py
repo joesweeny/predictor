@@ -8,7 +8,7 @@ def test_train_glm_model_uses_data_frame_to_train_model_and_returns_model():
 
     model = train_glm_model(features=df)
 
-    assert model.df_resid == 2353
+    assert model.df_resid == 3313
     assert model.df_model == 6
     assert model.scale == 1.0
 
@@ -21,5 +21,5 @@ def test_get_over_under_odds_returns_over_under_odds_object():
 
     odds = get_over_under_odds(model=model, fixture=fixture.to_dict('records')[0])
 
-    assert odds.get_under_decimal_odds() == 4.34
-    assert odds.get_over_decimal_odds() == 1.3
+    assert odds.get_under_decimal_odds() == 2.62
+    assert odds.get_over_decimal_odds() == 1.62
