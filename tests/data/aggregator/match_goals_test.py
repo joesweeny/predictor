@@ -29,11 +29,13 @@ def test_for_season_data_frame_columns(match_goals):
         'season',
         'homeTeam',
         'homeGoals',
+        'homeXG',
         'homeShotsTotal',
         'homeShotsOnGoal',
         'homeSaves',
         'awayTeam',
         'awayGoals',
+        'awayXG',
         'awayShotsTotal',
         'awayShotsOnGoal',
         'awaySaves'
@@ -64,11 +66,13 @@ def test_for_season_converts_result_object_into_data_frame_row(match_goals, resu
         '2018/19',
         'West Ham United',
         2,
+        1.25,
         34,
         12,
         15,
         'Tottenham Hotspur',
         2,
+        1,
         34,
         12,
         2
@@ -79,7 +83,7 @@ def test_for_season_converts_result_object_into_data_frame_row(match_goals, resu
     assert row == expected
 
 
-def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(match_goals, result):
+def test_for_season_populates_multiple_rows_of_data_for_multiple_results(match_goals, result):
     value = match_goals.result_client.get_results_for_season.return_value
     value.__iter__.return_value = iter([result, result, result])
 
@@ -90,7 +94,7 @@ def test_for_reason_populates_multiple_rows_of_data_for_multiple_results(match_g
         date_before='2019-04-23T18:15:38+00:00'
     )
 
-    assert df.shape == (3, 14)
+    assert df.shape == (3, 16)
 
 
 def test_for_fixture_data_frame_columns(match_goals, fixture):
@@ -107,11 +111,13 @@ def test_for_fixture_data_frame_columns(match_goals, fixture):
         'season',
         'homeTeam',
         'homeGoals',
+        'homeXG',
         'homeShotsTotal',
         'homeShotsOnGoal',
         'homeSaves',
         'awayTeam',
         'awayGoals',
+        'awayXG',
         'awayShotsTotal',
         'awayShotsOnGoal',
         'awaySaves'
@@ -120,7 +126,7 @@ def test_for_fixture_data_frame_columns(match_goals, fixture):
     df_columns = df.columns
 
     assert (df_columns == columns).all()
-    assert df.shape == (1, 14)
+    assert df.shape == (1, 16)
 
 
 def test_for_fixture_returns_data_frame_of_collated_fixture_data(match_goals, fixture):
@@ -244,6 +250,9 @@ def team_stats_response():
     response.away_team.shots_total.value = 34
     response.away_team.shots_on_goal.value = 12
     response.away_team.saves.value = 2
+
+    response.team_xg.home.value = 1.25
+    response.team_xg.away.value = 1
 
     return response
 
