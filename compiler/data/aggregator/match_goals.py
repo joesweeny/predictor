@@ -25,11 +25,13 @@ class MatchGoals:
         'season',
         'homeTeam',
         'homeGoals',
+        'homeXG',
         'homeShotsTotal',
         'homeShotsOnGoal',
         'homeSaves',
         'awayTeam',
         'awayGoals',
+        'awayXG',
         'awayShotsTotal',
         'awayShotsOnGoal',
         'awaySaves'
@@ -88,6 +90,7 @@ class MatchGoals:
 
         home_stats = stats.home_team
         away_stats = stats.away_team
+        xg = stats.team_xg
 
         date = pd.to_datetime(datetime.utcfromtimestamp(result.date_time.utc), format='%Y-%m-%dT%H:%M:%S')
 
@@ -98,11 +101,13 @@ class MatchGoals:
             'season': result.season.name,
             'homeTeam': home_team.name,
             'homeGoals': self.__get_value('home_score', match_stats),
+            'homeXG': self.__get_value('home', xg),
             'homeShotsTotal': self.__get_value('shots_total', home_stats),
             'homeShotsOnGoal': self.__get_value('shots_on_goal', home_stats),
             'homeSaves': self.__get_value('saves', home_stats),
             'awayTeam': away_team.name,
             'awayGoals': self.__get_value('away_score', match_stats),
+            'awayXG': self.__get_value('away', xg),
             'awayShotsTotal': self.__get_value('shots_total', away_stats),
             'awayShotsOnGoal': self.__get_value('shots_on_goal', away_stats),
             'awaySaves': self.__get_value('saves', away_stats),
