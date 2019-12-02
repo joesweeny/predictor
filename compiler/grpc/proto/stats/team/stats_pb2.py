@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='proto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n*compiler/grpc/proto/stats/team/stats.proto\x12\x05proto\x1a+compiler/grpc/proto/requests/requests.proto\x1a\x1egoogle/protobuf/wrappers.proto\"Y\n\rStatsResponse\x12#\n\thome_team\x18\x01 \x01(\x0b\x32\x10.proto.TeamStats\x12#\n\taway_team\x18\x02 \x01(\x0b\x32\x10.proto.TeamStats\"\xc1\t\n\tTeamStats\x12\x0f\n\x07team_id\x18\x01 \x01(\x04\x12\x31\n\x0bshots_total\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rshots_on_goal\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x34\n\x0eshots_off_goal\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rshots_blocked\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x36\n\x10shots_inside_box\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11shots_outside_box\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cpasses_total\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x35\n\x0fpasses_accuracy\x18\t \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11passes_percentage\x18\n \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rattacks_total\x18\x0b \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11\x61ttacks_dangerous\x18\x0c \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12+\n\x05\x66ouls\x18\r \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12-\n\x07\x63orners\x18\x0e \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12.\n\x08offsides\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\npossession\x18\x10 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cyellow_cards\x18\x11 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12/\n\tred_cards\x18\x12 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12+\n\x05saves\x18\x13 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rsubstitutions\x18\x14 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\ngoal_kicks\x18\x15 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rgoal_attempts\x18\x16 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\nfree_kicks\x18\x17 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12/\n\tthrow_ins\x18\x18 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value2[\n\x10TeamStatsService\x12G\n\x16GetTeamStatsForFixture\x12\x15.proto.FixtureRequest\x1a\x14.proto.StatsResponse\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n*compiler/grpc/proto/stats/team/stats.proto\x12\x05proto\x1a+compiler/grpc/proto/requests/requests.proto\x1a\x1egoogle/protobuf/wrappers.proto\"y\n\rStatsResponse\x12#\n\thome_team\x18\x01 \x01(\x0b\x32\x10.proto.TeamStats\x12#\n\taway_team\x18\x02 \x01(\x0b\x32\x10.proto.TeamStats\x12\x1e\n\x07team_xg\x18\x03 \x01(\x0b\x32\r.proto.TeamXG\"\xc1\t\n\tTeamStats\x12\x0f\n\x07team_id\x18\x01 \x01(\x04\x12\x31\n\x0bshots_total\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rshots_on_goal\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x34\n\x0eshots_off_goal\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rshots_blocked\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x36\n\x10shots_inside_box\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11shots_outside_box\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cpasses_total\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x35\n\x0fpasses_accuracy\x18\t \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11passes_percentage\x18\n \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rattacks_total\x18\x0b \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x37\n\x11\x61ttacks_dangerous\x18\x0c \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12+\n\x05\x66ouls\x18\r \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12-\n\x07\x63orners\x18\x0e \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12.\n\x08offsides\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\npossession\x18\x10 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x32\n\x0cyellow_cards\x18\x11 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12/\n\tred_cards\x18\x12 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12+\n\x05saves\x18\x13 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rsubstitutions\x18\x14 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\ngoal_kicks\x18\x15 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x33\n\rgoal_attempts\x18\x16 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12\x30\n\nfree_kicks\x18\x17 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\x12/\n\tthrow_ins\x18\x18 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\"^\n\x06TeamXG\x12)\n\x04home\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\x12)\n\x04\x61way\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.FloatValue2[\n\x10TeamStatsService\x12G\n\x16GetTeamStatsForFixture\x12\x15.proto.FixtureRequest\x1a\x14.proto.StatsResponse\"\x00\x62\x06proto3')
   ,
   dependencies=[compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -49,6 +49,13 @@ _STATSRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='team_xg', full_name='proto.StatsResponse.team_xg', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -62,7 +69,7 @@ _STATSRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=130,
-  serialized_end=219,
+  serialized_end=251,
 )
 
 
@@ -253,12 +260,51 @@ _TEAMSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=222,
-  serialized_end=1439,
+  serialized_start=254,
+  serialized_end=1471,
+)
+
+
+_TEAMXG = _descriptor.Descriptor(
+  name='TeamXG',
+  full_name='proto.TeamXG',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='home', full_name='proto.TeamXG.home', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='away', full_name='proto.TeamXG.away', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1473,
+  serialized_end=1567,
 )
 
 _STATSRESPONSE.fields_by_name['home_team'].message_type = _TEAMSTATS
 _STATSRESPONSE.fields_by_name['away_team'].message_type = _TEAMSTATS
+_STATSRESPONSE.fields_by_name['team_xg'].message_type = _TEAMXG
 _TEAMSTATS.fields_by_name['shots_total'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
 _TEAMSTATS.fields_by_name['shots_on_goal'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
 _TEAMSTATS.fields_by_name['shots_off_goal'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
@@ -282,8 +328,11 @@ _TEAMSTATS.fields_by_name['goal_kicks'].message_type = google_dot_protobuf_dot_w
 _TEAMSTATS.fields_by_name['goal_attempts'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
 _TEAMSTATS.fields_by_name['free_kicks'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
 _TEAMSTATS.fields_by_name['throw_ins'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT32VALUE
+_TEAMXG.fields_by_name['home'].message_type = google_dot_protobuf_dot_wrappers__pb2._FLOATVALUE
+_TEAMXG.fields_by_name['away'].message_type = google_dot_protobuf_dot_wrappers__pb2._FLOATVALUE
 DESCRIPTOR.message_types_by_name['StatsResponse'] = _STATSRESPONSE
 DESCRIPTOR.message_types_by_name['TeamStats'] = _TEAMSTATS
+DESCRIPTOR.message_types_by_name['TeamXG'] = _TEAMXG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 StatsResponse = _reflection.GeneratedProtocolMessageType('StatsResponse', (_message.Message,), dict(
@@ -300,6 +349,13 @@ TeamStats = _reflection.GeneratedProtocolMessageType('TeamStats', (_message.Mess
   ))
 _sym_db.RegisterMessage(TeamStats)
 
+TeamXG = _reflection.GeneratedProtocolMessageType('TeamXG', (_message.Message,), dict(
+  DESCRIPTOR = _TEAMXG,
+  __module__ = 'compiler.grpc.proto.stats.team.stats_pb2'
+  # @@protoc_insertion_point(class_scope:proto.TeamXG)
+  ))
+_sym_db.RegisterMessage(TeamXG)
+
 
 
 _TEAMSTATSSERVICE = _descriptor.ServiceDescriptor(
@@ -308,8 +364,8 @@ _TEAMSTATSSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1441,
-  serialized_end=1532,
+  serialized_start=1569,
+  serialized_end=1660,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetTeamStatsForFixture',
