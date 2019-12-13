@@ -1,6 +1,5 @@
 import pandas as pd
-import pytest
-from compiler.model.match_goals import train_glm_model, get_over_under_odds
+from compiler.model.match_goals.xg import train_glm_model, get_over_under_odds
 
 
 def test_train_glm_model_uses_data_frame_to_train_model_and_returns_model():
@@ -8,7 +7,7 @@ def test_train_glm_model_uses_data_frame_to_train_model_and_returns_model():
 
     model = train_glm_model(features=df)
 
-    assert model.df_resid == 3313
+    assert model.df_resid == 2353
     assert model.df_model == 6
     assert model.scale == 1.0
 
@@ -21,5 +20,5 @@ def test_get_over_under_odds_returns_over_under_odds_object():
 
     odds = get_over_under_odds(model=model, fixture=fixture.to_dict('records')[0])
 
-    assert odds.get_under_decimal_odds() == 2.62
-    assert odds.get_over_decimal_odds() == 1.62
+    assert odds.get_under_decimal_odds() == 3.0
+    assert odds.get_over_decimal_odds() == 1.5

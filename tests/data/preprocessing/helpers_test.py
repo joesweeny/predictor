@@ -19,17 +19,17 @@ def test_elo_applier_returns_data_frame_with_elo_ratings_applied():
 
     assert row_1['homeElo'] == 1474.34
     assert row_1['awayElo'] == 1707.93
-    assert row_1['homeAttackStrength'] == 1671.4
-    assert row_1['homeDefenceStrength'] == 1354.41
-    assert row_1['awayAttackStrength'] == 1775.17
-    assert row_1['awayDefenceStrength'] == 1443.07
+    assert row_1['homeAttackStrength'] == 1671.59
+    assert row_1['homeDefenceStrength'] == 1354.31
+    assert row_1['awayAttackStrength'] == 1775.29
+    assert row_1['awayDefenceStrength'] == 1442.83
 
     assert row_2['homeElo'] == 1472.02
     assert row_2['awayElo'] == 1642.73
-    assert row_2['homeAttackStrength'] == 1578.74
-    assert row_2['homeDefenceStrength'] == 1424.26
-    assert row_2['awayAttackStrength'] == 1664.21
-    assert row_2['awayDefenceStrength'] == 1441.75
+    assert row_2['homeAttackStrength'] == 1578.95
+    assert row_2['homeDefenceStrength'] == 1424.13
+    assert row_2['awayAttackStrength'] == 1664.34
+    assert row_2['awayDefenceStrength'] == 1441.56
 
 
 def test_apply_current_elo_ratings_for_fixture_calculates_ratings_and_applies_them_to_data_frame():
@@ -44,7 +44,7 @@ def test_apply_current_elo_ratings_for_fixture_calculates_ratings_and_applies_th
 
     row = updated.iloc[0, :]
 
-    assert row['homeAttackStrength'] == 1799.35
-    assert row['homeDefenceStrength'] == 1464.7
-    assert row['awayAttackStrength'] == 1800.86
-    assert row['awayDefenceStrength'] == 1463.74
+    assert row['homeAttackStrength'] == 1816.55
+    assert row['homeDefenceStrength'] == 1526.98
+    assert row['awayAttackStrength'] == 1752.04
+    assert row['awayDefenceStrength'] == 1395.45
