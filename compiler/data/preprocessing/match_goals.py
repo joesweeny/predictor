@@ -18,6 +18,7 @@ def pre_process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
     updated = updated.fillna(updated.mean())
 
     for index, row in updated.iterrows():
+        __apply_shot_save_ratios_to_row(row=row, df=updated, index=index)
         __apply_goal_averages_to_row(row=row, df=updated, index=index)
         __apply_home_advantage(row=row, df=updated, index=index)
 
@@ -34,6 +35,46 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
     )
 
     row = fixture.iloc[0, :]
+
+    updated.loc[0, 'homeShotTargetRatio'] = stats.calculate_feature_average(
+        df=results,
+        row=row,
+        home_away='homeTeam',
+        feature='homeShotTargetRatio',
+        rating='awayDefenceStrength',
+        factor=STRENGTH_RATING_FACTOR,
+        row_count=MATCH_LIMIT
+    )
+
+    updated.loc[0, 'homeShotSaveRatio'] = stats.calculate_feature_average(
+        df=results,
+        row=row,
+        home_away='homeTeam',
+        feature='homeShotSaveRatio',
+        rating='awayAttackStrength',
+        factor=STRENGTH_RATING_FACTOR,
+        row_count=MATCH_LIMIT
+    )
+
+    updated.loc[0, 'awayShotTargetRatio'] = stats.calculate_feature_average(
+        df=results,
+        row=row,
+        home_away='awayTeam',
+        feature='awayShotTargetRatio',
+        rating='homeDefenceStrength',
+        factor=STRENGTH_RATING_FACTOR,
+        row_count=MATCH_LIMIT
+    )
+
+    updated.loc[0, 'awayShotSaveRatio'] = stats.calculate_feature_average(
+        df=results,
+        row=row,
+        home_away='awayTeam',
+        feature='awayShotSaveRatio',
+        rating='homeAttackStrength',
+        factor=STRENGTH_RATING_FACTOR,
+        row_count=MATCH_LIMIT
+    )
 
     updated.loc[0, 'homeAvgScored'] = stats.calculate_feature_average(
         df=results,
@@ -122,6 +163,13 @@ def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd
     )
 
     return updated
+
+
+def __apply_shot_save_ratios_to_row(row: pd.Series, df: pd.DataFrame, index: int):
+    df.loc[index, 'homeShotTargetRatio'] = __apply_feature_ratio(row, 'homeShotsTotal', 'homeShotsOnGoal')
+    df.loc[index, 'homeShotSaveRatio'] = __apply_feature_ratio(row, 'awayShotsOnGoal', 'homeSaves')
+    df.loc[index, 'awayShotTargetRatio'] = __apply_feature_ratio(row, 'awayShotsTotal', 'awayShotsOnGoal')
+    df.loc[index, 'awayShotSaveRatio'] = __apply_feature_ratio(row, 'homeShotsOnGoal', 'awaySaves')
 
 
 def __apply_goal_averages_to_row(row: pd.Series, df: pd.DataFrame, index: int):

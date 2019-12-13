@@ -1,1 +1,2 @@
 15 */12 * * * root cd /opt && /usr/local/bin/python3 -m compiler.console pre_process_match_goals_data_for_supported_competitions > /proc/1/fd/1 2>/proc/1/fd/2
+30 18 * * * root cd /opt && /usr/local/bin/python3 -m compiler.console pre_process_match_goals_data_for_supported_competitions > /proc/1/fd/1 2>/proc/1/fd/2

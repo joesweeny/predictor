@@ -12,8 +12,12 @@ message OverUnderRequest {
 }
 
 message OverUnderGoalsResponse {
-    uint64 fixture_id = 1;
-    float under = 2;
-    float over = 3;
+    repeated ModelResult models = 1;
 }
 
+message ModelResult {
+    uint64 fixture_id = 1;
+    string model_name = 2;
+    float under = 3;
+    float over = 4;
+}

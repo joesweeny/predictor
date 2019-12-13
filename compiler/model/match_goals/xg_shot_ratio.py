@@ -1,10 +1,9 @@
 from compiler.model.odds import OverUnderGoals
-from scipy.stats import poisson
+from compiler.model.match_goals.helpers import get_prediction_matrix, calculate_odds
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
-import numpy as np
 import pandas as pd
-from typing import Dict, List
+from typing import Dict
 
 HOME_LIST = [
     'homeGoals',
@@ -13,7 +12,9 @@ HOME_LIST = [
     'homeXGFor',
     'awayXGAgainst',
     'homeAvgScored',
-    'awayAvgConceded'
+    'awayAvgConceded',
+    'homeShotTargetRatio',
+    'awayShotSaveRatio'
 ]
 
 AWAY_LIST = [
@@ -22,7 +23,9 @@ AWAY_LIST = [
     'awayXGFor',
     'homeXGAgainst',
     'awayAvgScored',
-    'homeAvgConceded'
+    'homeAvgConceded',
+    'awayShotTargetRatio',
+    'homeShotSaveRatio'
 ]
 
 HOME_DICT = {
@@ -32,7 +35,9 @@ HOME_DICT = {
     'homeAvgScored': 'avgScored',
     'awayAvgConceded': 'avgConceded',
     'homeXGFor': 'xGFor',
-    'awayXGAgainst': 'xGAgainst'
+    'awayXGAgainst': 'xGAgainst',
+    'homeShotTargetRatio': 'shotRatio',
+    'awayShotSaveRatio': 'saveRatio',
 }
 
 AWAY_DICT = {
@@ -41,7 +46,9 @@ AWAY_DICT = {
     'awayAvgScored': 'avgScored',
     'homeAvgConceded': 'avgConceded',
     'awayXGFor': 'xGFor',
-    'homeXGAgainst': 'xGAgainst'
+    'homeXGAgainst': 'xGAgainst',
+    'awayShotTargetRatio': 'shotRatio',
+    'homeShotSaveRatio': 'saveRatio',
 }
 
 MAX_GOALS = 5
@@ -59,7 +66,7 @@ def train_glm_model(features: pd.DataFrame) -> smf.glm:
 
     data = pd.concat([home_data, away_data], sort=False, ignore_index=False)
 
-    formula = "goals ~ home + attackStrength + avgScored + avgConceded + xGFor + xGAgainst"
+    formula = "goals ~ home + attackStrength + avgScored + avgConceded + xGFor + xGAgainst + shotRatio + saveRatio"
 
     model = smf.glm(formula=formula, data=data, family=sm.families.Poisson()).fit()
 
@@ -79,24 +86,11 @@ def get_over_under_odds(model: smf.glm, fixture: Dict) -> OverUnderGoals:
     home_goals_avg = model.predict(home_data).values[0]
     away_goals_avg = model.predict(away_data).values[0]
 
-    matrix = __get_prediction_matrix(home_avg=home_goals_avg, away_avg=away_goals_avg)
+    matrix = get_prediction_matrix(home_avg=home_goals_avg, away_avg=away_goals_avg)
 
-    under, over = __calculate_odds(matrix=matrix)
+    under, over = calculate_odds(matrix=matrix)
 
-    return OverUnderGoals(under=under, over=over)
-
-
-def __get_prediction_matrix(home_avg: List, away_avg: List):
-    home_pred = [poisson.pmf(i, home_avg) for i in range(0, MAX_GOALS + 1)]
-    away_pred = [poisson.pmf(i, away_avg) for i in range(0, MAX_GOALS + 1)]
-
-    return np.outer(np.array(home_pred), np.array(away_pred))
-
-
-def __calculate_odds(matrix: np.ndarray) -> (float, float):
-    under = np.sum(matrix[:2, :2]) + matrix.item((0, 2)) + matrix.item((2, 0))
-
-    return round((1 / under), 2), round((1 / (1 - under)), 2)
+    return OverUnderGoals(model='xg_shot_ratio', under=under, over=over)
 
 
 def __create_home_fixture_data(fixture: Dict) -> Dict:
@@ -106,7 +100,9 @@ def __create_home_fixture_data(fixture: Dict) -> Dict:
         'avgScored': fixture['homeAvgScored'],
         'avgConceded': fixture['awayAvgConceded'],
         'xGFor': fixture['homeXGFor'],
-        'xGAgainst': fixture['awayXGAgainst']
+        'xGAgainst': fixture['awayXGAgainst'],
+        'shotRatio': fixture['homeShotTargetRatio'],
+        'saveRatio': fixture['awayShotSaveRatio'],
     }
 
     return data
@@ -119,7 +115,9 @@ def __create_away_fixture_data(fixture: Dict) -> Dict:
         'avgScored': fixture['awayAvgScored'],
         'avgConceded': fixture['homeAvgConceded'],
         'xGFor': fixture['awayXGFor'],
-        'xGAgainst': fixture['homeXGAgainst']
+        'xGAgainst': fixture['homeXGAgainst'],
+        'shotRatio': fixture['awayShotTargetRatio'],
+        'saveRatio': fixture['homeShotSaveRatio'],
     }
 
     return data

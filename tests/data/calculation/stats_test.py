@@ -47,14 +47,14 @@ def test_calculate_feature_average_returns_a_calculated_ratio_float_for_feature(
         row_count=3
     )
 
-    assert home_xg_for == 1.98
-    assert away_xg_for == 1.71
-    assert home_xg_against == 0.89
-    assert away_xg_against == 0.94
+    assert home_xg_for == 1.62
+    assert away_xg_for == 1.78
+    assert home_xg_against == 0.9
+    assert away_xg_against == 0.89
 
 
 def test_calculate_home_advantage_returns_a_float():
     df = pd.read_csv("/opt/tests/test-data/test-data.csv")
     row = pd.read_csv("/opt/tests/test-data/test-fixture.csv")
 
-    assert calculate_home_advantage(row=row.iloc[0, :], df=df, index=1179) == 1.79
+    assert calculate_home_advantage(row=row.iloc[0, :], df=df, index=1179) == 3.0
