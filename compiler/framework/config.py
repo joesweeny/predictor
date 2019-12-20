@@ -4,7 +4,7 @@ CONNECTIONS = {
     'redis': {
         'host': os.getenv('REDIS_HOST', 'redis'),
         'port': os.getenv('REDIS_PORT', 6379),
-        'database': os.getenv('REDIS_DATABASE', 15)
+        'database': os.getenv('REDIS_DATABASE', 0)
     },
 
     'data-server': {
