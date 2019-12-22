@@ -46,7 +46,10 @@ class MatchGoals:
         )
 
         for result in results:
-            df = df.append(self.__result_to_row(result), ignore_index=True)
+            try:
+                df = df.append(self.__result_to_row(result), ignore_index=True)
+            except Exception:
+                continue
 
         return df
 
