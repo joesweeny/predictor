@@ -9,15 +9,16 @@ service OddsCompilerService {
 
 message OverUnderRequest {
     uint64 fixture_id = 1;
+    string market = 2;
 }
 
 message OverUnderGoalsResponse {
-    repeated ModelResult models = 1;
+    uint64 fixture_id = 1;
+    string market_type = 2;
+    repeated Odds odds = 3;
 }
 
-message ModelResult {
-    uint64 fixture_id = 1;
-    string model_name = 2;
-    float under = 3;
-    float over = 4;
+message Odds {
+    float price = 1;
+    string selection = 2;
 }
