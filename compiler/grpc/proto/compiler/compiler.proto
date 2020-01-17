@@ -14,7 +14,7 @@ message OverUnderRequest {
 
 message OverUnderGoalsResponse {
     uint64 fixture_id = 1;
-    string market_type = 2;
+    string market = 2;
     repeated Odds odds = 3;
 }
 
