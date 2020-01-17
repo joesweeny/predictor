@@ -1,7 +1,9 @@
+from compiler.model.odds import Odds
 from compiler.grpc.proto.compiler import compiler_pb2_grpc, compiler_pb2
 from compiler.grpc.fixture_client import FixtureClient
 from compiler.data.handling.data_handler import DataHandler
 from compiler.model.match_goals import xg_shot_ratio
+from typing import List
 
 
 class OddsCompilerServiceServicer(compiler_pb2_grpc.OddsCompilerServiceServicer):
@@ -29,7 +31,17 @@ class OddsCompilerServiceServicer(compiler_pb2_grpc.OddsCompilerServiceServicer)
         response = compiler_pb2.OverUnderGoalsResponse(
             fixture_id=request.fixture_id,
             market=request.market,
-            odds=odds
+            odds=self.__map_odds(odds)
         )
 
         return response
+
+    @staticmethod
+    def __map_odds(odds: List[Odds]) -> List[compiler_pb2.Odds]:
+        mapped = []
+
+        for o in odds:
+            odd = compiler_pb2.Odds(price=o.get_price(), selection=o.get_selection())
+            mapped.append(odd)
+
+        return mapped
