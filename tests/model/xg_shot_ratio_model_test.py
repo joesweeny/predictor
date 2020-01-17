@@ -8,7 +8,7 @@ def test_train_glm_model_uses_data_frame_to_train_model_and_returns_model():
 
     model = train_glm_model(features=df)
 
-    assert model.df_resid == 2353
+    assert model.df_resid == 2351
     assert model.df_model == 6
     assert model.scale == 1.0
 
