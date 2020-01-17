@@ -32,7 +32,7 @@ def calculate_odds(matrix: np.ndarray, market: str) -> (float, float):
 
 
 def over_under_15(matrix: np.ndarray):
-    return np.sum(matrix[:1, :2]) + matrix.item((0, 2)) + matrix.item((1, 0))
+    return np.sum(matrix[:1, :1]) + matrix.item((0, 2)) + matrix.item((1, 0))
 
 
 def over_under_25(matrix: np.ndarray):

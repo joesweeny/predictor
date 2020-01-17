@@ -21,9 +21,9 @@ def test_get_over_under_odds_returns_odds_for_1_5_goals_market():
 
     odds = get_over_under_odds(model=model, fixture=fixture.to_dict('records')[0], market="OVER_UNDER_15")
 
-    assert odds[0].get_price() == 5.82
+    assert odds[0].get_price() == 7.99
     assert odds[0].get_selection() == "UNDER"
-    assert odds[1].get_price() == 1.21
+    assert odds[1].get_price() == 1.14
     assert odds[1].get_selection() == "OVER"
 
 
