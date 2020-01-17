@@ -8,4 +8,3 @@ class Odds:
 
     def get_selection(self) -> str:
         return self.__selection
-
