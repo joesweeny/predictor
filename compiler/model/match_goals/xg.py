@@ -78,7 +78,7 @@ def get_over_under_odds(model: smf.glm, fixture: Dict) -> OverUnderGoals:
 
     matrix = get_prediction_matrix(home_avg=home_goals_avg, away_avg=away_goals_avg)
 
-    under, over = calculate_odds(matrix=matrix)
+    under, over = calculate_odds(matrix=matrix, market="OVER_UNDER_25")
 
     return OverUnderGoals(model='xg', under=under, over=over)
 

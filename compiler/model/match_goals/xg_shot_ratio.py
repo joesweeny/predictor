@@ -1,9 +1,9 @@
-from compiler.model.odds import OverUnderGoals
+from compiler.model.odds import Odds
 from compiler.model.match_goals.helpers import get_prediction_matrix, calculate_odds
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 import pandas as pd
-from typing import Dict
+from typing import Dict, List
 
 HOME_LIST = [
     'homeGoals',
@@ -73,12 +73,14 @@ def train_glm_model(features: pd.DataFrame) -> smf.glm:
     return model
 
 
-def get_over_under_odds(model: smf.glm, fixture: Dict) -> OverUnderGoals:
+def get_over_under_odds(model: smf.glm, fixture: Dict, market: str) -> List[Odds]:
     """
     Use trained GLM model to make prediction and return calculated decimal odds
+    :param market:
     :param model:
     :param fixture:
     :return: OverUnderGoals
+    :raise Exception: Exception is raised if unable to calculate odds for a specific market
     """
     home_data = pd.DataFrame(data=__create_home_fixture_data(fixture=fixture), index=[1])
     away_data = pd.DataFrame(data=__create_away_fixture_data(fixture=fixture), index=[1])
@@ -88,9 +90,12 @@ def get_over_under_odds(model: smf.glm, fixture: Dict) -> OverUnderGoals:
 
     matrix = get_prediction_matrix(home_avg=home_goals_avg, away_avg=away_goals_avg)
 
-    under, over = calculate_odds(matrix=matrix)
+    under, over = calculate_odds(matrix=matrix, market=market)
 
-    return OverUnderGoals(model='xg_shot_ratio', under=under, over=over)
+    under = Odds(price=under, selection="UNDER")
+    over = Odds(price=over, selection="OVER")
+
+    return [under, over]
 
 
 def __create_home_fixture_data(fixture: Dict) -> Dict:

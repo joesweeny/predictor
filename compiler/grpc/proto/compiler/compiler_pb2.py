@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='proto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n+compiler/grpc/proto/compiler/compiler.proto\x12\x05proto\"&\n\x10OverUnderRequest\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\"<\n\x16OverUnderGoalsResponse\x12\"\n\x06models\x18\x01 \x03(\x0b\x32\x12.proto.ModelResult\"R\n\x0bModelResult\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\x12\x12\n\nmodel_name\x18\x02 \x01(\t\x12\r\n\x05under\x18\x03 \x01(\x02\x12\x0c\n\x04over\x18\x04 \x01(\x02\x32n\n\x13OddsCompilerService\x12W\n\x1bGetOverUnderGoalsForFixture\x12\x17.proto.OverUnderRequest\x1a\x1d.proto.OverUnderGoalsResponse\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n+compiler/grpc/proto/compiler/compiler.proto\x12\x05proto\"6\n\x10OverUnderRequest\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\x12\x0e\n\x06market\x18\x02 \x01(\t\"W\n\x16OverUnderGoalsResponse\x12\x12\n\nfixture_id\x18\x01 \x01(\x04\x12\x0e\n\x06market\x18\x02 \x01(\t\x12\x19\n\x04odds\x18\x03 \x03(\x0b\x32\x0b.proto.Odds\"(\n\x04Odds\x12\r\n\x05price\x18\x01 \x01(\x02\x12\x11\n\tselection\x18\x02 \x01(\t2n\n\x13OddsCompilerService\x12W\n\x1bGetOverUnderGoalsForFixture\x12\x17.proto.OverUnderRequest\x1a\x1d.proto.OverUnderGoalsResponse\"\x00\x62\x06proto3')
 )
 
 
@@ -39,6 +39,13 @@ _OVERUNDERREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='market', full_name='proto.OverUnderRequest.market', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -52,7 +59,7 @@ _OVERUNDERREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=54,
-  serialized_end=92,
+  serialized_end=108,
 )
 
 
@@ -64,8 +71,22 @@ _OVERUNDERGOALSRESPONSE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='models', full_name='proto.OverUnderGoalsResponse.models', index=0,
-      number=1, type=11, cpp_type=10, label=3,
+      name='fixture_id', full_name='proto.OverUnderGoalsResponse.fixture_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='market', full_name='proto.OverUnderGoalsResponse.market', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='odds', full_name='proto.OverUnderGoalsResponse.odds', index=2,
+      number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -82,43 +103,29 @@ _OVERUNDERGOALSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=94,
-  serialized_end=154,
+  serialized_start=110,
+  serialized_end=197,
 )
 
 
-_MODELRESULT = _descriptor.Descriptor(
-  name='ModelResult',
-  full_name='proto.ModelResult',
+_ODDS = _descriptor.Descriptor(
+  name='Odds',
+  full_name='proto.Odds',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='fixture_id', full_name='proto.ModelResult.fixture_id', index=0,
-      number=1, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
+      name='price', full_name='proto.Odds.price', index=0,
+      number=1, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='model_name', full_name='proto.ModelResult.model_name', index=1,
+      name='selection', full_name='proto.Odds.selection', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='under', full_name='proto.ModelResult.under', index=2,
-      number=3, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='over', full_name='proto.ModelResult.over', index=3,
-      number=4, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -134,14 +141,14 @@ _MODELRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=156,
-  serialized_end=238,
+  serialized_start=199,
+  serialized_end=239,
 )
 
-_OVERUNDERGOALSRESPONSE.fields_by_name['models'].message_type = _MODELRESULT
+_OVERUNDERGOALSRESPONSE.fields_by_name['odds'].message_type = _ODDS
 DESCRIPTOR.message_types_by_name['OverUnderRequest'] = _OVERUNDERREQUEST
 DESCRIPTOR.message_types_by_name['OverUnderGoalsResponse'] = _OVERUNDERGOALSRESPONSE
-DESCRIPTOR.message_types_by_name['ModelResult'] = _MODELRESULT
+DESCRIPTOR.message_types_by_name['Odds'] = _ODDS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 OverUnderRequest = _reflection.GeneratedProtocolMessageType('OverUnderRequest', (_message.Message,), dict(
@@ -158,12 +165,12 @@ OverUnderGoalsResponse = _reflection.GeneratedProtocolMessageType('OverUnderGoal
   ))
 _sym_db.RegisterMessage(OverUnderGoalsResponse)
 
-ModelResult = _reflection.GeneratedProtocolMessageType('ModelResult', (_message.Message,), dict(
-  DESCRIPTOR = _MODELRESULT,
+Odds = _reflection.GeneratedProtocolMessageType('Odds', (_message.Message,), dict(
+  DESCRIPTOR = _ODDS,
   __module__ = 'compiler.grpc.proto.compiler.compiler_pb2'
-  # @@protoc_insertion_point(class_scope:proto.ModelResult)
+  # @@protoc_insertion_point(class_scope:proto.Odds)
   ))
-_sym_db.RegisterMessage(ModelResult)
+_sym_db.RegisterMessage(Odds)
 
 
 
@@ -173,8 +180,8 @@ _ODDSCOMPILERSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=240,
-  serialized_end=350,
+  serialized_start=241,
+  serialized_end=351,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetOverUnderGoalsForFixture',

@@ -1,14 +1,10 @@
-class OverUnderGoals:
-    def __init__(self, model: str, under: float, over: float):
-        self.__model = model
-        self.__under = under
-        self.__over = over
+class Odds:
+    def __init__(self, price: float, selection: str):
+        self.__price = price
+        self.__selection = selection
 
-    def get_model_name(self) -> str:
-        return self.__model
+    def get_price(self) -> float:
+        return self.__price
 
-    def get_under_decimal_odds(self) -> float:
-        return self.__under
-
-    def get_over_decimal_odds(self) -> float:
-        return self.__over
+    def get_selection(self) -> str:
+        return self.__selection
