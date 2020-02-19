@@ -36,7 +36,7 @@ jobs:
     working_directory: ~/statistico-odds-compiler
     machine: true
     steps:
-      - - *attach_workspace
+      - *attach_workspace
       - checkout
       - run:
           name: Build Release Image
