@@ -1,34 +1,87 @@
-version: 2
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@0.1.20
+  aws-ecs: circleci/aws-ecs@1.1.0
+
+references:
+  workspace_root: &workspace_root
+    /tmp/workspace
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - build-and-test
+      - release-images:
+          context: aws
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: master
+      - deploy-to-production:
+          context: aws
+          requires:
+            - build-and-test
+            - release-images
+          filters:
+            branches:
+              only: master
+
 jobs:
-  build:
+  build-and-test:
     working_directory: ~/statistico-odds-compiler
     machine: true
-
     steps:
+      - *attach_workspace
       - checkout
-
-      - add_ssh_keys:
-          fingerprints:
-            - "5a:3c:09:01:a7:15:9a:07:f0:4e:f5:04:06:96:b5:72"
-
       - run:
           name: Build Release Image
           command: |
             docker-compose -f docker-compose.build.yml up -d --build
-
       - run:
           name: Test Release Image
           command: |
             docker-compose -f docker-compose.build.yml run grpc pipenv run flake8
             docker-compose -f docker-compose.build.yml run grpc python3 -m pytest tests/
-
-      - deploy:
-          name: Deploy
+      - run:
+          name: Cache Built Images
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ssh-keyscan $PRODUCTION_SERVER >> ~/.ssh/known_hosts
-              chmod +x ./.circleci/deploy/docker-push.sh
-              ./.circleci/deploy/docker-push.sh
-              chmod +x ./.circleci/deploy/docker-deploy.sh
-              ./.circleci/deploy/docker-deploy.sh
-            fi
+            chmod +x ./.circleci/deploy/docker-save.sh && ./.circleci/deploy/docker-save.sh
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - docker-cache
+
+  release-images:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - *attach_workspace
+      - setup_remote_docker
+      - aws-cli/setup
+      - run:
+          name: Push images to ECR
+          command: |
+            chmod +x ./.circleci/deploy/docker-load.sh && ./.circleci/deploy/docker-load.sh
+            chmod +x ./.circleci/deploy/docker-push.sh && ./.circleci/deploy/docker-push.sh
+
+  deploy-to-production:
+    docker:
+      - image: 'circleci/python:3.7.1'
+    steps:
+      - aws-cli/setup
+      - aws-ecs/update-service:
+          family: 'statistico-odds-compiler-grpc'
+          cluster-name: 'statistico-production'
+          container-image-name-updates: >
+            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-odds-compiler:${CIRCLE_SHA1}
+      - aws-ecs/update-service:
+          family: 'statistico-odd-compiler-background'
+          cluster-name: 'statistico-production'
+          container-image-name-updates: >
+            container=console,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-data:${CIRCLE_SHA1},
+            container=cron,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-data:${CIRCLE_SHA1},

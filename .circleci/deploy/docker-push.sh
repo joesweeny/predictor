@@ -2,13 +2,7 @@
 
 set -e
 
-docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
+aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION | bash
 
-docker tag "statisticooddscompiler_grpc" "joesweeny/statisticooddscompiler_grpc:$CIRCLE_SHA1"
-docker push "joesweeny/statisticooddscompiler_grpc:$CIRCLE_SHA1"
-
-docker tag "statisticooddscompiler_console" "joesweeny/statisticooddscompiler_console:$CIRCLE_SHA1"
-docker push "joesweeny/statisticooddscompiler_console:$CIRCLE_SHA1"
-
-docker tag "statisticooddscompiler_cron" "joesweeny/statisticooddscompiler_cron:$CIRCLE_SHA1"
-docker push "joesweeny/statisticooddscompiler_cron:$CIRCLE_SHA1"
+docker tag "statisticooddscompiler_grpc" "216629550457.dkr.ecr.eu-west-2.amazonaws.com/statistico-data:$CIRCLE_SHA1"
+docker push "216629550457.dkr.ecr.eu-west-2.amazonaws.com/statistico-data:$CIRCLE_SHA1"
