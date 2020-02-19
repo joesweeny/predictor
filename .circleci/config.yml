@@ -83,5 +83,5 @@ jobs:
           family: 'statistico-odd-compiler-background'
           cluster-name: 'statistico-production'
           container-image-name-updates: >
-            container=console,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-data:${CIRCLE_SHA1},
-            container=cron,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-data:${CIRCLE_SHA1},
+            container=console,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-odds-compiler:${CIRCLE_SHA1},
+            container=cron,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-odds-compiler:${CIRCLE_SHA1},
