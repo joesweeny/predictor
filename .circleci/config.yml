@@ -75,12 +75,7 @@ jobs:
     steps:
       - aws-cli/setup
       - aws-ecs/update-service:
-          family: 'statistico-odds-compiler-grpc'
-          cluster-name: 'statistico-production'
-          container-image-name-updates: >
-            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-odds-compiler:${CIRCLE_SHA1}
-      - aws-ecs/update-service:
-          family: 'statistico-odd-compiler-background'
+          family: 'statistico-odds-compiler-background'
           cluster-name: 'statistico-production'
           container-image-name-updates: >
             container=console,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-odds-compiler:${CIRCLE_SHA1},
