@@ -2,7 +2,7 @@ import os
 
 CONNECTIONS = {
     'redis': {
-        'host': os.getenv('REDIS_HOST', 'redis'),
+        'host': os.getenv('REDIS_HOST', 'redis.statistico.internal'),
         'port': os.getenv('REDIS_PORT', 6379),
         'database': os.getenv('REDIS_DATABASE', 0)
     },
