@@ -8,7 +8,7 @@ CONNECTIONS = {
     },
 
     'data-server': {
-        'host': os.getenv('DATA_SERVER_HOST', '138.68.132.183'),
+        'host': os.getenv('DATA_SERVER_HOST', 'data-grpc.statistico.internal'),
         'port': os.getenv('DATA_SERVER_PORT', '50051')
     }
 }
