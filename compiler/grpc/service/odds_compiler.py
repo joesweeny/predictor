@@ -11,8 +11,8 @@ class OddsCompilerServiceServicer(compiler_pb2_grpc.OddsCompilerServiceServicer)
         self.__fixture_client = fixture_client
         self.__handler = handler
 
-    def GetOverUnderGoalsForFixture(self, request, context):
-        fixture = self.__fixture_client.get_fixture_by_id(fixture_id=request.fixture_id)
+    def GetEventMarket(self, request, context):
+        fixture = self.__fixture_client.get_fixture_by_id(fixture_id=request.event_id)
 
         fix_data = self.__handler.get_match_goals_data_for_fixture(fixture_id=fixture.id)
 
@@ -28,8 +28,8 @@ class OddsCompilerServiceServicer(compiler_pb2_grpc.OddsCompilerServiceServicer)
             market=request.market
         )
 
-        response = compiler_pb2.OverUnderGoalsResponse(
-            fixture_id=request.fixture_id,
+        response = compiler_pb2.EventMarket(
+            event_id=request.fixture_id,
             market=request.market,
             odds=self.__map_odds(odds)
         )

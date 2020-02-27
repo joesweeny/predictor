@@ -21,4 +21,4 @@ scikit-learn = "*"
 statsmodels = "~=0.10.1"
 
 [requires]
-python_version = "3.7.3"
+python_version = "3.7"

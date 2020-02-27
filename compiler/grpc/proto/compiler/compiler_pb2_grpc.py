@@ -14,10 +14,10 @@ class OddsCompilerServiceStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.GetOverUnderGoalsForFixture = channel.unary_unary(
-        '/proto.OddsCompilerService/GetOverUnderGoalsForFixture',
-        request_serializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.OverUnderRequest.SerializeToString,
-        response_deserializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.OverUnderGoalsResponse.FromString,
+    self.GetEventMarket = channel.unary_unary(
+        '/proto.OddsCompilerService/GetEventMarket',
+        request_serializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.EventRequest.SerializeToString,
+        response_deserializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.EventMarket.FromString,
         )
 
 
@@ -25,8 +25,8 @@ class OddsCompilerServiceServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def GetOverUnderGoalsForFixture(self, request, context):
-    """Returns a Over/Under goals odds for a given fixture
+  def GetEventMarket(self, request, context):
+    """Returns market for a given event
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -35,10 +35,10 @@ class OddsCompilerServiceServicer(object):
 
 def add_OddsCompilerServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'GetOverUnderGoalsForFixture': grpc.unary_unary_rpc_method_handler(
-          servicer.GetOverUnderGoalsForFixture,
-          request_deserializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.OverUnderRequest.FromString,
-          response_serializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.OverUnderGoalsResponse.SerializeToString,
+      'GetEventMarket': grpc.unary_unary_rpc_method_handler(
+          servicer.GetEventMarket,
+          request_deserializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.EventRequest.FromString,
+          response_serializer=compiler_dot_grpc_dot_proto_dot_compiler_dot_compiler__pb2.EventMarket.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
