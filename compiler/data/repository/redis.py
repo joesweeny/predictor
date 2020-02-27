@@ -1,5 +1,6 @@
 import redis
 import pandas as pd
+import pyarrow as pa
 from typing import Optional
 
 EXPIRATION_SECONDS = 86400
@@ -13,7 +14,12 @@ class RedisRepository:
         """
         Save a Pandas dataframe to Redis store
         """
-        self.redis_client.setex(key, EXPIRATION_SECONDS, df.to_msgpack(compress='zlib'))
+        context = pa.default_serialization_context()
+        self.redis_client.setex(
+            key,
+            EXPIRATION_SECONDS,
+            context.serialize(df).to_buffer().to_pybytes()
+        )
 
     def get_data_frame(self, key: str) -> Optional:
         """
@@ -24,4 +30,5 @@ class RedisRepository:
         if value is None:
             return
 
-        return pd.read_msgpack(value)
+        context = pa.default_serialization_context()
+        return context.deserialize(value)
