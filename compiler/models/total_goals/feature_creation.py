@@ -47,6 +47,39 @@ def calculate_round_goal_stats(fixtures: pd.DataFrame) -> Dict:
     return stats
 
 
+def convert_to_league_positions(seasons: Dict) -> Dict:
+    """
+    Convert a dictionary containing season, round and team goal totals and convert into a dictionary
+    containing team and league positions
+
+    :param seasons
+    :return Dict
+    """
+    league = {}
+
+    for season, rounds in seasons.items():
+        league[season] = {}
+
+        for r, stats in rounds.items():
+            teams = seasons[season][r]
+            table = []
+            counter = 1
+
+            for team, goals in teams.items():
+                table.append({
+                    'team': team,
+                    'position': counter,
+                    'goals': goals,
+                    'diff': 0 if r == 1 else __calculate_position_diff(league[season][r], team, counter)
+                })
+
+                counter += 1
+
+            league[season][r + 1] = table
+
+    return league
+
+
 def __get_previous_round_goals(stats: Dict, team: str, r: int, goals: int):
     if r == 1:
         return goals
@@ -62,3 +95,9 @@ def __get_previous_round_goals(stats: Dict, team: str, r: int, goals: int):
         return two_rounds_previous[team] + goals
 
     raise KeyError("Key " + team + " not found when creating round stats for round " + str(r))
+
+
+def __calculate_position_diff(table: Dict, team: str, position: int) -> int:
+    for stat in table:
+        if stat['team'] == team:
+            return abs(stat['position'] - position)
