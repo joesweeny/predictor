@@ -99,8 +99,6 @@ def test_convert_to_league_positions_converts_a_dictionary_of_goal_stats_into_le
 
     tables = feature_creation.convert_to_league_positions(stats)
 
-    print(tables)
-
     expected = {
         '2019/2020': {
             2: [

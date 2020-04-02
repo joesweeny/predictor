@@ -49,8 +49,8 @@ def calculate_round_goal_stats(fixtures: pd.DataFrame) -> Dict:
 
 def convert_to_league_positions(seasons: Dict) -> Dict:
     """
-    Convert a dictionary containing season, round and team goal totals and convert into a dictionary
-    containing team and league positions
+    Convert a dictionary containing season, round and team goal totals into a dictionary
+    containing team, goals, league position and previous round position diff data
 
     :param seasons
     :return Dict
