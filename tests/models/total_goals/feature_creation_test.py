@@ -79,3 +79,153 @@ def test_calculate_round_goal_stats_raises_key_error_if_unable_to_find_a_teams_p
 
     with pytest.raises(KeyError):
         feature_creation.calculate_round_goal_stats(df)
+
+
+def test_convert_to_league_positions_converts_a_dictionary_of_goal_stats_into_league_table_dictionary():
+    stats = {
+        '2019/2020': {
+            1: {
+                'Chelsea': 25,
+                'West Ham United': 23,
+                'Arsenal': 22,
+            },
+            2: {
+                'West Ham United': 28,
+                'Chelsea': 26,
+                'Arsenal': 24,
+            }
+        }
+    }
+
+    tables = feature_creation.convert_to_league_positions(stats)
+
+    expected = {
+        '2019/2020': {
+            2: [
+                {
+                    'team': 'Chelsea',
+                    'position': 1,
+                    'goals': 25,
+                    'diff': 0,
+                },
+                {
+                    'team': 'West Ham United',
+                    'position': 2,
+                    'goals': 23,
+                    'diff': 0,
+                },
+                {
+                    'team': 'Arsenal',
+                    'position': 3,
+                    'goals': 22,
+                    'diff': 0,
+                }
+            ],
+            3: [
+                {
+                    'team': 'West Ham United',
+                    'position': 1,
+                    'goals': 28,
+                    'diff': 1,
+                },
+                {
+                    'team': 'Chelsea',
+                    'position': 2,
+                    'goals': 26,
+                    'diff': 1,
+                },
+                {
+                    'team': 'Arsenal',
+                    'position': 3,
+                    'goals': 24,
+                    'diff': 0,
+                }
+            ],
+        }
+    }
+
+    assert tables == expected
+
+
+def test_convert_to_league_positions_can_handle_if_a_team_is_not_present_in_a_previous_round():
+    stats = {
+        '2019/2020': {
+            1: {
+                'Chelsea': 25,
+                'Arsenal': 22,
+            },
+            2: {
+                'West Ham United': 28,
+                'Chelsea': 26,
+                'Arsenal': 24,
+            },
+            3: {
+                'Chelsea': 30,
+                'West Ham United': 29,
+                'Arsenal': 24,
+            }
+        }
+    }
+
+    tables = feature_creation.convert_to_league_positions(stats)
+
+    expected = {
+        '2019/2020': {
+            2: [
+                {
+                    'team': 'Chelsea',
+                    'position': 1,
+                    'goals': 25,
+                    'diff': 0,
+                },
+                {
+                    'team': 'Arsenal',
+                    'position': 2,
+                    'goals': 22,
+                    'diff': 0,
+                }
+            ],
+            3: [
+                {
+                    'team': 'West Ham United',
+                    'position': 1,
+                    'goals': 28,
+                    'diff': 0,
+                },
+                {
+                    'team': 'Chelsea',
+                    'position': 2,
+                    'goals': 26,
+                    'diff': 1,
+                },
+                {
+                    'team': 'Arsenal',
+                    'position': 3,
+                    'goals': 24,
+                    'diff': 1,
+                }
+            ],
+            4: [
+                {
+                    'team': 'Chelsea',
+                    'position': 1,
+                    'goals': 30,
+                    'diff': 1,
+                },
+                {
+                    'team': 'West Ham United',
+                    'position': 2,
+                    'goals': 29,
+                    'diff': 1,
+                },
+                {
+                    'team': 'Arsenal',
+                    'position': 3,
+                    'goals': 24,
+                    'diff': 0,
+                }
+            ],
+        }
+    }
+
+    assert tables == expected
