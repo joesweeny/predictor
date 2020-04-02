@@ -101,3 +101,5 @@ def __calculate_position_diff(table: Dict, team: str, position: int) -> int:
     for stat in table:
         if stat['team'] == team:
             return abs(stat['position'] - position)
+
+    return 0
