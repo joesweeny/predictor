@@ -8,7 +8,7 @@ def prepare_dataframe(df: pd.DataFrame, stats: Dict) -> pd.DataFrame:
     null value columns
 
     :param df pd.DataFrame
-    :params stats Dict
+    :param stats Dict
     :return pd.DataFrame
     """
     for index, row in df.iterrows():
