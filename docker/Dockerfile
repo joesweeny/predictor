@@ -1,4 +1,4 @@
-FROM python:3.7.3
+FROM python:3.8.2
 
 RUN apt-get -y update && apt-get install -y cron && pip install --upgrade pip
 

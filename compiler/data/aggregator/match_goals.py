@@ -84,10 +84,9 @@ class MatchGoals:
         return data
 
     def __result_to_row(self, result: Result) -> dict:
-        match_data = result.match_data
-        match_stats = match_data.stats
-        home_team = match_data.home_team
-        away_team = match_data.away_team
+        match_stats = result.stats
+        home_team = result.home_team
+        away_team = result.away_team
 
         stats = self.team_stats_client.get_team_stats_for_fixture(fixture_id=result.id)
 
