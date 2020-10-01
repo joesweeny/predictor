@@ -23,22 +23,22 @@ def test_for_season_data_frame_columns(match_goals):
     )
 
     columns = [
-        'matchID',
+        'fixtureID',
         'round',
         'date',
         'season',
+        'homeTeamID',
         'homeTeam',
         'homeGoals',
         'homeXG',
         'homeShotsTotal',
         'homeShotsOnGoal',
-        'homeSaves',
+        'awayTeamID',
         'awayTeam',
         'awayGoals',
         'awayXG',
         'awayShotsTotal',
         'awayShotsOnGoal',
-        'awaySaves'
     ]
 
     df_columns = df.columns
@@ -64,18 +64,18 @@ def test_for_season_converts_result_object_into_data_frame_row(match_goals, resu
         '4',
         pd.Timestamp('2019-04-23 18:15:38'),
         '2018/19',
+        7901,
         'West Ham United',
         2,
         1.25,
         34,
         12,
-        15,
+        496,
         'Tottenham Hotspur',
         2,
         1,
         34,
         12,
-        2
     ]
 
     row = df.iloc[0, :].values.tolist()
@@ -105,22 +105,22 @@ def test_for_fixture_data_frame_columns(match_goals, fixture):
     match_goals.fixture_client.get_fixture_by_id.assert_called_with(fixture_id=66)
 
     columns = [
-        'matchID',
+        'fixtureID',
         'round',
         'date',
         'season',
+        'homeTeamID',
         'homeTeam',
         'homeGoals',
         'homeXG',
         'homeShotsTotal',
         'homeShotsOnGoal',
-        'homeSaves',
+        'awayTeamID',
         'awayTeam',
         'awayGoals',
         'awayXG',
         'awayShotsTotal',
         'awayShotsOnGoal',
-        'awaySaves'
     ]
 
     df_columns = df.columns
@@ -138,11 +138,13 @@ def test_for_fixture_returns_data_frame_of_collated_fixture_data(match_goals, fi
 
     row = df.iloc[0, :]
 
-    assert row['matchID'] == 66
+    assert row['fixtureID'] == 66
     assert row['round'] == '4'
     assert row['date'] == pd.Timestamp('2019-04-23T18:15:38')
     assert row['season'] == '2018/19'
+    assert row['homeTeamID'] == 7901
     assert row['homeTeam'] == 'West Ham United'
+    assert row['awayTeamID'] == 496
     assert row['awayTeam'] == 'Tottenham Hotspur'
 
 
@@ -245,11 +247,9 @@ def team_stats_response():
 
     response.home_team.shots_total.value = 34
     response.home_team.shots_on_goal.value = 12
-    response.home_team.saves.value = 15
 
     response.away_team.shots_total.value = 34
     response.away_team.shots_on_goal.value = 12
-    response.away_team.saves.value = 2
 
     response.team_xg.home.value = 1.25
     response.team_xg.away.value = 1
