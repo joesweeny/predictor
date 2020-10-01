@@ -18,7 +18,12 @@ class TeamStatsServiceStub(object):
     self.GetTeamStatsForFixture = channel.unary_unary(
         '/proto.TeamStatsService/GetTeamStatsForFixture',
         request_serializer=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.FixtureRequest.SerializeToString,
-        response_deserializer=compiler_dot_grpc_dot_proto_dot_stats_dot_team_dot_stats__pb2.StatsResponse.FromString,
+        response_deserializer=compiler_dot_grpc_dot_proto_dot_stats_dot_team_dot_stats__pb2.TeamStatsResponse.FromString,
+        )
+    self.GetStatForTeam = channel.unary_stream(
+        '/proto.TeamStatsService/GetStatForTeam',
+        request_serializer=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.TeamStatRequest.SerializeToString,
+        response_deserializer=compiler_dot_grpc_dot_proto_dot_stats_dot_team_dot_stats__pb2.TeamStat.FromString,
         )
 
 
@@ -33,13 +38,25 @@ class TeamStatsServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetStatForTeam(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_TeamStatsServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'GetTeamStatsForFixture': grpc.unary_unary_rpc_method_handler(
           servicer.GetTeamStatsForFixture,
           request_deserializer=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.FixtureRequest.FromString,
-          response_serializer=compiler_dot_grpc_dot_proto_dot_stats_dot_team_dot_stats__pb2.StatsResponse.SerializeToString,
+          response_serializer=compiler_dot_grpc_dot_proto_dot_stats_dot_team_dot_stats__pb2.TeamStatsResponse.SerializeToString,
+      ),
+      'GetStatForTeam': grpc.unary_stream_rpc_method_handler(
+          servicer.GetStatForTeam,
+          request_deserializer=compiler_dot_grpc_dot_proto_dot_requests_dot_requests__pb2.TeamStatRequest.FromString,
+          response_serializer=compiler_dot_grpc_dot_proto_dot_stats_dot_team_dot_stats__pb2.TeamStat.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
