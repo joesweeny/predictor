@@ -19,22 +19,22 @@ class MatchGoals:
         self.team_stats_client = team_stats_client
 
     __columns = [
-        'matchID',
+        'fixtureID',
         'round',
         'date',
         'season',
+        'homeTeamID',
         'homeTeam',
         'homeGoals',
         'homeXG',
         'homeShotsTotal',
         'homeShotsOnGoal',
-        'homeSaves',
+        'awayTeamID',
         'awayTeam',
         'awayGoals',
         'awayXG',
         'awayShotsTotal',
         'awayShotsOnGoal',
-        'awaySaves'
     ]
 
     def for_season(self, season_id: int, date_before: datetime) -> pd.DataFrame:
@@ -73,11 +73,13 @@ class MatchGoals:
         date = pd.to_datetime(datetime.utcfromtimestamp(fixture.date_time.utc), format='%Y-%m-%dT%H:%M:%S')
 
         data = {
-            'matchID': fixture.id,
+            'fixtureID': fixture.id,
             'round': fixture.round.name,
             'date': date,
             'season': fixture.season.name,
+            'homeTeamID': home_team.id,
             'homeTeam': home_team.name,
+            'awayTeamID': away_team.id,
             'awayTeam': away_team.name,
         }
 
@@ -97,22 +99,22 @@ class MatchGoals:
         date = pd.to_datetime(datetime.utcfromtimestamp(result.date_time.utc), format='%Y-%m-%dT%H:%M:%S')
 
         data = {
-            'matchID': result.id,
+            'fixtureID': result.id,
             'round': result.round.name,
             'date': date,
             'season': result.season.name,
+            'homeTeamID': home_team.id,
             'homeTeam': home_team.name,
             'homeGoals': self.__get_value('home_score', match_stats),
             'homeXG': self.__get_value('home', xg),
             'homeShotsTotal': self.__get_value('shots_total', home_stats),
             'homeShotsOnGoal': self.__get_value('shots_on_goal', home_stats),
-            'homeSaves': self.__get_value('saves', home_stats),
+            'awayTeamID': away_team.id,
             'awayTeam': away_team.name,
             'awayGoals': self.__get_value('away_score', match_stats),
             'awayXG': self.__get_value('away', xg),
             'awayShotsTotal': self.__get_value('shots_total', away_stats),
             'awayShotsOnGoal': self.__get_value('shots_on_goal', away_stats),
-            'awaySaves': self.__get_value('saves', away_stats),
         }
 
         return data
