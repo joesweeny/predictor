@@ -201,14 +201,14 @@ def result():
 
     result.date_time.utc = 1556043338
 
-    result.match_data.home_team.id = 7901
-    result.match_data.home_team.name = 'West Ham United'
-    result.match_data.away_team.id = 496
-    result.match_data.away_team.name = 'Tottenham Hotspur'
-    result.match_data.stats.home_formation.value = '4-4-2'
-    result.match_data.stats.away_formation.value = '5-3-1-1'
-    result.match_data.stats.home_score.value = 2
-    result.match_data.stats.away_score.value = 2
+    result.home_team.id = 7901
+    result.home_team.name = 'West Ham United'
+    result.away_team.id = 496
+    result.away_team.name = 'Tottenham Hotspur'
+    result.stats.home_formation.value = '4-4-2'
+    result.stats.away_formation.value = '5-3-1-1'
+    result.stats.home_score.value = 2
+    result.stats.away_score.value = 2
 
     return result
 
@@ -217,12 +217,12 @@ def result():
 def home_past_result():
     result = result_pb2.Result()
     result.date_time.utc = 1555761600
-    result.match_data.home_team.id = 7901
-    result.match_data.home_team.name = 'West Ham United'
-    result.match_data.away_team.id = 496
-    result.match_data.away_team.name = 'Tottenham Hotspur'
-    result.match_data.stats.home_score.value = 5
-    result.match_data.stats.away_score.value = 2
+    result.home_team.id = 7901
+    result.home_team.name = 'West Ham United'
+    result.away_team.id = 496
+    result.away_team.name = 'Tottenham Hotspur'
+    result.stats.home_score.value = 5
+    result.stats.away_score.value = 2
     return result
 
 
@@ -230,18 +230,18 @@ def home_past_result():
 def away_past_result():
     result = result_pb2.Result()
     result.date_time.utc = 1555549200
-    result.match_data.home_team.id = 496
-    result.match_data.home_team.name = 'Manchester City'
-    result.match_data.away_team.id = 7901
-    result.match_data.away_team.name = 'Liverpool'
-    result.match_data.stats.home_score.value = 1
-    result.match_data.stats.away_score.value = 3
+    result.home_team.id = 496
+    result.home_team.name = 'Manchester City'
+    result.way_team.id = 7901
+    result.away_team.name = 'Liverpool'
+    result.stats.home_score.value = 1
+    result.stats.away_score.value = 3
     return result
 
 
 @pytest.fixture
 def team_stats_response():
-    response = stats_pb2.StatsResponse()
+    response = stats_pb2.TeamStatsResponse()
 
     response.home_team.shots_total.value = 34
     response.home_team.shots_on_goal.value = 12
