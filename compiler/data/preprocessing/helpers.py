@@ -3,6 +3,96 @@ import pandas as pd
 from compiler.data.calculation import elo
 
 
+def create_fixture_rows(df):
+    home_columns = {
+        "team": "homeTeam",
+        "shotsOnGoal": "homeShotsOnGoal",
+        "shotsTotal": "homeShotsTotal",
+        "goalsScored": "homeGoalsScored",
+        "goalsConceded": "homeGoalsConceded",
+        "xGFor": "homeXGF",
+        "xGAgainst": "homeXGA"
+    }
+
+    away_columns = {
+        "team": "awayTeam",
+        "shotsOnGoal": "awayShotsOnGoal",
+        "shotsTotal": "awayShotsTotal",
+        "goalsScored": "awayGoalsScored",
+        "goalsConceded": "awayGoalsConceded",
+        "xGFor": "awayXGF",
+        "xGAgainst": "awayXGA",
+    }
+
+    home = df[df["atHome"] == 1].rename(columns=home_columns)
+    away = df[df["atHome"] == 0].rename(columns=away_columns)
+
+    merged = home.merge(away, on=["fixtureID", "date", "season", "round"], how='left')
+
+    return merged.drop(columns=["atHome_x", "atHome_y"])
+
+
+def create_rolling_stats(df: pd.DataFrame) -> pd.DataFrame:
+    multi_line = __create_multi_line_stats(df)
+
+    core_columns = ['fixtureID', 'date', 'round', 'season', 'team', 'atHome']
+
+    core_features = multi_line[core_columns].copy()
+
+    feature_names = multi_line.drop(columns=core_columns).columns
+
+    for feature_name in feature_names:
+        core_features[feature_name] = multi_line.groupby(['team'])[feature_name].apply(lambda x: x.shift().cumsum())
+
+    return core_features
+
+
+def __create_multi_line_stats(df: pd.DataFrame) -> pd.DataFrame:
+    home_columns = [
+        'homeTeam',
+        'homeGoals',
+        'homeXG',
+        'homeShotsOnGoal',
+        'homeShotsTotal',
+        'awayGoals',
+        'awayXG',
+    ]
+
+    away_columns = [
+        'awayTeam',
+        'awayGoals',
+        'awayXG',
+        'awayShotsOnGoal',
+        'awayShotsTotal',
+        'homeGoals',
+        'homeXG',
+    ]
+
+    column_mappings = [
+        'team',
+        'goalsScored',
+        'xGFor',
+        'shotsOnGoal',
+        'shotsTotal',
+        'goalsConceded',
+        'xGAgainst'
+    ]
+
+    home_mapping = {old_column: new_column for old_column, new_column in zip(home_columns, column_mappings)}
+    away_mapping = {old_column: new_column for old_column, new_column in zip(away_columns, column_mappings)}
+
+    multi_line = (df[['fixtureID', 'date', 'round', 'season'] + home_columns]
+                  .rename(columns=home_mapping)
+                  .assign(atHome=1)
+                  .append((df[['fixtureID', 'date', 'round', 'season'] + away_columns])
+                          .rename(columns=away_mapping)
+                          .assign(atHome=0), sort=True)
+                  .sort_values(by=['date', 'fixtureID'])
+                  .reset_index(drop=True))
+
+    return multi_line
+
+
 def apply_current_elo_ratings_for_fixture(fixture: pd.DataFrame, data: pd.DataFrame, points: int) -> pd.DataFrame:
     """
     Calculate and apply home and defence ratings for a Fixture
@@ -85,7 +175,7 @@ def apply_historic_elo_ratings(df, historic_elos, soft_reset_factor, goal_points
             current_away_defence_elos = __revert_elos_to_mean(current_away_defence_elos, soft_reset_factor)
 
         # Get the Game ID
-        match_id = row['matchID']
+        match_id = row['fixtureID']
 
         # Get the team and opposition
         home_team = row['homeTeam']
@@ -138,12 +228,12 @@ def apply_historic_elo_ratings(df, historic_elos, soft_reset_factor, goal_points
         last_season = current_season
 
     updated = (df.assign(
-        homeElo=lambda frame: frame.matchID.map(match_elos).str[0],
-        awayElo=lambda frame: frame.matchID.map(match_elos).str[1],
-        homeAttackStrength=lambda frame: frame.matchID.map(match_home_strength).str[0],
-        homeDefenceStrength=lambda frame: frame.matchID.map(match_home_strength).str[1],
-        awayAttackStrength=lambda frame: frame.matchID.map(match_away_strength).str[0],
-        awayDefenceStrength=lambda frame: frame.matchID.map(match_away_strength).str[1],
+        homeElo=lambda frame: frame.fixtureID.map(match_elos).str[0],
+        awayElo=lambda frame: frame.fixtureID.map(match_elos).str[1],
+        homeAttackStrength=lambda frame: frame.fixtureID.map(match_home_strength).str[0],
+        homeDefenceStrength=lambda frame: frame.fixtureID.map(match_home_strength).str[1],
+        awayAttackStrength=lambda frame: frame.fixtureID.map(match_away_strength).str[0],
+        awayDefenceStrength=lambda frame: frame.fixtureID.map(match_away_strength).str[1],
     ))
 
     return updated
