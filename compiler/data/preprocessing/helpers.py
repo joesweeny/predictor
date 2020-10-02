@@ -3,14 +3,12 @@ import pandas as pd
 from compiler.data.calculation import elo
 
 
-def apply_current_elo_ratings_for_fixture(fixture: pd.DataFrame, data: pd.DataFrame, points: int) -> pd.DataFrame:
+def apply_current_elo_ratings_for_fixture(fixture: pd.Series, data: pd.DataFrame, points: int) -> pd.DataFrame:
     """
     Calculate and apply home and defence ratings for a Fixture
     """
-    row = fixture.iloc[0, :]
-
-    home_rows = data[data['homeTeam'] == row['homeTeam']]
-    away_rows = data[data['awayTeam'] == row['awayTeam']]
+    home_rows = data[data['homeTeam'] == fixture['homeTeam']]
+    away_rows = data[data['awayTeam'] == fixture['awayTeam']]
 
     home = home_rows.iloc[-1, :]
     away = away_rows.iloc[-1, :]

@@ -15,152 +15,20 @@ def pre_process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
         goal_points=GOAL_POINTS
     )
 
-    updated = updated.fillna(updated.mean())
-
-    for index, row in updated.iterrows():
-        __apply_shot_save_ratios_to_row(row=row, df=updated, index=index)
-        __apply_goal_averages_to_row(row=row, df=updated, index=index)
-        __apply_home_advantage(row=row, df=updated, index=index)
-
-    cleaned = updated.fillna(updated.mean()).round(2)
-
-    return cleaned
+    return updated
 
 
 def pre_process_fixture_data(fixture: pd.DataFrame, results: pd.DataFrame) -> pd.DataFrame:
+    fixture_row = fixture.iloc[0, :]
+
     updated = helpers.apply_current_elo_ratings_for_fixture(
-        fixture=fixture,
+        fixture=fixture_row,
         data=results,
         points=GOAL_POINTS
     )
 
-    row = fixture.iloc[0, :]
+    current_season =
 
-    updated.loc[0, 'homeShotTargetRatio'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='homeTeam',
-        feature='homeShotTargetRatio',
-        rating='awayDefenceStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'homeShotSaveRatio'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='homeTeam',
-        feature='homeShotSaveRatio',
-        rating='awayAttackStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'awayShotTargetRatio'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='awayTeam',
-        feature='awayShotTargetRatio',
-        rating='homeDefenceStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'awayShotSaveRatio'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='awayTeam',
-        feature='awayShotSaveRatio',
-        rating='homeAttackStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'homeAvgScored'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='homeTeam',
-        feature='homeGoals',
-        rating='awayDefenceStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'homeAvgConceded'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='homeTeam',
-        feature='awayGoals',
-        rating='awayAttackStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'awayAvgScored'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='awayTeam',
-        feature='awayGoals',
-        rating='homeDefenceStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'awayAvgConceded'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='awayTeam',
-        feature='homeGoals',
-        rating='homeAttackStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'homeXGFor'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='homeTeam',
-        feature='homeXG',
-        rating='awayDefenceStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'homeXGAgainst'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='homeTeam',
-        feature='awayXG',
-        rating='awayAttackStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'awayXGFor'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='awayTeam',
-        feature='awayXG',
-        rating='homeDefenceStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'awayXGAgainst'] = stats.calculate_feature_average(
-        df=results,
-        row=row,
-        home_away='awayTeam',
-        feature='homeXG',
-        rating='homeAttackStrength',
-        factor=STRENGTH_RATING_FACTOR,
-        row_count=MATCH_LIMIT
-    )
-
-    updated.loc[0, 'homeAdvantage'] = stats.calculate_home_advantage(
-        row=row,
-        df=results,
-        index=0
-    )
 
     return updated
 
