@@ -35,14 +35,14 @@ def create_fixture_rows(df):
 def create_rolling_stats(df: pd.DataFrame) -> pd.DataFrame:
     multi_line = __create_multi_line_stats(df)
 
-    core_columns = ['fixtureID', 'date', 'round', 'season', 'team']
+    core_columns = ['fixtureID', 'date', 'round', 'season', 'team', 'atHome']
 
     core_features = multi_line[core_columns].copy()
 
     feature_names = multi_line.drop(columns=core_columns).columns
 
     for feature_name in feature_names:
-        core_features[feature_name] = multi_line.groupby(['team'])[feature_name].apply(lambda x: x.cumsum())
+        core_features[feature_name] = multi_line.groupby(['team'])[feature_name].apply(lambda x: x.shift().cumsum())
 
     return core_features
 

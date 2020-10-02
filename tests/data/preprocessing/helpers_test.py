@@ -59,30 +59,22 @@ def test_create_rolling_stats_returns_a_dataframe_of_calculated_rolling_stats():
 
     stats = stats[stats['team'] == 'West Ham United']
 
-    row_1 = stats[stats['fixtureID'] == 1710807].iloc[0]
     row_2 = stats[stats['fixtureID'] == 1711119].iloc[0]
     row_3 = stats[stats['fixtureID'] == 1710828].iloc[0]
 
-    assert row_1['goalsScored'] == 0
-    assert row_1['xGFor'] == 0.63
-    assert row_1['shotsOnGoal'] == 1
-    assert row_1['shotsTotal'] == 9
-    assert row_1['goalsConceded'] == 4
-    assert row_1['xGAgainst'] == 2.64
-
-    assert row_2['goalsScored'] == 2
-    assert row_2['xGFor'] == 2.16
-    assert row_2['shotsOnGoal'] == 9
-    assert row_2['shotsTotal'] == 25
-    assert row_2['goalsConceded'] == 7
-    assert row_2['xGAgainst'] == 4.78
+    assert row_2['goalsScored'] == 0
+    assert row_2['xGFor'] == 0.63
+    assert row_2['shotsOnGoal'] == 1
+    assert row_2['shotsTotal'] == 9
+    assert row_2['goalsConceded'] == 4
+    assert row_2['xGAgainst'] == 2.64
 
     assert row_3['goalsScored'] == 2
-    assert row_3['xGFor'] == 2.72
-    assert row_3['shotsOnGoal'] == 12
-    assert row_3['shotsTotal'] == 33
-    assert row_3['goalsConceded'] == 10
-    assert row_3['xGAgainst'] == 7.54
+    assert row_3['xGFor'] == 2.16
+    assert row_3['shotsOnGoal'] == 9
+    assert row_3['shotsTotal'] == 25
+    assert row_3['goalsConceded'] == 7
+    assert row_3['xGAgainst'] == 4.78
 
 
 def test_create_fixture_rows_converts_multi_line_stats_into_fixture_rows():
