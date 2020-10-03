@@ -26,19 +26,28 @@ def test_pre_process_fixture_data_returns_pre_processed_fixture_data_frame():
     reduced = df[-100:]
     fixture = fixture.iloc[0, :]
 
-    pre_processed = match_goals.pre_process_fixture_data(fixture=fixture, results=reduced)
+    row = match_goals.pre_process_fixture_data(fixture=fixture, results=reduced)
 
-    print(pre_processed)
+    assert row['fixtureID'] == 10332808
+    assert row['date'] == '2018-09-15 11:30:00'
+    assert row['round'] == 5
+    assert row['season'] == '2018/2019'
+    assert row['homeTeam'] == 'Tottenham Hotspur'
+    assert row['homeGoalsScored'] == 9
+    assert row['homeGoalsConceded'] == 4
+    assert row['homeShotsOnGoal'] == 23
+    assert row['homeShotsTotal'] == 60
+    assert row['homeXGF'] == 8.24
+    assert row['homeXGA'] == 4.26
+    assert row['homeAttackStrength'] == 1816.55
+    assert row['homeDefenceStrength'] == 1526.98
 
-    # assert row['homeXGFor'] == 1.48
-    # assert row['homeXGAgainst'] == 1.18
-    # assert row['awayXGFor'] == 1.49
-    # assert row['awayXGAgainst'] == 0.72
-    # assert row['homeAvgScored'] == 2.67
-    # assert row['homeAvgConceded'] == 1.67
-    # assert row['awayAvgScored'] == 1.33
-    # assert row['awayAvgConceded'] == 0.67
-    # assert row['homeShotTargetRatio'] == 0.43
-    # assert row['homeShotSaveRatio'] == 0.61
-    # assert row['awayShotTargetRatio'] == 0.43
-    # assert row['awayShotSaveRatio'] == 0.85
+    assert row['awayTeam'] == 'Liverpool'
+    assert row['awayGoalsScored'] == 9
+    assert row['awayGoalsConceded'] == 1
+    assert row['awayShotsOnGoal'] == 26
+    assert row['awayShotsTotal'] == 66
+    assert row['awayXGF'] == 10.20
+    assert row['awayXGA'] == 2.29
+    assert row['awayAttackStrength'] == 1752.04
+    assert row['awayDefenceStrength'] == 1395.45
