@@ -42,7 +42,8 @@ def create_rolling_stats(df: pd.DataFrame) -> pd.DataFrame:
     feature_names = multi_line.drop(columns=core_columns).columns
 
     for feature_name in feature_names:
-        core_features[feature_name] = multi_line.groupby(['team'])[feature_name].apply(lambda x: x.shift().cumsum())
+        stat = multi_line.groupby(['team'])[feature_name].apply(lambda x: x.shift().cumsum())
+        core_features[feature_name] = round(stat, 2)
 
     return core_features
 
@@ -93,14 +94,12 @@ def __create_multi_line_stats(df: pd.DataFrame) -> pd.DataFrame:
     return multi_line
 
 
-def apply_current_elo_ratings_for_fixture(fixture: pd.DataFrame, data: pd.DataFrame, points: int) -> pd.DataFrame:
+def apply_current_elo_ratings_for_fixture(fixture: pd.Series, data: pd.DataFrame, points: int) -> pd.Series:
     """
     Calculate and apply home and defence ratings for a Fixture
     """
-    row = fixture.iloc[0, :]
-
-    home_rows = data[data['homeTeam'] == row['homeTeam']]
-    away_rows = data[data['awayTeam'] == row['awayTeam']]
+    home_rows = data[data['homeTeam'] == fixture['homeTeam']]
+    away_rows = data[data['awayTeam'] == fixture['awayTeam']]
 
     home = home_rows.iloc[-1, :]
     away = away_rows.iloc[-1, :]
