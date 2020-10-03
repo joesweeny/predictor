@@ -34,13 +34,13 @@ def test_apply_current_elo_ratings_for_fixture_calculates_ratings_and_applies_th
     df = pd.read_csv("/opt/tests/test-data/test-data.csv")
     fixture = pd.read_csv("/opt/tests/test-data/test-fixture.csv")
 
-    updated = helpers.apply_current_elo_ratings_for_fixture(
+    fixture = fixture.iloc[0, :]
+
+    row = helpers.apply_current_elo_ratings_for_fixture(
         fixture=fixture,
         data=df,
         points=20
     )
-
-    row = updated.iloc[0, :]
 
     assert row['homeAttackStrength'] == 1816.55
     assert row['homeDefenceStrength'] == 1526.98
