@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Build Release Image
           command: |
-            /bin/docker-dev up -d --build
+            bin/docker-dev up -d --build
       - run:
           name: Test Release Image
           command: |
