@@ -1,35 +1,21 @@
 from compiler.model.odds import Odds
-from compiler.grpc.proto.compiler import compiler_pb2_grpc, compiler_pb2
-from compiler.grpc.fixture_client import FixtureClient
-from compiler.data.handling.data_handler import DataHandler
-from compiler.model.match_goals import xg_shot_ratio
+from compiler.grpc.proto import compiler_pb2_grpc, compiler_pb2
+from compiler.models.over_under_goals import OverUnderGoalsModel
 from typing import List
 
 
 class OddsCompilerServiceServicer(compiler_pb2_grpc.OddsCompilerServiceServicer):
-    def __init__(self, fixture_client: FixtureClient, handler: DataHandler):
-        self.__fixture_client = fixture_client
-        self.__handler = handler
+    def __init__(self, over_under_model: OverUnderGoalsModel):
+        self.__over_under_model = over_under_model
 
     def GetEventMarket(self, request, context):
-        fixture = self.__fixture_client.get_fixture_by_id(fixture_id=request.event_id)
+        odds = []
 
-        fix_data = self.__handler.get_match_goals_data_for_fixture(fixture_id=fixture.id)
-
-        train_data = self.__handler.get_stored_match_goals_data_for_competition(
-            competition_id=fixture.competition.id
-        )
-
-        model = xg_shot_ratio.train_glm_model(features=train_data)
-
-        odds = xg_shot_ratio.get_over_under_odds(
-            model=model,
-            fixture=fix_data.to_dict('records')[0],
-            market=request.market
-        )
+        if request.market == 'OVER_UNDER_25':
+            odds = self.__over_under_model.get_odds(fixture_id=request.event_id)
 
         response = compiler_pb2.EventMarket(
-            event_id=request.fixture_id,
+            event_id=request.event_id,
             market=request.market,
             odds=self.__map_odds(odds)
         )

@@ -6,7 +6,8 @@ from compiler.grpc.result_client import ResultClient
 from compiler.grpc.team_stats_client import TeamStatsClient
 from compiler.preprocessing.aggregation.goals import GoalsAggregator
 from compiler.data_handling.goals import GoalsDataHandler
-# from compiler.grpc.service.odds_compiler import OddsCompilerServiceServicer
+from compiler.models.over_under_goals import OverUnderGoalsModel
+from compiler.grpc.service.odds_compiler import OddsCompilerServiceServicer
 from dependency_injector import containers, providers
 
 
@@ -50,8 +51,10 @@ class Container(containers.DeclarativeContainer):
         aggregator=goals_aggregator,
     )
 
-    # odds_compiler_service = providers.Singleton(
-    #     OddsCompilerServiceServicer,
-    #     fixture_client=fixture_client,
-    #     handler=goals_data_handler
-    # )
+    # Models
+
+    over_under_model = providers.Singleton(OverUnderGoalsModel, handler=goals_data_handler)
+
+    # gRPC
+
+    odds_compiler_service = providers.Singleton(OddsCompilerServiceServicer, over_under_model=over_under_model)

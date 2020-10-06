@@ -7,7 +7,7 @@ from typing import List
 class OverUnderGoalsModel:
     def __init__(self, handler: GoalsDataHandler):
         self.__handler = handler
-        self.__model = load_model('./assets/over_under_goals.h5')
+        self.__model = load_model('compiler/models/assets/over_under_goals.h5')
 
     def get_odds(self, fixture_id: int) -> List[Odds]:
         fixture = self.__handler.get_match_goals_data_for_fixture(fixture_id=fixture_id)

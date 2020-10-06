@@ -49,7 +49,7 @@ def process_fixture_data(fixture: pd.Series, results: pd.DataFrame) -> pd.Series
         points=GOAL_POINTS
     )
 
-    return updated_fixture[FEATURE_COLUMNS]
+    return updated_fixture
 
 
 def __create_fixture_rows(df):

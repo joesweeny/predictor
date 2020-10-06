@@ -5,13 +5,13 @@ def config_factory():
     return {
         'connections': {
             'redis': {
-                'host': os.getenv('REDIS_HOST', 'redis.statistico.internal'),
+                'host': os.getenv('REDIS_HOST', 'redis'),
                 'port': os.getenv('REDIS_PORT', 6379),
-                'database': os.getenv('REDIS_DATABASE', 0)
+                'database': os.getenv('REDIS_DATABASE', 15)
             },
 
             'data_server': {
-                'host': os.getenv('DATA_SERVER_HOST', 'data-grpc.statistico.internal'),
+                'host': os.getenv('DATA_SERVER_HOST', 'statistico-data-grpc'),
                 'port': os.getenv('DATA_SERVER_PORT', '50051')
             }
         },
