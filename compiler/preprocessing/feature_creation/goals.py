@@ -4,6 +4,22 @@ from compiler.preprocessing.calculation import elo
 
 GOAL_POINTS = 20
 
+FEATURE_COLUMNS = [
+    "round",
+    "homeGoalsScored",
+    "homeGoalsConceded",
+    "awayGoalsScored",
+    "awayGoalsConceded",
+    "awayXGF",
+    "awayXGA",
+    "homeXGF",
+    "homeXGA",
+    "homeAttackStrength",
+    "homeDefenceStrength",
+    "awayAttackStrength",
+    "awayDefenceStrength",
+]
+
 
 def process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
     updated = __apply_historic_elo_ratings(
@@ -33,7 +49,7 @@ def process_fixture_data(fixture: pd.Series, results: pd.DataFrame) -> pd.Series
         points=GOAL_POINTS
     )
 
-    return updated_fixture
+    return updated_fixture[FEATURE_COLUMNS]
 
 
 def __create_fixture_rows(df):
