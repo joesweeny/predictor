@@ -1,6 +1,6 @@
 import grpc
-from compiler.grpc.proto.requests import requests_pb2
-from compiler.grpc.proto.stats.team import stats_pb2_grpc
+from compiler.grpc.proto import requests_pb2
+from compiler.grpc.proto import team_stats_pb2_grpc
 
 
 class TeamStatsClient:
@@ -15,5 +15,5 @@ class TeamStatsClient:
 
     def __client(self):
         channel = grpc.insecure_channel(self.host + ':' + self.port)
-        stub = stats_pb2_grpc.TeamStatsServiceStub(channel)
+        stub = team_stats_pb2_grpc.TeamStatsServiceStub(channel)
         return stub

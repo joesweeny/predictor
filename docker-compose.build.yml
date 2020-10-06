@@ -5,18 +5,29 @@ services:
     build:
       dockerfile: ./docker/Dockerfile
       context: ./
+    networks:
+      - statistico-data_default
+      - statistico-odds-compiler_default
     volumes:
       - .:/opt
     tty: true
     environment:
+      - DATA_SERVER_HOST=statistico-data-grpc
+      - DATA_SERVER_PORT=50051
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_DATABASE=15
 
   grpc:
     <<: *console
+    environment:
+      - DATA_SERVER_HOST=statistico-data-grpc
+      - DATA_SERVER_PORT=50051
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DATABASE=15
     ports:
-      - "50051:50051"
+      - "50052:50051"
     command: ["python3", "-m", "compiler.grpc"]
 
   cron:
@@ -25,3 +36,11 @@ services:
 
   redis:
     image: 'redis'
+    networks:
+      - statistico-odds-compiler_default
+
+networks:
+  statistico-data_default:
+    external: true
+  statistico-odds-compiler_default:
+    external: false

@@ -1,11 +1,11 @@
 import grpc
-from compiler.grpc.proto.fixture import fixture_pb2
-from compiler.grpc.proto.requests import requests_pb2
-from compiler.grpc.proto.fixture import fixture_pb2_grpc
+from compiler.grpc.proto import fixture_pb2
+from compiler.grpc.proto import requests_pb2
+from compiler.grpc.proto import fixture_pb2_grpc
 
 
 class FixtureClient:
-    def __init__(self, host, port):
+    def __init__(self, host: str, port: str):
         self.host = host
         self.port = port
 
