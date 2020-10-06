@@ -1,13 +1,3 @@
 #!/bin/bash
 
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./compiler/grpc/proto/fixture/fixture.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./compiler/grpc/proto/compiler/compiler.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./compiler/grpc/proto/result/result.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./compiler/grpc/proto/stats/team/stats.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./compiler/grpc/proto/competition/competition.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./compiler/grpc/proto/common/common.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./compiler/grpc/proto/requests/requests.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./compiler/grpc/proto/round/round.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./compiler/grpc/proto/season/season.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./compiler/grpc/proto/team/team.proto
-pipenv run python3 -m grpc_tools.protoc -I. --python_out=. ./compiler/grpc/proto/venue/venue.proto
+pipenv run python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./compiler/grpc/proto/*.proto

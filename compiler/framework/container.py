@@ -1,63 +1,57 @@
 import redis
 from compiler.framework import config
-from compiler.data.repository.redis import RedisRepository
+from compiler.cache.redis import RedisRepository
 from compiler.grpc.fixture_client import FixtureClient
 from compiler.grpc.result_client import ResultClient
 from compiler.grpc.team_stats_client import TeamStatsClient
-from compiler.data.aggregator.match_goals import MatchGoals
-from compiler.data.handling.data_handler import DataHandler
-from compiler.grpc.service.odds_compiler import OddsCompilerServiceServicer
+from compiler.preprocessing.aggregation.goals import GoalsAggregator
+from compiler.data_handling.goals import GoalsDataHandler
+# from compiler.grpc.service.odds_compiler import OddsCompilerServiceServicer
+from dependency_injector import containers, providers
 
 
-class Container:
-    __configuration = config
+class Container(containers.DeclarativeContainer):
+    # Configuration
+    configuration = providers.Configuration()
 
-    redis_client = redis.Redis(
-        host=config.CONNECTIONS['redis']['host'],
-        port=config.CONNECTIONS['redis']['port'],
-        db=config.CONNECTIONS['redis']['database']
+    configuration.from_dict(config.config_factory())
+
+    # Connections
+    redis_client = providers.Singleton(
+        redis.Redis,
+        host=configuration.connections.redis.host,
+        port=configuration.connections.redis.port,
+        db=configuration.connections.redis.database,
     )
 
-    redis_repository = RedisRepository(redis_client=redis_client)
+    data_service_host = configuration.connections.data_server.host
+    data_service_port = configuration.connections.data_server.port
 
-    fixture_client = FixtureClient(
-                        host=config.CONNECTIONS['data-server']['host'],
-                        port=config.CONNECTIONS['data-server']['port'],
-                    )
+    # Gateways
+    fixture_client = providers.Singleton(FixtureClient, host=data_service_host, port=data_service_port)
+    result_client = providers.Singleton(ResultClient, host=data_service_host, port=data_service_port)
+    team_stats_client = providers.Singleton(TeamStatsClient, host=data_service_host, port=data_service_port)
 
-    result_client = ResultClient(
-                        host=config.CONNECTIONS['data-server']['host'],
-                        port=config.CONNECTIONS['data-server']['port'],
-                    )
+    # Repositories
+    redis_repository = providers.Singleton(RedisRepository, redis_client=redis_client)
 
-    team_stats_client = TeamStatsClient(
-                            host=config.CONNECTIONS['data-server']['host'],
-                            port=config.CONNECTIONS['data-server']['port'],
-                        )
+    # Services
+    goals_aggregator = providers.Singleton(
+        GoalsAggregator,
+        fixture_client=fixture_client,
+        result_client=result_client,
+        team_stats_client=team_stats_client
+    )
 
-    def get_config(self):
-        return self.__configuration
+    goals_data_handler = providers.Singleton(
+        GoalsDataHandler,
+        competitions=configuration.supported_competitions,
+        repository=redis_repository,
+        aggregator=goals_aggregator,
+    )
 
-    def match_goals_aggregator(self):
-        return MatchGoals(
-            fixture_client=self.fixture_client,
-            result_client=self.result_client,
-            team_stats_client=self.team_stats_client
-        )
-
-    def data_handler(self):
-        handler = DataHandler(
-            configuration=config,
-            repository=self.redis_repository,
-            aggregator=self.match_goals_aggregator()
-        )
-
-        return handler
-
-    def odds_compiler_service(self):
-        service = OddsCompilerServiceServicer(
-            fixture_client=self.fixture_client,
-            handler=self.data_handler()
-        )
-
-        return service
+    # odds_compiler_service = providers.Singleton(
+    #     OddsCompilerServiceServicer,
+    #     fixture_client=fixture_client,
+    #     handler=goals_data_handler
+    # )
