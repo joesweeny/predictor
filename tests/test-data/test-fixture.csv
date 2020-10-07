@@ -1,2 +1,2 @@
-fixtureID,round,date,season,homeTeam,homeGoals,homeXG,homeShotsTotal,homeShotsOnGoal,homeSaves,awayTeam,awayGoals,awayXG,awayShotsTotal,awayShotsOnGoal,awaySaves,homeElo,awayElo,homeAttackStrength,homeDefenceStrength,awayAttackStrength,awayDefenceStrength,homeAvgScored,homeAvgConceded,awayAvgScored,awayAvgConceded,homeXGFor,homeXGAgainst,awayXGFor,awayXGAgainst,homeAdvantage,homeShotTargetRatio,homeShotSaveRatio,awayShotTargetRatio,awayShotSaveRatio
-10332808,5,2018-09-15 11:30:00,2018/2019,Tottenham Hotspur,1,0.79,11,3,8,Liverpool,2,3.01,17,10,2,1688.1,1682.72,1816.55,1526.99,1752.04,1395.45,2,1.33,1.67,1,1.67,0.93,1.69,0.85,1.79,0.433333333333,0.61,0.426666666667,0.85
+fixtureID,round,date,season,homeTeamID,homeTeam,awayTeamID,awayTeam
+10332808,5,2018-09-15 11:30:00,2018/2019,6,Tottenham Hotspur,15,Liverpool

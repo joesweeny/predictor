@@ -36,13 +36,13 @@ def process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
 def process_fixture_data(fixture: pd.Series, results: pd.DataFrame) -> pd.Series:
     stats = results[results['season'] == fixture['season']]
 
-    stats = stats.append(fixture)
+    stats = stats.append(fixture).fillna(0)
 
     calculated = __create_rolling_stats(stats)
 
     converted = __create_fixture_rows(calculated)
 
-    fixture = converted[-1:].iloc[0]
+    fixture = converted[converted['fixtureID'] == fixture['fixtureID']].iloc[-1]
 
     updated_fixture = __apply_current_elo_ratings_for_fixture(
         fixture=fixture,
@@ -54,7 +54,7 @@ def process_fixture_data(fixture: pd.Series, results: pd.DataFrame) -> pd.Series
 
     scaled = MinMaxScaler().fit_transform(data)
 
-    return scaled.reshape(-1)
+    return scaled
 
 
 def __create_fixture_rows(df):

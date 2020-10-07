@@ -12,18 +12,18 @@ class OverUnderGoalsModel:
     def get_odds(self, fixture_id: int) -> List[Odds]:
         fixture = self.__handler.get_match_goals_data_for_fixture(fixture_id=fixture_id)
 
-        prediction = self.__model.predict(x=fixture.reshape(1, 1, 1))
+        prediction = self.__model.predict(x=fixture.reshape(1, 1, fixture.shape[0]))
 
         selection = prediction.reshape(-1)
 
-        return self.__convert_odds(selection)
+        return self.__convert_odds(selection[0])
 
     @staticmethod
     def __load_model():
         json_file = open('compiler/models/assets/over_under.json', 'r')
         loaded_model = model_from_json(json_file.read())
         json_file.close()
-        loaded_model.load_weights('compiler/models/assets/over_under_weight.h5')
+        loaded_model.load_weights('compiler/models/assets/over_under_weights.h5')
         return loaded_model
 
     @staticmethod

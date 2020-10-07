@@ -22,7 +22,7 @@ class GoalsDataHandler:
 
         data = self.get_stored_match_goals_data_for_competition(competition_id=fixture.competition.id)
 
-        return process_fixture_data(fixture=fixture_data, results=data)
+        return process_fixture_data(fixture=fixture_data.iloc[0], results=data)
 
     def get_stored_match_goals_data_for_competition(self, competition_id: int) -> pd.DataFrame:
         filename = "competition:" + str(competition_id) + ':goals'
