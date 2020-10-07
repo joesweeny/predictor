@@ -1,13 +1,13 @@
 from compiler.data_handling.goals import GoalsDataHandler
 from compiler.models.odds import Odds
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import model_from_json
 from typing import List
 
 
 class OverUnderGoalsModel:
     def __init__(self, handler: GoalsDataHandler):
         self.__handler = handler
-        self.__model = load_model('compiler/models/assets/over_under_goals.h5')
+        self.__model = self.__load_model()
 
     def get_odds(self, fixture_id: int) -> List[Odds]:
         fixture = self.__handler.get_match_goals_data_for_fixture(fixture_id=fixture_id)
@@ -17,6 +17,14 @@ class OverUnderGoalsModel:
         selection = prediction.reshape(-1)
 
         return self.__convert_odds(selection)
+
+    @staticmethod
+    def __load_model():
+        json_file = open('compiler/models/assets/over_under.json', 'r')
+        loaded_model = model_from_json(json_file.read())
+        json_file.close()
+        loaded_model.load_weights('compiler/models/assets/over_under_weight.h5')
+        return loaded_model
 
     @staticmethod
     def __convert_odds(prediction: float):
