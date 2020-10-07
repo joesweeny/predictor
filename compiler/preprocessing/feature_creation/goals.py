@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 from compiler.preprocessing.calculation import elo
 
 GOAL_POINTS = 20
@@ -8,12 +9,12 @@ FEATURE_COLUMNS = [
     "round",
     "homeGoalsScored",
     "homeGoalsConceded",
+    "homeXGF",
+    "homeXGA",
     "awayGoalsScored",
     "awayGoalsConceded",
     "awayXGF",
     "awayXGA",
-    "homeXGF",
-    "homeXGA",
     "homeAttackStrength",
     "homeDefenceStrength",
     "awayAttackStrength",
@@ -49,7 +50,11 @@ def process_fixture_data(fixture: pd.Series, results: pd.DataFrame) -> pd.Series
         points=GOAL_POINTS
     )
 
-    return updated_fixture
+    data = np.array(updated_fixture[FEATURE_COLUMNS]).reshape(-1, 1)
+
+    scaled = MinMaxScaler().fit_transform(data)
+
+    return scaled.reshape(-1)
 
 
 def __create_fixture_rows(df):
