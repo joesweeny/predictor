@@ -1,4 +1,4 @@
-from compiler.model.odds import Odds
+from compiler.models.odds import Odds
 from compiler.grpc.proto import compiler_pb2_grpc, compiler_pb2
 from compiler.models.over_under_goals import OverUnderGoalsModel
 from typing import List

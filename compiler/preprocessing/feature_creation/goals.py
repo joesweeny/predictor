@@ -22,39 +22,35 @@ FEATURE_COLUMNS = [
 ]
 
 
-def process_historic_data_set(results: pd.DataFrame) -> pd.DataFrame:
-    updated = __apply_historic_elo_ratings(
-        df=results,
-        historic_elos={team: 1500 for team in results['homeTeam'].unique()},
+def process_fixture_data(fixture: pd.Series, results: pd.DataFrame) -> np.array:
+    combined = results.append(fixture).fillna(0)
+
+    multi_line = __create_multi_line_stats(combined)
+
+    stats = __create_rolling_stats(multi_line, fixture['season'])
+
+    fixture_rows = __create_fixture_rows(stats)
+
+    ratings = __apply_historic_elo_ratings(
+        df=combined,
+        historic_elos={team: 1500 for team in combined['homeTeam'].unique()},
         soft_reset_factor=0.96,
         goal_points=GOAL_POINTS
     )
 
-    return updated
+    columns = ['fixtureID', 'homeAttackStrength', 'homeDefenceStrength', 'awayAttackStrength', 'awayDefenceStrength']
+
+    arr = fixture_rows.merge(ratings[columns], on='fixtureID', how='left')
+
+    data = __scale_attributes(arr)
+
+    return data[-1:].to_numpy()
 
 
-def process_fixture_data(fixture: pd.Series, results: pd.DataFrame) -> pd.Series:
-    stats = results[results['season'] == fixture['season']]
+def __scale_attributes(df: pd.DataFrame):
+    con = MinMaxScaler().fit_transform(df[FEATURE_COLUMNS])
 
-    stats = stats.append(fixture).fillna(0)
-
-    calculated = __create_rolling_stats(stats)
-
-    converted = __create_fixture_rows(calculated)
-
-    fixture = converted[converted['fixtureID'] == fixture['fixtureID']].iloc[-1]
-
-    updated_fixture = __apply_current_elo_ratings_for_fixture(
-        fixture=fixture,
-        data=results,
-        points=GOAL_POINTS
-    )
-
-    data = np.array(updated_fixture[FEATURE_COLUMNS]).reshape(-1, 1)
-
-    scaled = MinMaxScaler().fit_transform(data)
-
-    return scaled
+    return pd.DataFrame(data=con, columns=FEATURE_COLUMNS)
 
 
 def __create_fixture_rows(df):
@@ -86,17 +82,17 @@ def __create_fixture_rows(df):
     return merged.drop(columns=["atHome_x", "atHome_y"])
 
 
-def __create_rolling_stats(df: pd.DataFrame) -> pd.DataFrame:
-    multi_line = __create_multi_line_stats(df)
+def __create_rolling_stats(df: pd.DataFrame, season: str) -> pd.DataFrame:
+    df = df[df['season'] == season]
 
     core_columns = ['fixtureID', 'date', 'round', 'season', 'team', 'atHome']
 
-    core_features = multi_line[core_columns].copy()
+    core_features = df[core_columns].copy()
 
-    feature_names = multi_line.drop(columns=core_columns).columns
+    feature_names = df.drop(columns=core_columns).columns
 
     for feature_name in feature_names:
-        stat = multi_line.groupby(['team'])[feature_name].apply(lambda x: x.shift().cumsum())
+        stat = df.groupby(['team'])[feature_name].apply(lambda x: x.shift().cumsum())
         core_features[feature_name] = round(stat, 2)
 
     return core_features

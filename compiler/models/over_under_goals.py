@@ -12,7 +12,7 @@ class OverUnderGoalsModel:
     def get_odds(self, fixture_id: int) -> List[Odds]:
         fixture = self.__handler.get_match_goals_data_for_fixture(fixture_id=fixture_id)
 
-        prediction = self.__model.predict(x=fixture.reshape(1, 1, fixture.shape[0]))
+        prediction = self.__model.predict(x=fixture.reshape(fixture.shape[0], 1, fixture.shape[1]))
 
         selection = prediction.reshape(-1)
 
@@ -33,8 +33,8 @@ class OverUnderGoalsModel:
             under_price = round((1 / (1 - prediction)), 2)
         else:
             prediction = 1 - prediction
-            over_price = round((1 / prediction), 2)
-            under_price = round((1 / (1 - prediction)), 2)
+            under_price = round((1 / prediction), 2)
+            over_price = round((1 / (1 - prediction)), 2)
 
         over = Odds(price=over_price, selection='over')
         under = Odds(price=under_price, selection='under')
