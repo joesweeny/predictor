@@ -1,22 +1,5 @@
 import pandas as pd
-from compiler.preprocessing.feature_creation.goals import process_historic_data_set, process_fixture_data
-
-
-def test_process_historic_data_set_returns_a_pre_processed_data_frame():
-    df = pd.read_csv("/opt/tests/test-data/test-data.csv")
-
-    reduced = df[-100:]
-
-    pre_processed = process_historic_data_set(results=reduced)
-
-    row = pre_processed.iloc[-1, :]
-
-    assert row['homeElo'] == 1451.75
-    assert row['awayElo'] == 1504.38
-    assert row['homeAttackStrength'] == 1533.7
-    assert row['homeDefenceStrength'] == 1435.89
-    assert row['awayAttackStrength'] == 1541.85
-    assert row['awayDefenceStrength'] == 1464.85
+from compiler.preprocessing.feature_creation.goals import process_fixture_data
 
 
 def test_process_fixture_data_returns_pre_processed_fixture_series_object():
