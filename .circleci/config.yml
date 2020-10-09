@@ -21,7 +21,7 @@ workflows:
             - build-and-test
           filters:
             branches:
-              only: master-blocked
+              only: master
       - deploy-to-production:
           context: aws
           requires:
