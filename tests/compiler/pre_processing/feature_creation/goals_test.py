@@ -11,17 +11,18 @@ def test_process_fixture_data_returns_pre_processed_fixture_series_object():
 
     row = process_fixture_data(fixture=fixture, results=reduced)
 
-    assert row[0] == 0.002203189116245766
-    assert row[1] == 0.004406378232491532
-    assert row[2] == 0.0016523918371843245
-    assert row[3] == 0.003987772300404837
-    assert row[4] == 0.001795599129740299
-    assert row[5] == 0.004406378232491532
-    assert row[6] == 0.0
-    assert row[7] == 0.0050673349673652605
-    assert row[8] == 0.0007105284899892597
-    assert row[9] == 1.0
-    assert row[10] == 0.8405056319021784
-    assert row[11] == 0.9644680675277465
-    assert row[12] == 0.768059265787227
+    row = row.reshape(-1)
 
+    assert row[0] == 1.0
+    assert row[1] == 1.0
+    assert row[2] == 0.4444444444444444
+    assert row[3] == 0.9727047146401984
+    assert row[4] == 0.5202156334231804
+    assert row[5] == 1.0
+    assert row[6] == 0.1111111111111111
+    assert row[7] == 1.0
+    assert row[8] == 0.24966974900924704
+    assert row[9] == 0.8118495906757328
+    assert row[10] == 0.08649439297903427
+    assert row[11] == 0.6628564966529833
+    assert row[12] == 0.7168761069410472
