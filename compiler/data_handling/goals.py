@@ -1,8 +1,9 @@
 from datetime import datetime, timezone
 from compiler.cache.redis import RedisRepository
 from compiler.preprocessing.aggregation.goals import GoalsAggregator
-from compiler.preprocessing.feature_creation.goals import process_historic_data_set, process_fixture_data
+from compiler.preprocessing.feature_creation.goals import process_fixture_data
 import pandas as pd
+import numpy as np
 from typing import List
 
 
@@ -17,12 +18,12 @@ class GoalsDataHandler:
         self._repository = repository
         self._aggregator = aggregator
 
-    def get_match_goals_data_for_fixture(self, fixture_id: int) -> pd.Series:
+    def get_match_goals_data_for_fixture(self, fixture_id: int) -> np.array:
         fixture, fixture_data = self._aggregator.for_fixture(fixture_id=fixture_id)
 
         data = self.get_stored_match_goals_data_for_competition(competition_id=fixture.competition.id)
 
-        return process_fixture_data(fixture=fixture_data, results=data)
+        return process_fixture_data(fixture=fixture_data.iloc[0], results=data)
 
     def get_stored_match_goals_data_for_competition(self, competition_id: int) -> pd.DataFrame:
         filename = "competition:" + str(competition_id) + ':goals'
@@ -76,10 +77,8 @@ class GoalsDataHandler:
 
             data_frame = data_frame.append(other=df, ignore_index=True)
 
-        pre_processed = process_historic_data_set(results=data_frame)
-
         filename = "competition:" + str(competition_id) + ':goals'
 
-        self._repository.save_data_frame(key=filename, df=pre_processed)
+        self._repository.save_data_frame(key=filename, df=data_frame)
 
-        return pre_processed
+        return data_frame

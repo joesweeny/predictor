@@ -27,13 +27,11 @@ def test_for_season_data_frame_columns(match_goals):
         'round',
         'date',
         'season',
-        'homeTeamID',
         'homeTeam',
         'homeGoals',
         'homeXG',
         'homeShotsTotal',
         'homeShotsOnGoal',
-        'awayTeamID',
         'awayTeam',
         'awayGoals',
         'awayXG',
@@ -64,13 +62,11 @@ def test_for_season_converts_result_object_into_data_frame_row(match_goals, resu
         '4',
         pd.Timestamp('2019-04-23 18:15:38'),
         '2018/19',
-        7901,
         'West Ham United',
         2,
         1.25,
         34,
         12,
-        496,
         'Tottenham Hotspur',
         2,
         1,
@@ -94,7 +90,7 @@ def test_for_season_populates_multiple_rows_of_data_for_multiple_results(match_g
         date_before='2019-04-23T18:15:38+00:00'
     )
 
-    assert df.shape == (3, 16)
+    assert df.shape == (3, 14)
 
 
 def test_for_fixture_data_frame_columns(match_goals, fixture):
@@ -109,13 +105,11 @@ def test_for_fixture_data_frame_columns(match_goals, fixture):
         'round',
         'date',
         'season',
-        'homeTeamID',
         'homeTeam',
         'homeGoals',
         'homeXG',
         'homeShotsTotal',
         'homeShotsOnGoal',
-        'awayTeamID',
         'awayTeam',
         'awayGoals',
         'awayXG',
@@ -126,7 +120,7 @@ def test_for_fixture_data_frame_columns(match_goals, fixture):
     df_columns = df.columns
 
     assert (df_columns == columns).all()
-    assert df.shape == (1, 16)
+    assert df.shape == (1, 14)
 
 
 def test_for_fixture_returns_data_frame_of_collated_fixture_data(match_goals, fixture):
@@ -142,9 +136,7 @@ def test_for_fixture_returns_data_frame_of_collated_fixture_data(match_goals, fi
     assert row['round'] == '4'
     assert row['date'] == pd.Timestamp('2019-04-23T18:15:38')
     assert row['season'] == '2018/19'
-    assert row['homeTeamID'] == 7901
     assert row['homeTeam'] == 'West Ham United'
-    assert row['awayTeamID'] == 496
     assert row['awayTeam'] == 'Tottenham Hotspur'
 
 
@@ -168,9 +160,7 @@ def test_for_fixture_returns_fixture_and_data_frame(match_goals, fixture):
     assert fixture.season.id == 39910
     assert fixture.season.is_current.value == True
     assert fixture.date_time.utc == 1556043338
-    assert fixture.home_team.id == 7901
     assert fixture.home_team.name == 'West Ham United'
-    assert fixture.away_team.id == 496
     assert fixture.away_team.name == 'Tottenham Hotspur'
 
 
