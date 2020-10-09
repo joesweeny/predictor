@@ -29,7 +29,7 @@ workflows:
             - release-images
           filters:
             branches:
-              only: master-blocked
+              only: master
 
 jobs:
   build-and-test:
