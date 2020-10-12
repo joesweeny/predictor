@@ -20,10 +20,10 @@ class OverUnderGoalsModel:
 
     @staticmethod
     def __load_model():
-        json_file = open('compiler/models/assets/over_under.json', 'r')
+        json_file = open('compiler/models/assets/over_under_goals.json', 'r')
         loaded_model = model_from_json(json_file.read())
         json_file.close()
-        loaded_model.load_weights('compiler/models/assets/over_under_weights.h5')
+        loaded_model.load_weights('compiler/models/assets/over_under_goals.h5')
         return loaded_model
 
     @staticmethod

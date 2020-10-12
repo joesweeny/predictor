@@ -7,10 +7,18 @@ GOAL_POINTS = 20
 
 FEATURE_COLUMNS = [
     "round",
+    "homeShotsOnGoalF",
+    "homeShotsTotalF",
+    "homeShotsOnGoalA",
+    "homeShotsTotalA",
     "homeGoalsScored",
     "homeGoalsConceded",
     "homeXGF",
     "homeXGA",
+    "awayShotsOnGoalF",
+    "awayShotsTotalF",
+    "awayShotsOnGoalA",
+    "awayShotsTotalA",
     "awayGoalsScored",
     "awayGoalsConceded",
     "awayXGF",
@@ -18,7 +26,7 @@ FEATURE_COLUMNS = [
     "homeAttackStrength",
     "homeDefenceStrength",
     "awayAttackStrength",
-    "awayDefenceStrength",
+    "awayDefenceStrength"
 ]
 
 
@@ -56,22 +64,26 @@ def __scale_attributes(df: pd.DataFrame):
 def __create_fixture_rows(df):
     home_columns = {
         "team": "homeTeam",
-        "shotsOnGoal": "homeShotsOnGoal",
-        "shotsTotal": "homeShotsTotal",
+        "shotsOnGoalF": "homeShotsOnGoalF",
+        "shotsTotalF": "homeShotsTotalF",
         "goalsScored": "homeGoalsScored",
         "goalsConceded": "homeGoalsConceded",
         "xGFor": "homeXGF",
-        "xGAgainst": "homeXGA"
+        "xGAgainst": "homeXGA",
+        "shotsOnGoalA": "homeShotsOnGoalA",
+        "shotsTotalA": "homeShotsTotalA",
     }
 
     away_columns = {
         "team": "awayTeam",
-        "shotsOnGoal": "awayShotsOnGoal",
-        "shotsTotal": "awayShotsTotal",
+        "shotsOnGoalF": "awayShotsOnGoalF",
+        "shotsTotalF": "awayShotsTotalF",
         "goalsScored": "awayGoalsScored",
         "goalsConceded": "awayGoalsConceded",
         "xGFor": "awayXGF",
         "xGAgainst": "awayXGA",
+        "shotsOnGoalA": "awayShotsOnGoalA",
+        "shotsTotalA": "awayShotsTotalA",
     }
 
     home = df[df["atHome"] == 1].rename(columns=home_columns)
@@ -107,6 +119,8 @@ def __create_multi_line_stats(df: pd.DataFrame) -> pd.DataFrame:
         'homeShotsTotal',
         'awayGoals',
         'awayXG',
+        'awayShotsOnGoal',
+        'awayShotsTotal',
     ]
 
     away_columns = [
@@ -117,16 +131,20 @@ def __create_multi_line_stats(df: pd.DataFrame) -> pd.DataFrame:
         'awayShotsTotal',
         'homeGoals',
         'homeXG',
+        'homeShotsOnGoal',
+        'homeShotsTotal',
     ]
 
     column_mappings = [
         'team',
         'goalsScored',
         'xGFor',
-        'shotsOnGoal',
-        'shotsTotal',
+        'shotsOnGoalF',
+        'shotsTotalF',
         'goalsConceded',
-        'xGAgainst'
+        'xGAgainst',
+        'shotsOnGoalA',
+        'shotsTotalA',
     ]
 
     home_mapping = {old_column: new_column for old_column, new_column in zip(home_columns, column_mappings)}
