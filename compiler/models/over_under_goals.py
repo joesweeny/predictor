@@ -26,7 +26,7 @@ class OverUnderGoalsModel:
                 filename = competition['model']
                 return self.__build_model(filename)
 
-        raise NotImplemented(f'Over under goals model not available for competition {competition_id}')
+        raise NotImplementedError(f'Over under goals model not available for competition {competition_id}')
 
     @staticmethod
     def __build_model(filename: str):
