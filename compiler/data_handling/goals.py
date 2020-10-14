@@ -80,8 +80,6 @@ class GoalsDataHandler:
 
         filename = "competition:" + str(competition_id) + ':goals'
 
-        data_frame.to_csv(filename, index=False)
-
         self._repository.save_data_frame(key=filename, df=data_frame)
 
         return data_frame
