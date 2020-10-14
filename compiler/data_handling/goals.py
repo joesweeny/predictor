@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from compiler.cache.redis import RedisRepository
 from compiler.preprocessing.aggregation.goals import GoalsAggregator
 from compiler.preprocessing.feature_creation.goals import process_fixture_data
+from compiler.grpc.proto.fixture_pb2 import Fixture
 import pandas as pd
 import numpy as np
 from typing import List
@@ -18,12 +19,12 @@ class GoalsDataHandler:
         self._repository = repository
         self._aggregator = aggregator
 
-    def get_match_goals_data_for_fixture(self, fixture_id: int) -> np.array:
+    def get_match_goals_data_for_fixture(self, fixture_id: int) -> (Fixture, np.array):
         fixture, fixture_data = self._aggregator.for_fixture(fixture_id=fixture_id)
 
         data = self.get_stored_match_goals_data_for_competition(competition_id=fixture.competition.id)
 
-        return process_fixture_data(fixture=fixture_data.iloc[0], results=data)
+        return fixture, process_fixture_data(fixture=fixture_data.iloc[0], results=data)
 
     def get_stored_match_goals_data_for_competition(self, competition_id: int) -> pd.DataFrame:
         filename = "competition:" + str(competition_id) + ':goals'

@@ -5,25 +5,35 @@ from typing import List
 
 
 class OverUnderGoalsModel:
-    def __init__(self, handler: GoalsDataHandler):
+    def __init__(self, handler: GoalsDataHandler, competitions: List):
         self.__handler = handler
-        self.__model = self.__load_model()
+        self.__competitions = competitions
 
     def get_odds(self, fixture_id: int) -> List[Odds]:
-        fixture = self.__handler.get_match_goals_data_for_fixture(fixture_id=fixture_id)
+        fixture, fixture_row = self.__handler.get_match_goals_data_for_fixture(fixture_id=fixture_id)
 
-        prediction = self.__model.predict(x=fixture.reshape(fixture.shape[0], 1, fixture.shape[1]))
+        model = self.__load_model(fixture.competition.id)
+
+        prediction = model.predict(x=fixture_row.reshape(fixture_row.shape[0], 1, fixture_row.shape[1]))
 
         selection = prediction.reshape(-1)
 
         return self.__convert_odds(selection[0])
 
+    def __load_model(self, competition_id: int):
+        for competition in self.__competitions:
+            if competition['id'] == competition_id:
+                filename = competition['model']
+                return self.__build_model(filename)
+
+        raise NotImplementedError(f'Over under goals model not available for competition {competition_id}')
+
     @staticmethod
-    def __load_model():
-        json_file = open('compiler/models/assets/over_under.json', 'r')
+    def __build_model(filename: str):
+        json_file = open(f'compiler/models/assets/{filename}.json', 'r')
         loaded_model = model_from_json(json_file.read())
         json_file.close()
-        loaded_model.load_weights('compiler/models/assets/over_under_weights.h5')
+        loaded_model.load_weights(f'compiler/models/assets/{filename}.h5')
         return loaded_model
 
     @staticmethod
