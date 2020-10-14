@@ -19,6 +19,7 @@ def config_factory():
             {
                 'id': 8,
                 'name': 'English Premier League',
+                'model': "over_under_goals_1",
                 'seasons': [
                     {
                         'id': 12,
@@ -53,6 +54,7 @@ def config_factory():
             {
                 'id': 82,
                 'name': 'Bundesliga',
+                'model': "over_under_goals_2",
                 'seasons': [
                     {
                         'id': 217,
@@ -85,42 +87,9 @@ def config_factory():
                 ]
             },
             {
-                'id': 564,
-                'name': 'La Liga',
-                'seasons': [
-                    {
-                        'id': 2061,
-                        'name': "2014/2015",
-                    },
-                    {
-                        'id': 2063,
-                        'name': "2015/2016",
-                    },
-                    {
-                        'id': 853,
-                        'name': "2016/2017",
-                    },
-                    {
-                        'id': 8442,
-                        'name': "2017/2018",
-                    },
-                    {
-                        'id': 13133,
-                        'name': "2018/2019",
-                    },
-                    {
-                        'id': 16326,
-                        'name': "2019/2020",
-                    },
-                    {
-                        'id': 17480,
-                        'name': "2020/2021",
-                    }
-                ]
-            },
-            {
                 'id': 384,
                 'name': 'Serie A',
+                'model': "over_under_goals_2",
                 'seasons': [
                     {
                         'id': 1583,

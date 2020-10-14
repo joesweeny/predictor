@@ -53,7 +53,11 @@ class Container(containers.DeclarativeContainer):
 
     # Models
 
-    over_under_model = providers.Singleton(OverUnderGoalsModel, handler=goals_data_handler)
+    over_under_model = providers.Singleton(
+        OverUnderGoalsModel,
+        handler=goals_data_handler,
+        competitions=configuration.supported_competitions,
+    )
 
     # gRPC
 
