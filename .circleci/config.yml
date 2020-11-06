@@ -45,8 +45,8 @@ jobs:
       - run:
           name: Test Release Image
           command: |
-            docker-compose -f docker-compose.build.yml run grpc pipenv run flake8
-            docker-compose -f docker-compose.build.yml run grpc python3 -m pytest tests/
+            docker-compose -f docker-compose.build.yml run statistico-odds-compiler-grpc pipenv run flake8
+            docker-compose -f docker-compose.build.yml run statistico-odds-compiler-grpc python3 -m pytest tests/
       - run:
           name: Cache Built Images
           command: |
