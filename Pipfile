@@ -10,10 +10,11 @@ mock = "*"
 python-dotenv = "*"
 freezegun = "*"
 
+
 [packages]
-grpcio = "==1.31.0"
-grpcio-tools = "==1.31.0"
-grpcio-reflection = "==1.31.0"
+grpcio = ">=1.31.0"
+grpcio-tools = ">=1.31.0"
+grpcio-reflection = ">=1.31.0"
 pandas = "*"
 click = "==0.7"
 redis = "*"
@@ -24,6 +25,7 @@ setuptools = "==50.3.0"
 tensorflow = "==2.3.1"
 dependency-injector = "==3.44.0"
 protobuf = "==3.13.0"
+grpcio-status = "*"
 
 [requires]
-python_version = "3.8.2"
+python_version = "3.8.5"
