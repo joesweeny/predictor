@@ -9,7 +9,8 @@ pytest = "*"
 mock = "*"
 python-dotenv = "*"
 freezegun = "*"
-
+grpcio-testing = "*"
+pytest-grpc = "*"
 
 [packages]
 grpcio = ">=1.31.0"
