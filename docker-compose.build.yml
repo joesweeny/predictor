@@ -3,7 +3,7 @@ services:
 
   console: &console
     build:
-      dockerfile: ./docker/Dockerfile
+      dockerfile: .docker/Dockerfile
       context: ./
     networks:
       - statistico-data_default
