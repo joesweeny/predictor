@@ -14,7 +14,7 @@ def calculate_adjusted_goals(team_id: int, home: bool, goals: List[GoalEvent], c
         if (card.team_id != team_id) and (card.type == 'redcard'):
             red_cards.append(card)
 
-    if (len(red_cards) < 0) and (len(team_goals) <= 2):
+    if (len(red_cards) == 0) and (len(team_goals) <= 2):
         return len(team_goals)
 
     return __calculate_goals_total(home, team_goals, red_cards)
@@ -24,7 +24,7 @@ def __calculate_goals_total(home: bool, goals: List[GoalEvent], cards: List[Card
     total = 0
 
     for goal in goals:
-        if goal.minute <= 70 or total <= 1:
+        if goal.minute <= 60 or total <= 1:
             if __goal_before_red_card(goal, cards):
                 total += 1
             else:
@@ -53,6 +53,9 @@ def __calculate_goal_value(home: bool, goal: GoalEvent) -> float:
 
 
 def __goal_before_red_card(goal: GoalEvent, cards: List[CardEvent]) -> bool:
+    if len(cards) == 0:
+        return True
+
     for card in cards:
         if goal.minute < card.minute:
             return True
