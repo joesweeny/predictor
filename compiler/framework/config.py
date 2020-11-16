@@ -11,7 +11,7 @@ def config_factory():
             },
 
             'data_server': {
-                'host': os.getenv('DATA_SERVER_HOST', 'statistico-data-grpc'),
+                'host': os.getenv('DATA_SERVER_HOST', 'statistico-data-grpc.statistico.internal'),
                 'port': os.getenv('DATA_SERVER_PORT', '50051')
             }
         },

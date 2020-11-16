@@ -18,7 +18,7 @@ services:
       - REDIS_PORT=6379
       - REDIS_DATABASE=15
 
-  grpc:
+  statistico-odds-compiler-grpc:
     <<: *console
     volumes:
       - .:/opt
